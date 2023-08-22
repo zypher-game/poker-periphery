@@ -99,6 +99,7 @@ export interface ZkGameLobbyInterface extends Interface {
       | "TEXAS_HOLDEM_TABLE"
       | "cardConfig"
       | "createTable"
+      | "isPlayerPlaying"
       | "isPlayerWaiting"
       | "join"
       | "kick"
@@ -142,6 +143,10 @@ export interface ZkGameLobbyInterface extends Interface {
   encodeFunctionData(
     functionFragment: "createTable",
     values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isPlayerPlaying",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isPlayerWaiting",
@@ -203,6 +208,10 @@ export interface ZkGameLobbyInterface extends Interface {
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createTable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isPlayerPlaying",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -479,6 +488,12 @@ export interface ZkGameLobby extends BaseContract {
     "nonpayable"
   >;
 
+  isPlayerPlaying: TypedContractMethod<
+    [player: AddressLike],
+    [[boolean, bigint] & { playing: boolean; lastTableId: bigint }],
+    "view"
+  >;
+
   isPlayerWaiting: TypedContractMethod<
     [player: AddressLike],
     [boolean],
@@ -579,6 +594,13 @@ export interface ZkGameLobby extends BaseContract {
     [name: string, posCounts: BigNumberish],
     [bigint],
     "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "isPlayerPlaying"
+  ): TypedContractMethod<
+    [player: AddressLike],
+    [[boolean, bigint] & { playing: boolean; lastTableId: bigint }],
+    "view"
   >;
   getFunction(
     nameOrSignature: "isPlayerWaiting"

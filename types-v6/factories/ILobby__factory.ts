@@ -233,6 +233,30 @@ const _abi = [
         type: "address",
       },
     ],
+    name: "isPlayerPlaying",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "playing",
+        type: "bool",
+      },
+      {
+        internalType: "uint32",
+        name: "lastTableId",
+        type: "uint32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+    ],
     name: "isPlayerWaiting",
     outputs: [
       {

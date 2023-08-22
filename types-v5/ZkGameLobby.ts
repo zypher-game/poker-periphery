@@ -103,6 +103,7 @@ export interface ZkGameLobbyInterface extends utils.Interface {
     "TEXAS_HOLDEM_TABLE()": FunctionFragment;
     "cardConfig()": FunctionFragment;
     "createTable(string,uint8)": FunctionFragment;
+    "isPlayerPlaying(address)": FunctionFragment;
     "isPlayerWaiting(address)": FunctionFragment;
     "join(uint32,string,bytes,bytes,bytes)": FunctionFragment;
     "kick(uint32,address)": FunctionFragment;
@@ -126,6 +127,7 @@ export interface ZkGameLobbyInterface extends utils.Interface {
       | "TEXAS_HOLDEM_TABLE"
       | "cardConfig"
       | "createTable"
+      | "isPlayerPlaying"
       | "isPlayerWaiting"
       | "join"
       | "kick"
@@ -155,6 +157,10 @@ export interface ZkGameLobbyInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "createTable",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isPlayerPlaying",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "isPlayerWaiting",
@@ -230,6 +236,10 @@ export interface ZkGameLobbyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createTable",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "isPlayerPlaying",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -463,6 +473,11 @@ export interface ZkGameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -566,6 +581,11 @@ export interface ZkGameLobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  isPlayerPlaying(
+    player: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
+
   isPlayerWaiting(
     player: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -668,6 +688,11 @@ export interface ZkGameLobby extends BaseContract {
       posCounts: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<number>;
+
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
 
     isPlayerWaiting(
       player: PromiseOrValue<string>,
@@ -871,6 +896,11 @@ export interface ZkGameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -965,6 +995,11 @@ export interface ZkGameLobby extends BaseContract {
       name: PromiseOrValue<string>,
       posCounts: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isPlayerWaiting(

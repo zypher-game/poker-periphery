@@ -100,6 +100,7 @@ export declare namespace MentalPokerHelper {
 
 export interface ILobbyInterface extends utils.Interface {
   functions: {
+    "isPlayerPlaying(address)": FunctionFragment;
     "isPlayerWaiting(address)": FunctionFragment;
     "join(uint32,string,bytes,bytes,bytes)": FunctionFragment;
     "leave()": FunctionFragment;
@@ -113,6 +114,7 @@ export interface ILobbyInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "isPlayerPlaying"
       | "isPlayerWaiting"
       | "join"
       | "leave"
@@ -124,6 +126,10 @@ export interface ILobbyInterface extends utils.Interface {
       | "tables"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "isPlayerPlaying",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "isPlayerWaiting",
     values: [PromiseOrValue<string>]
@@ -166,6 +172,10 @@ export interface ILobbyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "tables", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "isPlayerPlaying",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isPlayerWaiting",
     data: BytesLike
@@ -350,6 +360,11 @@ export interface ILobby extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -398,6 +413,11 @@ export interface ILobby extends BaseContract {
 
     tables(overrides?: CallOverrides): Promise<[ILobby.TableStructOutput[]]>;
   };
+
+  isPlayerPlaying(
+    player: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
 
   isPlayerWaiting(
     player: PromiseOrValue<string>,
@@ -448,6 +468,11 @@ export interface ILobby extends BaseContract {
   tables(overrides?: CallOverrides): Promise<ILobby.TableStructOutput[]>;
 
   callStatic: {
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -593,6 +618,11 @@ export interface ILobby extends BaseContract {
   };
 
   estimateGas: {
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -643,6 +673,11 @@ export interface ILobby extends BaseContract {
   };
 
   populateTransaction: {
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides

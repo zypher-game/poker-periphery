@@ -96,6 +96,7 @@ export declare namespace MentalPokerHelper {
 export interface GameLobbyInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "isPlayerPlaying"
       | "isPlayerWaiting"
       | "join"
       | "kick"
@@ -122,6 +123,10 @@ export interface GameLobbyInterface extends Interface {
       | "TableStarted"
   ): EventFragment;
 
+  encodeFunctionData(
+    functionFragment: "isPlayerPlaying",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "isPlayerWaiting",
     values: [AddressLike]
@@ -158,6 +163,10 @@ export interface GameLobbyInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "tables", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "isPlayerPlaying",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isPlayerWaiting",
     data: BytesLike
@@ -388,6 +397,12 @@ export interface GameLobby extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  isPlayerPlaying: TypedContractMethod<
+    [player: AddressLike],
+    [[boolean, bigint] & { playing: boolean; lastTableId: bigint }],
+    "view"
+  >;
+
   isPlayerWaiting: TypedContractMethod<
     [player: AddressLike],
     [boolean],
@@ -450,6 +465,13 @@ export interface GameLobby extends BaseContract {
     key: string | FunctionFragment
   ): T;
 
+  getFunction(
+    nameOrSignature: "isPlayerPlaying"
+  ): TypedContractMethod<
+    [player: AddressLike],
+    [[boolean, bigint] & { playing: boolean; lastTableId: bigint }],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "isPlayerWaiting"
   ): TypedContractMethod<[player: AddressLike], [boolean], "view">;

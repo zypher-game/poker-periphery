@@ -103,6 +103,7 @@ export interface DemoLobbyInterface extends utils.Interface {
     "cardConfig()": FunctionFragment;
     "createTable(string,uint8)": FunctionFragment;
     "initialize(bytes[])": FunctionFragment;
+    "isPlayerPlaying(address)": FunctionFragment;
     "isPlayerWaiting(address)": FunctionFragment;
     "join(uint32,string,bytes,bytes,bytes)": FunctionFragment;
     "leave()": FunctionFragment;
@@ -134,6 +135,7 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "cardConfig"
       | "createTable"
       | "initialize"
+      | "isPlayerPlaying"
       | "isPlayerWaiting"
       | "join"
       | "leave"
@@ -171,6 +173,10 @@ export interface DemoLobbyInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "initialize",
     values: [PromiseOrValue<BytesLike>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isPlayerPlaying",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "isPlayerWaiting",
@@ -274,6 +280,10 @@ export interface DemoLobbyInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isPlayerPlaying",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isPlayerWaiting",
     data: BytesLike
@@ -577,6 +587,11 @@ export interface DemoLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -710,6 +725,11 @@ export interface DemoLobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  isPlayerPlaying(
+    player: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
+
   isPlayerWaiting(
     player: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -842,6 +862,11 @@ export interface DemoLobby extends BaseContract {
       cardFaces: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean, number] & { playing: boolean; lastTableId: number }>;
 
     isPlayerWaiting(
       player: PromiseOrValue<string>,
@@ -1101,6 +1126,11 @@ export interface DemoLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isPlayerWaiting(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1229,6 +1259,11 @@ export interface DemoLobby extends BaseContract {
     initialize(
       cardFaces: PromiseOrValue<BytesLike>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    isPlayerPlaying(
+      player: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isPlayerWaiting(

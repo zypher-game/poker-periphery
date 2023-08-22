@@ -99,6 +99,7 @@ export interface DemoLobbyInterface extends Interface {
       | "cardConfig"
       | "createTable"
       | "initialize"
+      | "isPlayerPlaying"
       | "isPlayerWaiting"
       | "join"
       | "leave"
@@ -154,6 +155,10 @@ export interface DemoLobbyInterface extends Interface {
   encodeFunctionData(
     functionFragment: "initialize",
     values: [BytesLike[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isPlayerPlaying",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "isPlayerWaiting",
@@ -243,6 +248,10 @@ export interface DemoLobbyInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isPlayerPlaying",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "isPlayerWaiting",
     data: BytesLike
@@ -596,6 +605,12 @@ export interface DemoLobby extends BaseContract {
     "nonpayable"
   >;
 
+  isPlayerPlaying: TypedContractMethod<
+    [player: AddressLike],
+    [[boolean, bigint] & { playing: boolean; lastTableId: bigint }],
+    "view"
+  >;
+
   isPlayerWaiting: TypedContractMethod<
     [player: AddressLike],
     [boolean],
@@ -727,6 +742,13 @@ export interface DemoLobby extends BaseContract {
   getFunction(
     nameOrSignature: "initialize"
   ): TypedContractMethod<[cardFaces: BytesLike[]], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "isPlayerPlaying"
+  ): TypedContractMethod<
+    [player: AddressLike],
+    [[boolean, bigint] & { playing: boolean; lastTableId: bigint }],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "isPlayerWaiting"
   ): TypedContractMethod<[player: AddressLike], [boolean], "view">;
