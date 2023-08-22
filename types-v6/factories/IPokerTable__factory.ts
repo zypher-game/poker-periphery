@@ -90,8 +90,14 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "positions",
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "pid",
+        type: "uint8",
+      },
+    ],
+    name: "position",
     outputs: [
       {
         components: [
@@ -143,9 +149,9 @@ const _abi = [
             type: "uint256",
           },
         ],
-        internalType: "struct IPokerTable.Position[]",
+        internalType: "struct IPokerTable.Position",
         name: "",
-        type: "tuple[]",
+        type: "tuple",
       },
     ],
     stateMutability: "view",

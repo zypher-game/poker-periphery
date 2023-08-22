@@ -25,6 +25,7 @@ export type { OneTimeDrawInstance } from "./OneTimeDrawInstance";
 export type { PokerTable } from "./PokerTable";
 export type { RandSeat } from "./RandSeat";
 export type { TexasHoldemHelper } from "./TexasHoldemHelper";
+export type { TexasHoldemPeriphery } from "./TexasHoldemPeriphery";
 export type { TexasHoldemRound } from "./TexasHoldemRound";
 export type { ZkGameLobby } from "./ZkGameLobby";
 export * as factories from "./factories";
@@ -52,5 +53,6 @@ export { OneTimeDrawInstance__factory } from "./factories/OneTimeDrawInstance__f
 export { PokerTable__factory } from "./factories/PokerTable__factory";
 export { RandSeat__factory } from "./factories/RandSeat__factory";
 export { TexasHoldemHelper__factory } from "./factories/TexasHoldemHelper__factory";
+export { TexasHoldemPeriphery__factory } from "./factories/TexasHoldemPeriphery__factory";
 export { TexasHoldemRound__factory } from "./factories/TexasHoldemRound__factory";
 export { ZkGameLobby__factory } from "./factories/ZkGameLobby__factory";

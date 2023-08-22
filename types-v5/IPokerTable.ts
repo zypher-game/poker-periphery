@@ -93,11 +93,11 @@ export interface IPokerTableInterface extends utils.Interface {
     "info()": FunctionFragment;
     "isPlaying()": FunctionFragment;
     "newTable((address,string)[])": FunctionFragment;
-    "positions()": FunctionFragment;
+    "position(uint8)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "info" | "isPlaying" | "newTable" | "positions"
+    nameOrSignatureOrTopic: "info" | "isPlaying" | "newTable" | "position"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
@@ -106,12 +106,15 @@ export interface IPokerTableInterface extends utils.Interface {
     functionFragment: "newTable",
     values: [IPokerTable.PlayerStruct[]]
   ): string;
-  encodeFunctionData(functionFragment: "positions", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "position",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
 
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "positions", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
 
   events: {};
 }
@@ -152,9 +155,10 @@ export interface IPokerTable extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    positions(
+    position(
+      pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<[IPokerTable.PositionStructOutput[]]>;
+    ): Promise<[IPokerTable.PositionStructOutput]>;
   };
 
   info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
@@ -166,9 +170,10 @@ export interface IPokerTable extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  positions(
+  position(
+    pid: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<IPokerTable.PositionStructOutput[]>;
+  ): Promise<IPokerTable.PositionStructOutput>;
 
   callStatic: {
     info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
@@ -180,9 +185,10 @@ export interface IPokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    positions(
+    position(
+      pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<IPokerTable.PositionStructOutput[]>;
+    ): Promise<IPokerTable.PositionStructOutput>;
   };
 
   filters: {};
@@ -197,7 +203,10 @@ export interface IPokerTable extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    positions(overrides?: CallOverrides): Promise<BigNumber>;
+    position(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -210,6 +219,9 @@ export interface IPokerTable extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    positions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    position(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

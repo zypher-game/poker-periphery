@@ -85,7 +85,7 @@ export declare namespace IPokerTable {
 
 export interface IPokerTableInterface extends Interface {
   getFunction(
-    nameOrSignature: "info" | "isPlaying" | "newTable" | "positions"
+    nameOrSignature: "info" | "isPlaying" | "newTable" | "position"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
@@ -94,12 +94,15 @@ export interface IPokerTableInterface extends Interface {
     functionFragment: "newTable",
     values: [IPokerTable.PlayerStruct[]]
   ): string;
-  encodeFunctionData(functionFragment: "positions", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "position",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "positions", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
 }
 
 export interface IPokerTable extends BaseContract {
@@ -155,9 +158,9 @@ export interface IPokerTable extends BaseContract {
     "payable"
   >;
 
-  positions: TypedContractMethod<
-    [],
-    [IPokerTable.PositionStructOutput[]],
+  position: TypedContractMethod<
+    [pid: BigNumberish],
+    [IPokerTable.PositionStructOutput],
     "view"
   >;
 
@@ -179,8 +182,12 @@ export interface IPokerTable extends BaseContract {
     "payable"
   >;
   getFunction(
-    nameOrSignature: "positions"
-  ): TypedContractMethod<[], [IPokerTable.PositionStructOutput[]], "view">;
+    nameOrSignature: "position"
+  ): TypedContractMethod<
+    [pid: BigNumberish],
+    [IPokerTable.PositionStructOutput],
+    "view"
+  >;
 
   filters: {};
 }

@@ -96,7 +96,6 @@ export interface PokerTableInterface extends Interface {
       | "decimals"
       | "decreaseAllowance"
       | "getGamePlayerCounts"
-      | "highestBet"
       | "inTable"
       | "increaseAllowance"
       | "info"
@@ -105,7 +104,7 @@ export interface PokerTableInterface extends Interface {
       | "newTable"
       | "owner"
       | "playerCounts"
-      | "positions"
+      | "position"
       | "pot"
       | "renounceOwnership"
       | "symbol"
@@ -150,10 +149,6 @@ export interface PokerTableInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "highestBet",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "inTable",
     values: [AddressLike]
   ): string;
@@ -173,7 +168,10 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "playerCounts",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "positions", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "position",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "pot", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
@@ -214,7 +212,6 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "getGamePlayerCounts",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "highestBet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "inTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
@@ -229,7 +226,7 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "playerCounts",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "positions", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pot", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -364,9 +361,9 @@ export interface PokerTable extends BaseContract {
   >;
 
   approve: TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
 
   balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
@@ -386,8 +383,6 @@ export interface PokerTable extends BaseContract {
     [bigint],
     "view"
   >;
-
-  highestBet: TypedContractMethod<[], [bigint], "view">;
 
   inTable: TypedContractMethod<[player: AddressLike], [boolean], "view">;
 
@@ -413,9 +408,9 @@ export interface PokerTable extends BaseContract {
 
   playerCounts: TypedContractMethod<[], [bigint], "view">;
 
-  positions: TypedContractMethod<
-    [],
-    [IPokerTable.PositionStructOutput[]],
+  position: TypedContractMethod<
+    [pid: BigNumberish],
+    [IPokerTable.PositionStructOutput],
     "view"
   >;
 
@@ -428,15 +423,15 @@ export interface PokerTable extends BaseContract {
   totalSupply: TypedContractMethod<[], [bigint], "view">;
 
   transfer: TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
 
   transferFrom: TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
 
   transferOwnership: TypedContractMethod<
@@ -462,9 +457,9 @@ export interface PokerTable extends BaseContract {
   getFunction(
     nameOrSignature: "approve"
   ): TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
   getFunction(
     nameOrSignature: "balanceOf"
@@ -485,9 +480,6 @@ export interface PokerTable extends BaseContract {
   getFunction(
     nameOrSignature: "getGamePlayerCounts"
   ): TypedContractMethod<[gameId: BigNumberish], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "highestBet"
-  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "inTable"
   ): TypedContractMethod<[player: AddressLike], [boolean], "view">;
@@ -521,8 +513,12 @@ export interface PokerTable extends BaseContract {
     nameOrSignature: "playerCounts"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "positions"
-  ): TypedContractMethod<[], [IPokerTable.PositionStructOutput[]], "view">;
+    nameOrSignature: "position"
+  ): TypedContractMethod<
+    [pid: BigNumberish],
+    [IPokerTable.PositionStructOutput],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "pot"
   ): TypedContractMethod<[], [bigint], "view">;
@@ -538,16 +534,16 @@ export interface PokerTable extends BaseContract {
   getFunction(
     nameOrSignature: "transfer"
   ): TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
   getFunction(
     nameOrSignature: "transferFrom"
   ): TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
   getFunction(
     nameOrSignature: "transferOwnership"

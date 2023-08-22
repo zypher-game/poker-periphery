@@ -31,13 +31,6 @@ export declare namespace IPokerTable {
     rank: bigint;
   };
 
-  export type PlayerStruct = { wallet: AddressLike; name: string };
-
-  export type PlayerStructOutput = [wallet: string, name: string] & {
-    wallet: string;
-    name: string;
-  };
-
   export type InfoStruct = {
     subject: string;
     lobby: AddressLike;
@@ -61,6 +54,13 @@ export declare namespace IPokerTable {
     status: bigint;
     seats: bigint;
     initialBuyin: bigint;
+  };
+
+  export type PlayerStruct = { wallet: AddressLike; name: string };
+
+  export type PlayerStructOutput = [wallet: string, name: string] & {
+    wallet: string;
+    name: string;
   };
 
   export type PositionStruct = {
@@ -93,46 +93,10 @@ export declare namespace IPokerTable {
 }
 
 export declare namespace ITexasHoldemTable {
-  export type TexasHoldemPositionStruct = {
-    pid: BigNumberish;
-    player: IPokerTable.PlayerStruct;
-    status: BigNumberish;
-    bets: BigNumberish;
-    chips: BigNumberish;
-    pendingBuyin: BigNumberish;
-    holeCards: IPokerTable.PokerCardStruct[];
-    wins: BigNumberish;
-    draws: BigNumberish;
-  };
-
-  export type TexasHoldemPositionStructOutput = [
-    pid: bigint,
-    player: IPokerTable.PlayerStructOutput,
-    status: bigint,
-    bets: bigint,
-    chips: bigint,
-    pendingBuyin: bigint,
-    holeCards: IPokerTable.PokerCardStructOutput[],
-    wins: bigint,
-    draws: bigint
-  ] & {
-    pid: bigint;
-    player: IPokerTable.PlayerStructOutput;
-    status: bigint;
-    bets: bigint;
-    chips: bigint;
-    pendingBuyin: bigint;
-    holeCards: IPokerTable.PokerCardStructOutput[];
-    wins: bigint;
-    draws: bigint;
-  };
-
   export type TexasHoldemGameStruct = {
     id: BigNumberish;
     subject: string;
     stage: BigNumberish;
-    communityCards: IPokerTable.PokerCardStruct[];
-    positions: ITexasHoldemTable.TexasHoldemPositionStruct[];
     pot: BigNumberish;
     minRaise: BigNumberish;
     betAmount: BigNumberish;
@@ -144,8 +108,6 @@ export declare namespace ITexasHoldemTable {
     id: bigint,
     subject: string,
     stage: bigint,
-    communityCards: IPokerTable.PokerCardStructOutput[],
-    positions: ITexasHoldemTable.TexasHoldemPositionStructOutput[],
     pot: bigint,
     minRaise: bigint,
     betAmount: bigint,
@@ -155,8 +117,6 @@ export declare namespace ITexasHoldemTable {
     id: bigint;
     subject: string;
     stage: bigint;
-    communityCards: IPokerTable.PokerCardStructOutput[];
-    positions: ITexasHoldemTable.TexasHoldemPositionStructOutput[];
     pot: bigint;
     minRaise: bigint;
     betAmount: bigint;
@@ -174,21 +134,25 @@ export interface DemoTableInterface extends Interface {
       | "approve"
       | "balanceOf"
       | "bets"
+      | "burnCards"
+      | "buyin"
       | "callBets"
+      | "cashOut"
       | "checkBets"
+      | "communityCards"
       | "cutCards"
       | "decimals"
       | "decreaseAllowance"
       | "ff"
       | "foldBets"
       | "forceNewGame"
+      | "forceStop"
       | "game"
-      | "getAllPositions"
       | "getBigBlind"
       | "getGamePlayerCounts"
       | "getPositionHandRanking"
       | "getSmallBlind"
-      | "highestBet"
+      | "holeCards"
       | "inTable"
       | "increaseAllowance"
       | "info"
@@ -197,7 +161,8 @@ export interface DemoTableInterface extends Interface {
       | "newTable"
       | "owner"
       | "playerCounts"
-      | "positions"
+      | "position"
+      | "positionStatus"
       | "pot"
       | "raiseBets"
       | "renounceOwnership"
@@ -235,8 +200,15 @@ export interface DemoTableInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(functionFragment: "bets", values: [AddressLike]): string;
+  encodeFunctionData(functionFragment: "burnCards", values?: undefined): string;
+  encodeFunctionData(functionFragment: "buyin", values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: "callBets", values?: undefined): string;
+  encodeFunctionData(functionFragment: "cashOut", values?: undefined): string;
   encodeFunctionData(functionFragment: "checkBets", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "communityCards",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "cutCards", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
@@ -249,11 +221,8 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "forceNewGame",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "game", values: [BytesLike]): string;
-  encodeFunctionData(
-    functionFragment: "getAllPositions",
-    values: [AddressLike]
-  ): string;
+  encodeFunctionData(functionFragment: "forceStop", values?: undefined): string;
+  encodeFunctionData(functionFragment: "game", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getBigBlind",
     values?: undefined
@@ -271,8 +240,8 @@ export interface DemoTableInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "highestBet",
-    values?: undefined
+    functionFragment: "holeCards",
+    values: [BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "inTable",
@@ -294,7 +263,14 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "playerCounts",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "positions", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "position",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "positionStatus",
+    values: [BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "pot", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "raiseBets",
@@ -344,8 +320,15 @@ export interface DemoTableInterface extends Interface {
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bets", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "burnCards", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "buyin", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "callBets", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "cashOut", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "checkBets", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "communityCards",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "cutCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
@@ -358,11 +341,8 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "forceNewGame",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "forceStop", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "game", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getAllPositions",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "getBigBlind",
     data: BytesLike
@@ -379,7 +359,7 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "getSmallBlind",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "highestBet", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "inTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
@@ -394,7 +374,11 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "playerCounts",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "positions", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "positionStatus",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "pot", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "raiseBets", data: BytesLike): Result;
   decodeFunctionResult(
@@ -533,18 +517,34 @@ export interface DemoTable extends BaseContract {
   >;
 
   approve: TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
 
   balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
   bets: TypedContractMethod<[player: AddressLike], [bigint], "view">;
 
+  burnCards: TypedContractMethod<
+    [],
+    [IPokerTable.PokerCardStructOutput[]],
+    "view"
+  >;
+
+  buyin: TypedContractMethod<[amount: BigNumberish], [void], "payable">;
+
   callBets: TypedContractMethod<[], [void], "nonpayable">;
 
+  cashOut: TypedContractMethod<[], [void], "nonpayable">;
+
   checkBets: TypedContractMethod<[], [void], "nonpayable">;
+
+  communityCards: TypedContractMethod<
+    [],
+    [IPokerTable.PokerCardStructOutput[]],
+    "view"
+  >;
 
   cutCards: TypedContractMethod<[], [void], "nonpayable">;
 
@@ -560,7 +560,7 @@ export interface DemoTable extends BaseContract {
     [],
     [
       [bigint, bigint, bigint] & {
-        stage: bigint;
+        stage_: bigint;
         position: bigint;
         timeout: bigint;
       }
@@ -572,15 +572,11 @@ export interface DemoTable extends BaseContract {
 
   forceNewGame: TypedContractMethod<[], [void], "nonpayable">;
 
-  game: TypedContractMethod<
-    [signature: BytesLike],
-    [ITexasHoldemTable.TexasHoldemGameStructOutput],
-    "view"
-  >;
+  forceStop: TypedContractMethod<[], [void], "nonpayable">;
 
-  getAllPositions: TypedContractMethod<
-    [viewer: AddressLike],
-    [ITexasHoldemTable.TexasHoldemPositionStructOutput[]],
+  game: TypedContractMethod<
+    [],
+    [ITexasHoldemTable.TexasHoldemGameStructOutput],
     "view"
   >;
 
@@ -608,7 +604,11 @@ export interface DemoTable extends BaseContract {
     "view"
   >;
 
-  highestBet: TypedContractMethod<[], [bigint], "view">;
+  holeCards: TypedContractMethod<
+    [positionId: BigNumberish, revealToken: BytesLike],
+    [IPokerTable.PokerCardStructOutput[]],
+    "view"
+  >;
 
   inTable: TypedContractMethod<[player: AddressLike], [boolean], "view">;
 
@@ -634,16 +634,22 @@ export interface DemoTable extends BaseContract {
 
   playerCounts: TypedContractMethod<[], [bigint], "view">;
 
-  positions: TypedContractMethod<
-    [],
-    [IPokerTable.PositionStructOutput[]],
+  position: TypedContractMethod<
+    [pid: BigNumberish],
+    [IPokerTable.PositionStructOutput],
+    "view"
+  >;
+
+  positionStatus: TypedContractMethod<
+    [position: BigNumberish],
+    [bigint],
     "view"
   >;
 
   pot: TypedContractMethod<[], [bigint], "view">;
 
   raiseBets: TypedContractMethod<
-    [totalAmount: BigNumberish],
+    [raiseAmount: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -670,15 +676,15 @@ export interface DemoTable extends BaseContract {
   totalSupply: TypedContractMethod<[], [bigint], "view">;
 
   transfer: TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
 
   transferFrom: TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
 
   transferOwnership: TypedContractMethod<
@@ -707,9 +713,9 @@ export interface DemoTable extends BaseContract {
   getFunction(
     nameOrSignature: "approve"
   ): TypedContractMethod<
-    [spender: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
   getFunction(
     nameOrSignature: "balanceOf"
@@ -718,11 +724,23 @@ export interface DemoTable extends BaseContract {
     nameOrSignature: "bets"
   ): TypedContractMethod<[player: AddressLike], [bigint], "view">;
   getFunction(
+    nameOrSignature: "burnCards"
+  ): TypedContractMethod<[], [IPokerTable.PokerCardStructOutput[]], "view">;
+  getFunction(
+    nameOrSignature: "buyin"
+  ): TypedContractMethod<[amount: BigNumberish], [void], "payable">;
+  getFunction(
     nameOrSignature: "callBets"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "cashOut"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "checkBets"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "communityCards"
+  ): TypedContractMethod<[], [IPokerTable.PokerCardStructOutput[]], "view">;
   getFunction(
     nameOrSignature: "cutCards"
   ): TypedContractMethod<[], [void], "nonpayable">;
@@ -742,7 +760,7 @@ export interface DemoTable extends BaseContract {
     [],
     [
       [bigint, bigint, bigint] & {
-        stage: bigint;
+        stage_: bigint;
         position: bigint;
         timeout: bigint;
       }
@@ -756,17 +774,13 @@ export interface DemoTable extends BaseContract {
     nameOrSignature: "forceNewGame"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "forceStop"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "game"
   ): TypedContractMethod<
-    [signature: BytesLike],
+    [],
     [ITexasHoldemTable.TexasHoldemGameStructOutput],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "getAllPositions"
-  ): TypedContractMethod<
-    [viewer: AddressLike],
-    [ITexasHoldemTable.TexasHoldemPositionStructOutput[]],
     "view"
   >;
   getFunction(
@@ -794,8 +808,12 @@ export interface DemoTable extends BaseContract {
     "view"
   >;
   getFunction(
-    nameOrSignature: "highestBet"
-  ): TypedContractMethod<[], [bigint], "view">;
+    nameOrSignature: "holeCards"
+  ): TypedContractMethod<
+    [positionId: BigNumberish, revealToken: BytesLike],
+    [IPokerTable.PokerCardStructOutput[]],
+    "view"
+  >;
   getFunction(
     nameOrSignature: "inTable"
   ): TypedContractMethod<[player: AddressLike], [boolean], "view">;
@@ -829,14 +847,21 @@ export interface DemoTable extends BaseContract {
     nameOrSignature: "playerCounts"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "positions"
-  ): TypedContractMethod<[], [IPokerTable.PositionStructOutput[]], "view">;
+    nameOrSignature: "position"
+  ): TypedContractMethod<
+    [pid: BigNumberish],
+    [IPokerTable.PositionStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "positionStatus"
+  ): TypedContractMethod<[position: BigNumberish], [bigint], "view">;
   getFunction(
     nameOrSignature: "pot"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "raiseBets"
-  ): TypedContractMethod<[totalAmount: BigNumberish], [void], "nonpayable">;
+  ): TypedContractMethod<[raiseAmount: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
@@ -865,16 +890,16 @@ export interface DemoTable extends BaseContract {
   getFunction(
     nameOrSignature: "transfer"
   ): TypedContractMethod<
-    [to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
   getFunction(
     nameOrSignature: "transferFrom"
   ): TypedContractMethod<
-    [from: AddressLike, to: AddressLike, amount: BigNumberish],
+    [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
     [boolean],
-    "nonpayable"
+    "view"
   >;
   getFunction(
     nameOrSignature: "transferOwnership"

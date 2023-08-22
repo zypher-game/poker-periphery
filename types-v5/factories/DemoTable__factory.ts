@@ -39,6 +39,17 @@ const _abi = [
     type: "error",
   },
   {
+    inputs: [
+      {
+        internalType: "enum ITexasHoldemTable.GameStage",
+        name: "currentStage",
+        type: "uint8",
+      },
+    ],
+    name: "InvalidStage",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -168,12 +179,12 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "spender",
+        name: "",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "amount",
+        name: "",
         type: "uint256",
       },
     ],
@@ -185,7 +196,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
     type: "function",
   },
   {
@@ -228,7 +239,52 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "burnCards",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "enum IPokerTable.PokerSuit",
+            name: "suit",
+            type: "uint8",
+          },
+          {
+            internalType: "enum IPokerTable.PokerRank",
+            name: "rank",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct IPokerTable.PokerCard[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "buyin",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "callBets",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "cashOut",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -238,6 +294,31 @@ const _abi = [
     name: "checkBets",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "communityCards",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "enum IPokerTable.PokerSuit",
+            name: "suit",
+            type: "uint8",
+          },
+          {
+            internalType: "enum IPokerTable.PokerRank",
+            name: "rank",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct IPokerTable.PokerCard[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -290,7 +371,7 @@ const _abi = [
     outputs: [
       {
         internalType: "enum ITexasHoldemTable.GameStage",
-        name: "stage",
+        name: "stage_",
         type: "uint8",
       },
       {
@@ -322,13 +403,14 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "bytes",
-        name: "signature",
-        type: "bytes",
-      },
-    ],
+    inputs: [],
+    name: "forceStop",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "game",
     outputs: [
       {
@@ -347,99 +429,6 @@ const _abi = [
             internalType: "enum ITexasHoldemTable.GameStage",
             name: "stage",
             type: "uint8",
-          },
-          {
-            components: [
-              {
-                internalType: "enum IPokerTable.PokerSuit",
-                name: "suit",
-                type: "uint8",
-              },
-              {
-                internalType: "enum IPokerTable.PokerRank",
-                name: "rank",
-                type: "uint8",
-              },
-            ],
-            internalType: "struct IPokerTable.PokerCard[]",
-            name: "communityCards",
-            type: "tuple[]",
-          },
-          {
-            components: [
-              {
-                internalType: "uint8",
-                name: "pid",
-                type: "uint8",
-              },
-              {
-                components: [
-                  {
-                    internalType: "address",
-                    name: "wallet",
-                    type: "address",
-                  },
-                  {
-                    internalType: "string",
-                    name: "name",
-                    type: "string",
-                  },
-                ],
-                internalType: "struct IPokerTable.Player",
-                name: "player",
-                type: "tuple",
-              },
-              {
-                internalType: "enum ITexasHoldemTable.PlayerStatus",
-                name: "status",
-                type: "uint8",
-              },
-              {
-                internalType: "uint256",
-                name: "bets",
-                type: "uint256",
-              },
-              {
-                internalType: "uint256",
-                name: "chips",
-                type: "uint256",
-              },
-              {
-                internalType: "uint256",
-                name: "pendingBuyin",
-                type: "uint256",
-              },
-              {
-                components: [
-                  {
-                    internalType: "enum IPokerTable.PokerSuit",
-                    name: "suit",
-                    type: "uint8",
-                  },
-                  {
-                    internalType: "enum IPokerTable.PokerRank",
-                    name: "rank",
-                    type: "uint8",
-                  },
-                ],
-                internalType: "struct IPokerTable.PokerCard[]",
-                name: "holeCards",
-                type: "tuple[]",
-              },
-              {
-                internalType: "uint32",
-                name: "wins",
-                type: "uint32",
-              },
-              {
-                internalType: "uint32",
-                name: "draws",
-                type: "uint32",
-              },
-            ],
-            internalType: "struct ITexasHoldemTable.TexasHoldemPosition[]",
-            name: "positions",
-            type: "tuple[]",
           },
           {
             internalType: "uint256",
@@ -470,96 +459,6 @@ const _abi = [
         internalType: "struct ITexasHoldemTable.TexasHoldemGame",
         name: "currentGame",
         type: "tuple",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "viewer",
-        type: "address",
-      },
-    ],
-    name: "getAllPositions",
-    outputs: [
-      {
-        components: [
-          {
-            internalType: "uint8",
-            name: "pid",
-            type: "uint8",
-          },
-          {
-            components: [
-              {
-                internalType: "address",
-                name: "wallet",
-                type: "address",
-              },
-              {
-                internalType: "string",
-                name: "name",
-                type: "string",
-              },
-            ],
-            internalType: "struct IPokerTable.Player",
-            name: "player",
-            type: "tuple",
-          },
-          {
-            internalType: "enum ITexasHoldemTable.PlayerStatus",
-            name: "status",
-            type: "uint8",
-          },
-          {
-            internalType: "uint256",
-            name: "bets",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "chips",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "pendingBuyin",
-            type: "uint256",
-          },
-          {
-            components: [
-              {
-                internalType: "enum IPokerTable.PokerSuit",
-                name: "suit",
-                type: "uint8",
-              },
-              {
-                internalType: "enum IPokerTable.PokerRank",
-                name: "rank",
-                type: "uint8",
-              },
-            ],
-            internalType: "struct IPokerTable.PokerCard[]",
-            name: "holeCards",
-            type: "tuple[]",
-          },
-          {
-            internalType: "uint32",
-            name: "wins",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "draws",
-            type: "uint32",
-          },
-        ],
-        internalType: "struct ITexasHoldemTable.TexasHoldemPosition[]",
-        name: "positions",
-        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -645,13 +544,36 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "highestBet",
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "positionId",
+        type: "uint8",
+      },
+      {
+        internalType: "bytes",
+        name: "revealToken",
+        type: "bytes",
+      },
+    ],
+    name: "holeCards",
     outputs: [
       {
-        internalType: "uint256",
+        components: [
+          {
+            internalType: "enum IPokerTable.PokerSuit",
+            name: "suit",
+            type: "uint8",
+          },
+          {
+            internalType: "enum IPokerTable.PokerRank",
+            name: "rank",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct IPokerTable.PokerCard[]",
         name: "",
-        type: "uint256",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -823,8 +745,14 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "positions",
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "pid",
+        type: "uint8",
+      },
+    ],
+    name: "position",
     outputs: [
       {
         components: [
@@ -876,9 +804,28 @@ const _abi = [
             type: "uint256",
           },
         ],
-        internalType: "struct IPokerTable.Position[]",
+        internalType: "struct IPokerTable.Position",
         name: "",
-        type: "tuple[]",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "position",
+        type: "uint8",
+      },
+    ],
+    name: "positionStatus",
+    outputs: [
+      {
+        internalType: "enum ITexasHoldemTable.PlayerStatus",
+        name: "status",
+        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -901,7 +848,7 @@ const _abi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "totalAmount",
+        name: "raiseAmount",
         type: "uint256",
       },
     ],
@@ -995,12 +942,12 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "to",
+        name: "",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "amount",
+        name: "",
         type: "uint256",
       },
     ],
@@ -1012,24 +959,24 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
     type: "function",
   },
   {
     inputs: [
       {
         internalType: "address",
-        name: "from",
+        name: "",
         type: "address",
       },
       {
         internalType: "address",
-        name: "to",
+        name: "",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "amount",
+        name: "",
         type: "uint256",
       },
     ],
@@ -1041,7 +988,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "nonpayable",
+    stateMutability: "pure",
     type: "function",
   },
   {
