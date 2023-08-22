@@ -109,8 +109,12 @@ export interface DemoLobbyInterface extends Interface {
       | "renounceOwnership"
       | "revealSeats"
       | "setHelper"
+      | "setReadyTime"
+      | "setRevealTime"
+      | "setShuffleTime"
       | "setTable"
       | "setTableFactory"
+      | "setTablePlayTime"
       | "shuffleSeats"
       | "tableExists"
       | "tablePlaying"
@@ -118,6 +122,7 @@ export interface DemoLobbyInterface extends Interface {
       | "transferOwnership"
       | "upgradeTo"
       | "upgradeToAndCall"
+      | "version"
   ): FunctionFragment;
 
   getEvent(
@@ -182,12 +187,28 @@ export interface DemoLobbyInterface extends Interface {
     values: [AddressLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "setReadyTime",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRevealTime",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setShuffleTime",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setTable",
     values: [BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setTableFactory",
     values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setTablePlayTime",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "shuffleSeats",
@@ -214,6 +235,7 @@ export interface DemoLobbyInterface extends Interface {
     functionFragment: "upgradeToAndCall",
     values: [AddressLike, BytesLike]
   ): string;
+  encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
@@ -246,9 +268,25 @@ export interface DemoLobbyInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setHelper", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setReadyTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRevealTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setShuffleTime",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "setTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setTableFactory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setTablePlayTime",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -273,6 +311,7 @@ export interface DemoLobbyInterface extends Interface {
     functionFragment: "upgradeToAndCall",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
 }
 
 export namespace AdminChangedEvent {
@@ -599,6 +638,24 @@ export interface DemoLobby extends BaseContract {
 
   setHelper: TypedContractMethod<[helper: AddressLike], [void], "nonpayable">;
 
+  setReadyTime: TypedContractMethod<
+    [readyTimeout: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setRevealTime: TypedContractMethod<
+    [revealTimeout: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setShuffleTime: TypedContractMethod<
+    [shuffleTimeout: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   setTable: TypedContractMethod<
     [tableId: BigNumberish, table: AddressLike],
     [void],
@@ -607,6 +664,12 @@ export interface DemoLobby extends BaseContract {
 
   setTableFactory: TypedContractMethod<
     [table: AddressLike],
+    [void],
+    "nonpayable"
+  >;
+
+  setTablePlayTime: TypedContractMethod<
+    [tablePlayTime: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -640,6 +703,8 @@ export interface DemoLobby extends BaseContract {
     [void],
     "payable"
   >;
+
+  version: TypedContractMethod<[], [bigint], "view">;
 
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
@@ -707,6 +772,15 @@ export interface DemoLobby extends BaseContract {
     nameOrSignature: "setHelper"
   ): TypedContractMethod<[helper: AddressLike], [void], "nonpayable">;
   getFunction(
+    nameOrSignature: "setReadyTime"
+  ): TypedContractMethod<[readyTimeout: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setRevealTime"
+  ): TypedContractMethod<[revealTimeout: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setShuffleTime"
+  ): TypedContractMethod<[shuffleTimeout: BigNumberish], [void], "nonpayable">;
+  getFunction(
     nameOrSignature: "setTable"
   ): TypedContractMethod<
     [tableId: BigNumberish, table: AddressLike],
@@ -716,6 +790,9 @@ export interface DemoLobby extends BaseContract {
   getFunction(
     nameOrSignature: "setTableFactory"
   ): TypedContractMethod<[table: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setTablePlayTime"
+  ): TypedContractMethod<[tablePlayTime: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "shuffleSeats"
   ): TypedContractMethod<
@@ -749,6 +826,9 @@ export interface DemoLobby extends BaseContract {
     [void],
     "payable"
   >;
+  getFunction(
+    nameOrSignature: "version"
+  ): TypedContractMethod<[], [bigint], "view">;
 
   getEvent(
     key: "AdminChanged"

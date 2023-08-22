@@ -539,6 +539,45 @@ const _abi = [
     inputs: [
       {
         internalType: "uint32",
+        name: "readyTimeout",
+        type: "uint32",
+      },
+    ],
+    name: "setReadyTime",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint32",
+        name: "revealTimeout",
+        type: "uint32",
+      },
+    ],
+    name: "setRevealTime",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint32",
+        name: "shuffleTimeout",
+        type: "uint32",
+      },
+    ],
+    name: "setShuffleTime",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint32",
         name: "tableId",
         type: "uint32",
       },
@@ -562,6 +601,19 @@ const _abi = [
       },
     ],
     name: "setTableFactory",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint32",
+        name: "tablePlayTime",
+        type: "uint32",
+      },
+    ],
+    name: "setTablePlayTime",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -781,6 +833,19 @@ const _abi = [
     name: "upgradeToAndCall",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "version",
+    outputs: [
+      {
+        internalType: "uint32",
+        name: "",
+        type: "uint32",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ] as const;

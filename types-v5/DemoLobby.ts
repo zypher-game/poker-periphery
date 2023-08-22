@@ -113,8 +113,12 @@ export interface DemoLobbyInterface extends utils.Interface {
     "renounceOwnership()": FunctionFragment;
     "revealSeats(uint32,bytes[],bytes[])": FunctionFragment;
     "setHelper(address)": FunctionFragment;
+    "setReadyTime(uint32)": FunctionFragment;
+    "setRevealTime(uint32)": FunctionFragment;
+    "setShuffleTime(uint32)": FunctionFragment;
     "setTable(uint32,address)": FunctionFragment;
     "setTableFactory(address)": FunctionFragment;
+    "setTablePlayTime(uint32)": FunctionFragment;
     "shuffleSeats(uint32,bytes[],bytes)": FunctionFragment;
     "tableExists(uint32)": FunctionFragment;
     "tablePlaying(uint32)": FunctionFragment;
@@ -122,6 +126,7 @@ export interface DemoLobbyInterface extends utils.Interface {
     "transferOwnership(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
+    "version()": FunctionFragment;
   };
 
   getFunction(
@@ -139,8 +144,12 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "renounceOwnership"
       | "revealSeats"
       | "setHelper"
+      | "setReadyTime"
+      | "setRevealTime"
+      | "setShuffleTime"
       | "setTable"
       | "setTableFactory"
+      | "setTablePlayTime"
       | "shuffleSeats"
       | "tableExists"
       | "tablePlaying"
@@ -148,6 +157,7 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "transferOwnership"
       | "upgradeTo"
       | "upgradeToAndCall"
+      | "version"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -204,12 +214,28 @@ export interface DemoLobbyInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "setReadyTime",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRevealTime",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setShuffleTime",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setTable",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setTableFactory",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setTablePlayTime",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "shuffleSeats",
@@ -240,6 +266,7 @@ export interface DemoLobbyInterface extends utils.Interface {
     functionFragment: "upgradeToAndCall",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
@@ -272,9 +299,25 @@ export interface DemoLobbyInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setHelper", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setReadyTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRevealTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setShuffleTime",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "setTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setTableFactory",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setTablePlayTime",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -299,6 +342,7 @@ export interface DemoLobbyInterface extends utils.Interface {
     functionFragment: "upgradeToAndCall",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
 
   events: {
     "AdminChanged(address,address)": EventFragment;
@@ -580,6 +624,21 @@ export interface DemoLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    setReadyTime(
+      readyTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setRevealTime(
+      revealTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setShuffleTime(
+      shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     setTable(
       tableId: PromiseOrValue<BigNumberish>,
       table: PromiseOrValue<string>,
@@ -588,6 +647,11 @@ export interface DemoLobby extends BaseContract {
 
     setTableFactory(
       table: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setTablePlayTime(
+      tablePlayTime: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -625,6 +689,8 @@ export interface DemoLobby extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    version(overrides?: CallOverrides): Promise<[number]>;
   };
 
   cardConfig(
@@ -691,6 +757,21 @@ export interface DemoLobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  setReadyTime(
+    readyTimeout: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setRevealTime(
+    revealTimeout: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setShuffleTime(
+    shuffleTimeout: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   setTable(
     tableId: PromiseOrValue<BigNumberish>,
     table: PromiseOrValue<string>,
@@ -699,6 +780,11 @@ export interface DemoLobby extends BaseContract {
 
   setTableFactory(
     table: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setTablePlayTime(
+    tablePlayTime: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -736,6 +822,8 @@ export interface DemoLobby extends BaseContract {
     data: PromiseOrValue<BytesLike>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  version(overrides?: CallOverrides): Promise<number>;
 
   callStatic: {
     cardConfig(
@@ -796,6 +884,21 @@ export interface DemoLobby extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setReadyTime(
+      readyTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setRevealTime(
+      revealTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setShuffleTime(
+      shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setTable(
       tableId: PromiseOrValue<BigNumberish>,
       table: PromiseOrValue<string>,
@@ -804,6 +907,11 @@ export interface DemoLobby extends BaseContract {
 
     setTableFactory(
       table: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setTablePlayTime(
+      tablePlayTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -841,6 +949,8 @@ export interface DemoLobby extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    version(overrides?: CallOverrides): Promise<number>;
   };
 
   filters: {
@@ -1038,6 +1148,21 @@ export interface DemoLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    setReadyTime(
+      readyTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setRevealTime(
+      revealTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setShuffleTime(
+      shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     setTable(
       tableId: PromiseOrValue<BigNumberish>,
       table: PromiseOrValue<string>,
@@ -1046,6 +1171,11 @@ export interface DemoLobby extends BaseContract {
 
     setTableFactory(
       table: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setTablePlayTime(
+      tablePlayTime: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1083,6 +1213,8 @@ export interface DemoLobby extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    version(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1146,6 +1278,21 @@ export interface DemoLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    setReadyTime(
+      readyTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setRevealTime(
+      revealTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setShuffleTime(
+      shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     setTable(
       tableId: PromiseOrValue<BigNumberish>,
       table: PromiseOrValue<string>,
@@ -1154,6 +1301,11 @@ export interface DemoLobby extends BaseContract {
 
     setTableFactory(
       table: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setTablePlayTime(
+      tablePlayTime: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1191,5 +1343,7 @@ export interface DemoLobby extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
