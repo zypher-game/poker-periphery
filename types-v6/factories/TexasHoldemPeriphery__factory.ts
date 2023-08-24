@@ -170,6 +170,11 @@ const _abi = [
                 type: "string",
               },
               {
+                internalType: "enum ITexasHoldemTable.PlayerStatus",
+                name: "status",
+                type: "uint8",
+              },
+              {
                 components: [
                   {
                     internalType: "enum IPokerTable.PokerSuit",
@@ -185,16 +190,6 @@ const _abi = [
                 internalType: "struct IPokerTable.PokerCard[]",
                 name: "holeCards",
                 type: "tuple[]",
-              },
-              {
-                internalType: "uint32",
-                name: "wins",
-                type: "uint32",
-              },
-              {
-                internalType: "uint32",
-                name: "draws",
-                type: "uint32",
               },
               {
                 internalType: "uint256",
@@ -489,6 +484,11 @@ const _abi = [
                 type: "string",
               },
               {
+                internalType: "enum ITexasHoldemTable.PlayerStatus",
+                name: "status",
+                type: "uint8",
+              },
+              {
                 components: [
                   {
                     internalType: "enum IPokerTable.PokerSuit",
@@ -504,16 +504,6 @@ const _abi = [
                 internalType: "struct IPokerTable.PokerCard[]",
                 name: "holeCards",
                 type: "tuple[]",
-              },
-              {
-                internalType: "uint32",
-                name: "wins",
-                type: "uint32",
-              },
-              {
-                internalType: "uint32",
-                name: "draws",
-                type: "uint32",
               },
               {
                 internalType: "uint256",
@@ -643,6 +633,11 @@ const _abi = [
                 type: "string",
               },
               {
+                internalType: "enum ITexasHoldemTable.PlayerStatus",
+                name: "status",
+                type: "uint8",
+              },
+              {
                 components: [
                   {
                     internalType: "enum IPokerTable.PokerSuit",
@@ -658,16 +653,6 @@ const _abi = [
                 internalType: "struct IPokerTable.PokerCard[]",
                 name: "holeCards",
                 type: "tuple[]",
-              },
-              {
-                internalType: "uint32",
-                name: "wins",
-                type: "uint32",
-              },
-              {
-                internalType: "uint32",
-                name: "draws",
-                type: "uint32",
               },
               {
                 internalType: "uint256",

@@ -232,25 +232,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint64",
-        name: "gameId",
-        type: "uint64",
-      },
-    ],
-    name: "getGamePlayerCounts",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
         name: "player",
         type: "address",
@@ -448,16 +429,6 @@ const _abi = [
             type: "tuple",
           },
           {
-            internalType: "uint32",
-            name: "wins",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "draws",
-            type: "uint32",
-          },
-          {
             internalType: "uint256",
             name: "bets",
             type: "uint256",
@@ -483,19 +454,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "pot",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
@@ -509,6 +467,19 @@ const _abi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalPots",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

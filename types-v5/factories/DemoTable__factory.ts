@@ -8,6 +8,22 @@ import type { DemoTable, DemoTableInterface } from "../DemoTable";
 
 const _abi = [
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "requiredBalance",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "actualBalance",
+        type: "uint256",
+      },
+    ],
+    name: "BalanceTooLow",
+    type: "error",
+  },
+  {
     inputs: [],
     name: "Forbidden",
     type: "error",
@@ -35,14 +51,19 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "InvalidSignatureLength",
+    name: "InvalidSignature",
     type: "error",
   },
   {
     inputs: [
       {
         internalType: "enum ITexasHoldemTable.GameStage",
-        name: "currentStage",
+        name: "stage",
+        type: "uint8",
+      },
+      {
+        internalType: "enum TexasHoldemActions",
+        name: "action",
         type: "uint8",
       },
     ],
@@ -297,6 +318,25 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+    ],
+    name: "claimPots",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "communityCards",
     outputs: [
@@ -367,29 +407,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "ff",
-    outputs: [
-      {
-        internalType: "enum ITexasHoldemTable.GameStage",
-        name: "stage_",
-        type: "uint8",
-      },
-      {
-        internalType: "uint8",
-        name: "position",
-        type: "uint8",
-      },
-      {
-        internalType: "uint32",
-        name: "timeout",
-        type: "uint32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "foldBets",
     outputs: [],
     stateMutability: "nonpayable",
@@ -404,36 +421,14 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "forceStop",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "game",
     outputs: [
       {
         components: [
           {
-            internalType: "uint64",
-            name: "id",
-            type: "uint64",
-          },
-          {
-            internalType: "string",
-            name: "subject",
-            type: "string",
-          },
-          {
             internalType: "enum ITexasHoldemTable.GameStage",
             name: "stage",
             type: "uint8",
-          },
-          {
-            internalType: "uint256",
-            name: "pot",
-            type: "uint256",
           },
           {
             internalType: "uint256",
@@ -477,25 +472,6 @@ const _abi = [
         internalType: "uint256",
         name: "amount",
         type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint64",
-        name: "gameId",
-        type: "uint64",
-      },
-    ],
-    name: "getGamePlayerCounts",
-    outputs: [
-      {
-        internalType: "uint8",
-        name: "",
-        type: "uint8",
       },
     ],
     stateMutability: "view",
@@ -682,6 +658,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "message",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "name",
     outputs: [
       {
@@ -779,16 +768,6 @@ const _abi = [
             type: "tuple",
           },
           {
-            internalType: "uint32",
-            name: "wins",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "draws",
-            type: "uint32",
-          },
-          {
             internalType: "uint256",
             name: "bets",
             type: "uint256",
@@ -826,19 +805,6 @@ const _abi = [
         internalType: "enum ITexasHoldemTable.PlayerStatus",
         name: "status",
         type: "uint8",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "pot",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -914,12 +880,32 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "showCards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "symbol",
     outputs: [
       {
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalPots",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

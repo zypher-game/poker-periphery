@@ -124,16 +124,6 @@ const _abi = [
             type: "tuple",
           },
           {
-            internalType: "uint32",
-            name: "wins",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "draws",
-            type: "uint32",
-          },
-          {
             internalType: "uint256",
             name: "bets",
             type: "uint256",
@@ -152,6 +142,19 @@ const _abi = [
         internalType: "struct IPokerTable.Position",
         name: "",
         type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalPots",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

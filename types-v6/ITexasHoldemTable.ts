@@ -64,8 +64,6 @@ export declare namespace IPokerTable {
   export type PositionStruct = {
     pid: BigNumberish;
     player: IPokerTable.PlayerStruct;
-    wins: BigNumberish;
-    draws: BigNumberish;
     bets: BigNumberish;
     chips: BigNumberish;
     pendingBuyin: BigNumberish;
@@ -74,16 +72,12 @@ export declare namespace IPokerTable {
   export type PositionStructOutput = [
     pid: bigint,
     player: IPokerTable.PlayerStructOutput,
-    wins: bigint,
-    draws: bigint,
     bets: bigint,
     chips: bigint,
     pendingBuyin: bigint
   ] & {
     pid: bigint;
     player: IPokerTable.PlayerStructOutput;
-    wins: bigint;
-    draws: bigint;
     bets: bigint;
     chips: bigint;
     pendingBuyin: bigint;
@@ -92,10 +86,7 @@ export declare namespace IPokerTable {
 
 export declare namespace ITexasHoldemTable {
   export type TexasHoldemGameStruct = {
-    id: BigNumberish;
-    subject: string;
     stage: BigNumberish;
-    pot: BigNumberish;
     minRaise: BigNumberish;
     betAmount: BigNumberish;
     actingPosition: BigNumberish;
@@ -103,19 +94,13 @@ export declare namespace ITexasHoldemTable {
   };
 
   export type TexasHoldemGameStructOutput = [
-    id: bigint,
-    subject: string,
     stage: bigint,
-    pot: bigint,
     minRaise: bigint,
     betAmount: bigint,
     actingPosition: bigint,
     actingTimeout: bigint
   ] & {
-    id: bigint;
-    subject: string;
     stage: bigint;
-    pot: bigint;
     minRaise: bigint;
     betAmount: bigint;
     actingPosition: bigint;
@@ -132,6 +117,7 @@ export interface ITexasHoldemTableInterface extends Interface {
       | "callBets"
       | "cashOut"
       | "checkBets"
+      | "claimPots"
       | "communityCards"
       | "cutCards"
       | "foldBets"
@@ -139,11 +125,14 @@ export interface ITexasHoldemTableInterface extends Interface {
       | "holeCards"
       | "info"
       | "isPlaying"
+      | "message"
       | "newTable"
       | "position"
       | "positionStatus"
       | "raiseBets"
       | "setup"
+      | "showCards"
+      | "totalPots"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
@@ -152,6 +141,10 @@ export interface ITexasHoldemTableInterface extends Interface {
   encodeFunctionData(functionFragment: "callBets", values?: undefined): string;
   encodeFunctionData(functionFragment: "cashOut", values?: undefined): string;
   encodeFunctionData(functionFragment: "checkBets", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "claimPots",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(
     functionFragment: "communityCards",
     values?: undefined
@@ -165,6 +158,7 @@ export interface ITexasHoldemTableInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
   encodeFunctionData(functionFragment: "isPlaying", values?: undefined): string;
+  encodeFunctionData(functionFragment: "message", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "newTable",
     values: [IPokerTable.PlayerStruct[]]
@@ -194,6 +188,8 @@ export interface ITexasHoldemTableInterface extends Interface {
       BytesLike[]
     ]
   ): string;
+  encodeFunctionData(functionFragment: "showCards", values?: undefined): string;
+  encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burnCards", data: BytesLike): Result;
@@ -201,6 +197,7 @@ export interface ITexasHoldemTableInterface extends Interface {
   decodeFunctionResult(functionFragment: "callBets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "cashOut", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "checkBets", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "claimPots", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "communityCards",
     data: BytesLike
@@ -211,6 +208,7 @@ export interface ITexasHoldemTableInterface extends Interface {
   decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "message", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
   decodeFunctionResult(
@@ -219,6 +217,8 @@ export interface ITexasHoldemTableInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "raiseBets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "setup", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "showCards", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
 }
 
 export interface ITexasHoldemTable extends BaseContract {
@@ -280,6 +280,8 @@ export interface ITexasHoldemTable extends BaseContract {
 
   checkBets: TypedContractMethod<[], [void], "nonpayable">;
 
+  claimPots: TypedContractMethod<[player: AddressLike], [bigint], "nonpayable">;
+
   communityCards: TypedContractMethod<
     [],
     [IPokerTable.PokerCardStructOutput[]],
@@ -305,6 +307,8 @@ export interface ITexasHoldemTable extends BaseContract {
   info: TypedContractMethod<[], [IPokerTable.InfoStructOutput], "view">;
 
   isPlaying: TypedContractMethod<[], [boolean], "view">;
+
+  message: TypedContractMethod<[], [string], "view">;
 
   newTable: TypedContractMethod<
     [players: IPokerTable.PlayerStruct[]],
@@ -345,6 +349,10 @@ export interface ITexasHoldemTable extends BaseContract {
     "nonpayable"
   >;
 
+  showCards: TypedContractMethod<[], [void], "nonpayable">;
+
+  totalPots: TypedContractMethod<[], [bigint], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -367,6 +375,9 @@ export interface ITexasHoldemTable extends BaseContract {
   getFunction(
     nameOrSignature: "checkBets"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "claimPots"
+  ): TypedContractMethod<[player: AddressLike], [bigint], "nonpayable">;
   getFunction(
     nameOrSignature: "communityCards"
   ): TypedContractMethod<[], [IPokerTable.PokerCardStructOutput[]], "view">;
@@ -396,6 +407,9 @@ export interface ITexasHoldemTable extends BaseContract {
   getFunction(
     nameOrSignature: "isPlaying"
   ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "message"
+  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "newTable"
   ): TypedContractMethod<
@@ -432,6 +446,12 @@ export interface ITexasHoldemTable extends BaseContract {
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "showCards"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "totalPots"
+  ): TypedContractMethod<[], [bigint], "view">;
 
   filters: {};
 }

@@ -57,8 +57,6 @@ export declare namespace IPokerTable {
   export type PositionStruct = {
     pid: BigNumberish;
     player: IPokerTable.PlayerStruct;
-    wins: BigNumberish;
-    draws: BigNumberish;
     bets: BigNumberish;
     chips: BigNumberish;
     pendingBuyin: BigNumberish;
@@ -67,16 +65,12 @@ export declare namespace IPokerTable {
   export type PositionStructOutput = [
     pid: bigint,
     player: IPokerTable.PlayerStructOutput,
-    wins: bigint,
-    draws: bigint,
     bets: bigint,
     chips: bigint,
     pendingBuyin: bigint
   ] & {
     pid: bigint;
     player: IPokerTable.PlayerStructOutput;
-    wins: bigint;
-    draws: bigint;
     bets: bigint;
     chips: bigint;
     pendingBuyin: bigint;
@@ -85,7 +79,12 @@ export declare namespace IPokerTable {
 
 export interface IPokerTableInterface extends Interface {
   getFunction(
-    nameOrSignature: "info" | "isPlaying" | "newTable" | "position"
+    nameOrSignature:
+      | "info"
+      | "isPlaying"
+      | "newTable"
+      | "position"
+      | "totalPots"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
@@ -98,11 +97,13 @@ export interface IPokerTableInterface extends Interface {
     functionFragment: "position",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
 }
 
 export interface IPokerTable extends BaseContract {
@@ -164,6 +165,8 @@ export interface IPokerTable extends BaseContract {
     "view"
   >;
 
+  totalPots: TypedContractMethod<[], [bigint], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -188,6 +191,9 @@ export interface IPokerTable extends BaseContract {
     [IPokerTable.PositionStructOutput],
     "view"
   >;
+  getFunction(
+    nameOrSignature: "totalPots"
+  ): TypedContractMethod<[], [bigint], "view">;
 
   filters: {};
 }

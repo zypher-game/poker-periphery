@@ -62,8 +62,6 @@ export declare namespace IPokerTable {
   export type PositionStruct = {
     pid: PromiseOrValue<BigNumberish>;
     player: IPokerTable.PlayerStruct;
-    wins: PromiseOrValue<BigNumberish>;
-    draws: PromiseOrValue<BigNumberish>;
     bets: PromiseOrValue<BigNumberish>;
     chips: PromiseOrValue<BigNumberish>;
     pendingBuyin: PromiseOrValue<BigNumberish>;
@@ -72,16 +70,12 @@ export declare namespace IPokerTable {
   export type PositionStructOutput = [
     number,
     IPokerTable.PlayerStructOutput,
-    number,
-    number,
     BigNumber,
     BigNumber,
     BigNumber
   ] & {
     pid: number;
     player: IPokerTable.PlayerStructOutput;
-    wins: number;
-    draws: number;
     bets: BigNumber;
     chips: BigNumber;
     pendingBuyin: BigNumber;
@@ -94,10 +88,16 @@ export interface IPokerTableInterface extends utils.Interface {
     "isPlaying()": FunctionFragment;
     "newTable((address,string)[])": FunctionFragment;
     "position(uint8)": FunctionFragment;
+    "totalPots()": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "info" | "isPlaying" | "newTable" | "position"
+    nameOrSignatureOrTopic:
+      | "info"
+      | "isPlaying"
+      | "newTable"
+      | "position"
+      | "totalPots"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
@@ -110,11 +110,13 @@ export interface IPokerTableInterface extends utils.Interface {
     functionFragment: "position",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
 
   events: {};
 }
@@ -159,6 +161,8 @@ export interface IPokerTable extends BaseContract {
       pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[IPokerTable.PositionStructOutput]>;
+
+    totalPots(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
@@ -175,6 +179,8 @@ export interface IPokerTable extends BaseContract {
     overrides?: CallOverrides
   ): Promise<IPokerTable.PositionStructOutput>;
 
+  totalPots(overrides?: CallOverrides): Promise<BigNumber>;
+
   callStatic: {
     info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
 
@@ -189,6 +195,8 @@ export interface IPokerTable extends BaseContract {
       pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<IPokerTable.PositionStructOutput>;
+
+    totalPots(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
@@ -207,6 +215,8 @@ export interface IPokerTable extends BaseContract {
       pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    totalPots(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -223,5 +233,7 @@ export interface IPokerTable extends BaseContract {
       pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    totalPots(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

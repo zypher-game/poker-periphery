@@ -27,9 +27,8 @@ export type TablePositionStruct = {
   pid: BigNumberish;
   wallet: AddressLike;
   displayName: string;
+  status: BigNumberish;
   holeCards: IPokerTable.PokerCardStruct[];
-  wins: BigNumberish;
-  draws: BigNumberish;
   bets: BigNumberish;
   chips: BigNumberish;
   pendingBuyin: BigNumberish;
@@ -39,9 +38,8 @@ export type TablePositionStructOutput = [
   pid: bigint,
   wallet: string,
   displayName: string,
+  status: bigint,
   holeCards: IPokerTable.PokerCardStructOutput[],
-  wins: bigint,
-  draws: bigint,
   bets: bigint,
   chips: bigint,
   pendingBuyin: bigint
@@ -49,9 +47,8 @@ export type TablePositionStructOutput = [
   pid: bigint;
   wallet: string;
   displayName: string;
+  status: bigint;
   holeCards: IPokerTable.PokerCardStructOutput[];
-  wins: bigint;
-  draws: bigint;
   bets: bigint;
   chips: bigint;
   pendingBuyin: bigint;

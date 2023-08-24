@@ -76,6 +76,25 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+    ],
+    name: "claimPots",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "communityCards",
     outputs: [
@@ -121,24 +140,9 @@ const _abi = [
       {
         components: [
           {
-            internalType: "uint64",
-            name: "id",
-            type: "uint64",
-          },
-          {
-            internalType: "string",
-            name: "subject",
-            type: "string",
-          },
-          {
             internalType: "enum ITexasHoldemTable.GameStage",
             name: "stage",
             type: "uint8",
-          },
-          {
-            internalType: "uint256",
-            name: "pot",
-            type: "uint256",
           },
           {
             internalType: "uint256",
@@ -264,6 +268,19 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "message",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         components: [
@@ -321,16 +338,6 @@ const _abi = [
             internalType: "struct IPokerTable.Player",
             name: "player",
             type: "tuple",
-          },
-          {
-            internalType: "uint32",
-            name: "wins",
-            type: "uint32",
-          },
-          {
-            internalType: "uint32",
-            name: "draws",
-            type: "uint32",
           },
           {
             internalType: "uint256",
@@ -434,6 +441,26 @@ const _abi = [
     name: "setup",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "showCards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "totalPots",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ] as const;

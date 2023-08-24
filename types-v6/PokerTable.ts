@@ -59,8 +59,6 @@ export declare namespace IPokerTable {
   export type PositionStruct = {
     pid: BigNumberish;
     player: IPokerTable.PlayerStruct;
-    wins: BigNumberish;
-    draws: BigNumberish;
     bets: BigNumberish;
     chips: BigNumberish;
     pendingBuyin: BigNumberish;
@@ -69,16 +67,12 @@ export declare namespace IPokerTable {
   export type PositionStructOutput = [
     pid: bigint,
     player: IPokerTable.PlayerStructOutput,
-    wins: bigint,
-    draws: bigint,
     bets: bigint,
     chips: bigint,
     pendingBuyin: bigint
   ] & {
     pid: bigint;
     player: IPokerTable.PlayerStructOutput;
-    wins: bigint;
-    draws: bigint;
     bets: bigint;
     chips: bigint;
     pendingBuyin: bigint;
@@ -95,7 +89,6 @@ export interface PokerTableInterface extends Interface {
       | "bets"
       | "decimals"
       | "decreaseAllowance"
-      | "getGamePlayerCounts"
       | "inTable"
       | "increaseAllowance"
       | "info"
@@ -105,9 +98,9 @@ export interface PokerTableInterface extends Interface {
       | "owner"
       | "playerCounts"
       | "position"
-      | "pot"
       | "renounceOwnership"
       | "symbol"
+      | "totalPots"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
@@ -145,10 +138,6 @@ export interface PokerTableInterface extends Interface {
     values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getGamePlayerCounts",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "inTable",
     values: [AddressLike]
   ): string;
@@ -172,12 +161,12 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "position",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "pot", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -208,10 +197,6 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "decreaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getGamePlayerCounts",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "inTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
@@ -227,12 +212,12 @@ export interface PokerTableInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pot", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -378,12 +363,6 @@ export interface PokerTable extends BaseContract {
     "nonpayable"
   >;
 
-  getGamePlayerCounts: TypedContractMethod<
-    [gameId: BigNumberish],
-    [bigint],
-    "view"
-  >;
-
   inTable: TypedContractMethod<[player: AddressLike], [boolean], "view">;
 
   increaseAllowance: TypedContractMethod<
@@ -414,11 +393,11 @@ export interface PokerTable extends BaseContract {
     "view"
   >;
 
-  pot: TypedContractMethod<[], [bigint], "view">;
-
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
   symbol: TypedContractMethod<[], [string], "view">;
+
+  totalPots: TypedContractMethod<[], [bigint], "view">;
 
   totalSupply: TypedContractMethod<[], [bigint], "view">;
 
@@ -478,9 +457,6 @@ export interface PokerTable extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "getGamePlayerCounts"
-  ): TypedContractMethod<[gameId: BigNumberish], [bigint], "view">;
-  getFunction(
     nameOrSignature: "inTable"
   ): TypedContractMethod<[player: AddressLike], [boolean], "view">;
   getFunction(
@@ -520,14 +496,14 @@ export interface PokerTable extends BaseContract {
     "view"
   >;
   getFunction(
-    nameOrSignature: "pot"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "symbol"
   ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "totalPots"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "totalSupply"
   ): TypedContractMethod<[], [bigint], "view">;

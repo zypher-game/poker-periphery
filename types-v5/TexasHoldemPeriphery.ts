@@ -32,9 +32,8 @@ export type TablePositionStruct = {
   pid: PromiseOrValue<BigNumberish>;
   wallet: PromiseOrValue<string>;
   displayName: PromiseOrValue<string>;
+  status: PromiseOrValue<BigNumberish>;
   holeCards: IPokerTable.PokerCardStruct[];
-  wins: PromiseOrValue<BigNumberish>;
-  draws: PromiseOrValue<BigNumberish>;
   bets: PromiseOrValue<BigNumberish>;
   chips: PromiseOrValue<BigNumberish>;
   pendingBuyin: PromiseOrValue<BigNumberish>;
@@ -44,9 +43,8 @@ export type TablePositionStructOutput = [
   number,
   string,
   string,
+  number,
   IPokerTable.PokerCardStructOutput[],
-  number,
-  number,
   BigNumber,
   BigNumber,
   BigNumber
@@ -54,9 +52,8 @@ export type TablePositionStructOutput = [
   pid: number;
   wallet: string;
   displayName: string;
+  status: number;
   holeCards: IPokerTable.PokerCardStructOutput[];
-  wins: number;
-  draws: number;
   bets: BigNumber;
   chips: BigNumber;
   pendingBuyin: BigNumber;

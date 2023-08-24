@@ -67,8 +67,6 @@ export declare namespace IPokerTable {
   export type PositionStruct = {
     pid: PromiseOrValue<BigNumberish>;
     player: IPokerTable.PlayerStruct;
-    wins: PromiseOrValue<BigNumberish>;
-    draws: PromiseOrValue<BigNumberish>;
     bets: PromiseOrValue<BigNumberish>;
     chips: PromiseOrValue<BigNumberish>;
     pendingBuyin: PromiseOrValue<BigNumberish>;
@@ -77,16 +75,12 @@ export declare namespace IPokerTable {
   export type PositionStructOutput = [
     number,
     IPokerTable.PlayerStructOutput,
-    number,
-    number,
     BigNumber,
     BigNumber,
     BigNumber
   ] & {
     pid: number;
     player: IPokerTable.PlayerStructOutput;
-    wins: number;
-    draws: number;
     bets: BigNumber;
     chips: BigNumber;
     pendingBuyin: BigNumber;
@@ -102,7 +96,6 @@ export interface PokerTableInterface extends utils.Interface {
     "bets(address)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
-    "getGamePlayerCounts(uint64)": FunctionFragment;
     "inTable(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "info()": FunctionFragment;
@@ -112,9 +105,9 @@ export interface PokerTableInterface extends utils.Interface {
     "owner()": FunctionFragment;
     "playerCounts()": FunctionFragment;
     "position(uint8)": FunctionFragment;
-    "pot()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "symbol()": FunctionFragment;
+    "totalPots()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
@@ -130,7 +123,6 @@ export interface PokerTableInterface extends utils.Interface {
       | "bets"
       | "decimals"
       | "decreaseAllowance"
-      | "getGamePlayerCounts"
       | "inTable"
       | "increaseAllowance"
       | "info"
@@ -140,9 +132,9 @@ export interface PokerTableInterface extends utils.Interface {
       | "owner"
       | "playerCounts"
       | "position"
-      | "pot"
       | "renounceOwnership"
       | "symbol"
+      | "totalPots"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
@@ -175,10 +167,6 @@ export interface PokerTableInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getGamePlayerCounts",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "inTable",
     values: [PromiseOrValue<string>]
   ): string;
@@ -202,12 +190,12 @@ export interface PokerTableInterface extends utils.Interface {
     functionFragment: "position",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "pot", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -242,10 +230,6 @@ export interface PokerTableInterface extends utils.Interface {
     functionFragment: "decreaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "getGamePlayerCounts",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "inTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
@@ -261,12 +245,12 @@ export interface PokerTableInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pot", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -396,11 +380,6 @@ export interface PokerTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    getGamePlayerCounts(
-      gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[number]>;
-
     inTable(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -432,13 +411,13 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[IPokerTable.PositionStructOutput]>;
 
-    pot(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    totalPots(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -493,11 +472,6 @@ export interface PokerTable extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  getGamePlayerCounts(
-    gameId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<number>;
-
   inTable(
     player: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -529,13 +503,13 @@ export interface PokerTable extends BaseContract {
     overrides?: CallOverrides
   ): Promise<IPokerTable.PositionStructOutput>;
 
-  pot(overrides?: CallOverrides): Promise<BigNumber>;
-
   renounceOwnership(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
+
+  totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -590,11 +564,6 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    getGamePlayerCounts(
-      gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<number>;
-
     inTable(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -626,11 +595,11 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<IPokerTable.PositionStructOutput>;
 
-    pot(overrides?: CallOverrides): Promise<BigNumber>;
-
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
+
+    totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -722,11 +691,6 @@ export interface PokerTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    getGamePlayerCounts(
-      gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     inTable(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -758,13 +722,13 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    pot(overrides?: CallOverrides): Promise<BigNumber>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -820,11 +784,6 @@ export interface PokerTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    getGamePlayerCounts(
-      gameId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     inTable(
       player: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -856,13 +815,13 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    pot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalPots(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
