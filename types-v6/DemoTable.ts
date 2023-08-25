@@ -131,6 +131,7 @@ export interface DemoTableInterface extends Interface {
       | "decreaseAllowance"
       | "foldBets"
       | "forceNewGame"
+      | "forceStopGame"
       | "game"
       | "getBigBlind"
       | "getPositionHandRanking"
@@ -207,6 +208,10 @@ export interface DemoTableInterface extends Interface {
   encodeFunctionData(functionFragment: "foldBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "forceNewGame",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "forceStopGame",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "game", values?: undefined): string;
@@ -324,6 +329,10 @@ export interface DemoTableInterface extends Interface {
   decodeFunctionResult(functionFragment: "foldBets", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "forceNewGame",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "forceStopGame",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "game", data: BytesLike): Result;
@@ -544,6 +553,8 @@ export interface DemoTable extends BaseContract {
 
   forceNewGame: TypedContractMethod<[], [void], "nonpayable">;
 
+  forceStopGame: TypedContractMethod<[], [void], "nonpayable">;
+
   game: TypedContractMethod<
     [],
     [ITexasHoldemTable.TexasHoldemGameStructOutput],
@@ -730,6 +741,9 @@ export interface DemoTable extends BaseContract {
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "forceNewGame"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "forceStopGame"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "game"

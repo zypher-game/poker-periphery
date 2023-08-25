@@ -82,6 +82,30 @@ const _abi = [
     stateMutability: "pure",
     type: "function",
   },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "string",
+        name: "salt",
+        type: "string",
+      },
+    ],
+    name: "parseSigner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "signer",
+        type: "address",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
 ] as const;
 
 export class ITexasHoldemHelper__factory {

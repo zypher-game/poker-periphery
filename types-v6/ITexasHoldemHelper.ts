@@ -30,7 +30,9 @@ export declare namespace IPokerTable {
 }
 
 export interface ITexasHoldemHelperInterface extends Interface {
-  getFunction(nameOrSignature: "bestHand" | "getHandRanking"): FunctionFragment;
+  getFunction(
+    nameOrSignature: "bestHand" | "getHandRanking" | "parseSigner"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "bestHand",
@@ -48,10 +50,18 @@ export interface ITexasHoldemHelperInterface extends Interface {
       ]
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "parseSigner",
+    values: [BytesLike, string]
+  ): string;
 
   decodeFunctionResult(functionFragment: "bestHand", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getHandRanking",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "parseSigner",
     data: BytesLike
   ): Result;
 }
@@ -119,6 +129,12 @@ export interface ITexasHoldemHelper extends BaseContract {
     "view"
   >;
 
+  parseSigner: TypedContractMethod<
+    [signature: BytesLike, salt: string],
+    [string],
+    "view"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -143,6 +159,13 @@ export interface ITexasHoldemHelper extends BaseContract {
       ]
     ],
     [[bigint, bigint] & { ranking: bigint; kickers: bigint }],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "parseSigner"
+  ): TypedContractMethod<
+    [signature: BytesLike, salt: string],
+    [string],
     "view"
   >;
 

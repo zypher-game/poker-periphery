@@ -121,6 +121,8 @@ export interface ITexasHoldemTableInterface extends Interface {
       | "communityCards"
       | "cutCards"
       | "foldBets"
+      | "forceNewGame"
+      | "forceStopGame"
       | "game"
       | "holeCards"
       | "info"
@@ -151,6 +153,14 @@ export interface ITexasHoldemTableInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "cutCards", values?: undefined): string;
   encodeFunctionData(functionFragment: "foldBets", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "forceNewGame",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "forceStopGame",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "game", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "holeCards",
@@ -204,6 +214,14 @@ export interface ITexasHoldemTableInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "cutCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "foldBets", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "forceNewGame",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "forceStopGame",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "game", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
@@ -291,6 +309,10 @@ export interface ITexasHoldemTable extends BaseContract {
   cutCards: TypedContractMethod<[], [void], "nonpayable">;
 
   foldBets: TypedContractMethod<[], [void], "nonpayable">;
+
+  forceNewGame: TypedContractMethod<[], [void], "nonpayable">;
+
+  forceStopGame: TypedContractMethod<[], [void], "nonpayable">;
 
   game: TypedContractMethod<
     [],
@@ -386,6 +408,12 @@ export interface ITexasHoldemTable extends BaseContract {
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "foldBets"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "forceNewGame"
+  ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "forceStopGame"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "game"

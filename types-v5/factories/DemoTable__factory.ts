@@ -50,11 +50,6 @@ const _abi = [
     type: "error",
   },
   {
-    inputs: [],
-    name: "InvalidSignature",
-    type: "error",
-  },
-  {
     inputs: [
       {
         internalType: "enum ITexasHoldemTable.GameStage",
@@ -415,6 +410,13 @@ const _abi = [
   {
     inputs: [],
     name: "forceNewGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "forceStopGame",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

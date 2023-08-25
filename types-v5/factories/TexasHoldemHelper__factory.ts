@@ -11,6 +11,11 @@ import type {
 
 const _abi = [
   {
+    inputs: [],
+    name: "InvalidSignature",
+    type: "error",
+  },
+  {
     inputs: [
       {
         components: [
@@ -77,6 +82,30 @@ const _abi = [
         internalType: "uint64",
         name: "kickers",
         type: "uint64",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "string",
+        name: "salt",
+        type: "string",
+      },
+    ],
+    name: "parseSigner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "signer",
+        type: "address",
       },
     ],
     stateMutability: "pure",

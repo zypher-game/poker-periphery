@@ -129,6 +129,8 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
     "communityCards()": FunctionFragment;
     "cutCards()": FunctionFragment;
     "foldBets()": FunctionFragment;
+    "forceNewGame()": FunctionFragment;
+    "forceStopGame()": FunctionFragment;
     "game()": FunctionFragment;
     "holeCards(uint8,bytes)": FunctionFragment;
     "info()": FunctionFragment;
@@ -155,6 +157,8 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
       | "communityCards"
       | "cutCards"
       | "foldBets"
+      | "forceNewGame"
+      | "forceStopGame"
       | "game"
       | "holeCards"
       | "info"
@@ -188,6 +192,14 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "cutCards", values?: undefined): string;
   encodeFunctionData(functionFragment: "foldBets", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "forceNewGame",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "forceStopGame",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "game", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "holeCards",
@@ -241,6 +253,14 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "cutCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "foldBets", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "forceNewGame",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "forceStopGame",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "game", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
@@ -326,6 +346,14 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<ContractTransaction>;
 
     foldBets(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    forceNewGame(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    forceStopGame(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -430,6 +458,14 @@ export interface ITexasHoldemTable extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  forceNewGame(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  forceStopGame(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   game(
     overrides?: CallOverrides
   ): Promise<ITexasHoldemTable.TexasHoldemGameStructOutput>;
@@ -514,6 +550,10 @@ export interface ITexasHoldemTable extends BaseContract {
     cutCards(overrides?: CallOverrides): Promise<void>;
 
     foldBets(overrides?: CallOverrides): Promise<void>;
+
+    forceNewGame(overrides?: CallOverrides): Promise<void>;
+
+    forceStopGame(overrides?: CallOverrides): Promise<void>;
 
     game(
       overrides?: CallOverrides
@@ -609,6 +649,14 @@ export interface ITexasHoldemTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    forceNewGame(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    forceStopGame(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     game(overrides?: CallOverrides): Promise<BigNumber>;
 
     holeCards(
@@ -698,6 +746,14 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     foldBets(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    forceNewGame(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    forceStopGame(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

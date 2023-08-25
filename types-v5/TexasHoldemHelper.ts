@@ -37,10 +37,11 @@ export interface TexasHoldemHelperInterface extends utils.Interface {
   functions: {
     "bestHand((uint8,uint8)[7])": FunctionFragment;
     "getHandRanking((uint8,uint8)[5])": FunctionFragment;
+    "parseSigner(bytes,string)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "bestHand" | "getHandRanking"
+    nameOrSignatureOrTopic: "bestHand" | "getHandRanking" | "parseSigner"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -59,10 +60,18 @@ export interface TexasHoldemHelperInterface extends utils.Interface {
       ]
     ]
   ): string;
+  encodeFunctionData(
+    functionFragment: "parseSigner",
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]
+  ): string;
 
   decodeFunctionResult(functionFragment: "bestHand", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getHandRanking",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "parseSigner",
     data: BytesLike
   ): Result;
 
@@ -111,6 +120,12 @@ export interface TexasHoldemHelper extends BaseContract {
       ],
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
+
+    parseSigner(
+      signature: PromiseOrValue<BytesLike>,
+      salt: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string] & { signer: string }>;
   };
 
   bestHand(
@@ -129,6 +144,12 @@ export interface TexasHoldemHelper extends BaseContract {
     overrides?: CallOverrides
   ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
+  parseSigner(
+    signature: PromiseOrValue<BytesLike>,
+    salt: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   callStatic: {
     bestHand(
       cards: IPokerTable.PokerCardStruct[],
@@ -145,6 +166,12 @@ export interface TexasHoldemHelper extends BaseContract {
       ],
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
+
+    parseSigner(
+      signature: PromiseOrValue<BytesLike>,
+      salt: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
   };
 
   filters: {};
@@ -165,6 +192,12 @@ export interface TexasHoldemHelper extends BaseContract {
       ],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    parseSigner(
+      signature: PromiseOrValue<BytesLike>,
+      salt: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -181,6 +214,12 @@ export interface TexasHoldemHelper extends BaseContract {
         IPokerTable.PokerCardStruct,
         IPokerTable.PokerCardStruct
       ],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    parseSigner(
+      signature: PromiseOrValue<BytesLike>,
+      salt: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

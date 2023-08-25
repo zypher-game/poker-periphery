@@ -135,6 +135,20 @@ const _abi = [
   },
   {
     inputs: [],
+    name: "forceNewGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "forceStopGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "game",
     outputs: [
       {

@@ -141,6 +141,7 @@ export interface DemoTableInterface extends utils.Interface {
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "foldBets()": FunctionFragment;
     "forceNewGame()": FunctionFragment;
+    "forceStopGame()": FunctionFragment;
     "game()": FunctionFragment;
     "getBigBlind()": FunctionFragment;
     "getPositionHandRanking(uint8)": FunctionFragment;
@@ -189,6 +190,7 @@ export interface DemoTableInterface extends utils.Interface {
       | "decreaseAllowance"
       | "foldBets"
       | "forceNewGame"
+      | "forceStopGame"
       | "game"
       | "getBigBlind"
       | "getPositionHandRanking"
@@ -263,6 +265,10 @@ export interface DemoTableInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "foldBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "forceNewGame",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "forceStopGame",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "game", values?: undefined): string;
@@ -384,6 +390,10 @@ export interface DemoTableInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "foldBets", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "forceNewGame",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "forceStopGame",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "game", data: BytesLike): Result;
@@ -604,6 +614,10 @@ export interface DemoTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    forceStopGame(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     game(
       overrides?: CallOverrides
     ): Promise<
@@ -797,6 +811,10 @@ export interface DemoTable extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  forceStopGame(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   game(
     overrides?: CallOverrides
   ): Promise<ITexasHoldemTable.TexasHoldemGameStructOutput>;
@@ -971,6 +989,8 @@ export interface DemoTable extends BaseContract {
     foldBets(overrides?: CallOverrides): Promise<void>;
 
     forceNewGame(overrides?: CallOverrides): Promise<void>;
+
+    forceStopGame(overrides?: CallOverrides): Promise<void>;
 
     game(
       overrides?: CallOverrides
@@ -1190,6 +1210,10 @@ export interface DemoTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    forceStopGame(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     game(overrides?: CallOverrides): Promise<BigNumber>;
 
     getBigBlind(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1367,6 +1391,10 @@ export interface DemoTable extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     forceNewGame(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    forceStopGame(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

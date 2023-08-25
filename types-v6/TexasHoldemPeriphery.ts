@@ -61,6 +61,8 @@ export type TableStatusStruct = {
   communityCards: IPokerTable.PokerCardStruct[];
   burnCards: IPokerTable.PokerCardStruct[];
   positions: TablePositionStruct[];
+  minRaise: BigNumberish;
+  betAmount: BigNumberish;
   actingPosition: BigNumberish;
   actingTimeout: BigNumberish;
   timestamp: BigNumberish;
@@ -73,6 +75,8 @@ export type TableStatusStructOutput = [
   communityCards: IPokerTable.PokerCardStructOutput[],
   burnCards: IPokerTable.PokerCardStructOutput[],
   positions: TablePositionStructOutput[],
+  minRaise: bigint,
+  betAmount: bigint,
   actingPosition: bigint,
   actingTimeout: bigint,
   timestamp: bigint
@@ -83,6 +87,8 @@ export type TableStatusStructOutput = [
   communityCards: IPokerTable.PokerCardStructOutput[];
   burnCards: IPokerTable.PokerCardStructOutput[];
   positions: TablePositionStructOutput[];
+  minRaise: bigint;
+  betAmount: bigint;
   actingPosition: bigint;
   actingTimeout: bigint;
   timestamp: bigint;

@@ -213,6 +213,16 @@ const _abi = [
             type: "tuple[]",
           },
           {
+            internalType: "uint256",
+            name: "minRaise",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "betAmount",
+            type: "uint256",
+          },
+          {
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",
@@ -527,6 +537,16 @@ const _abi = [
             type: "tuple[]",
           },
           {
+            internalType: "uint256",
+            name: "minRaise",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "betAmount",
+            type: "uint256",
+          },
+          {
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",
@@ -674,6 +694,16 @@ const _abi = [
             internalType: "struct TablePosition[]",
             name: "positions",
             type: "tuple[]",
+          },
+          {
+            internalType: "uint256",
+            name: "minRaise",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "betAmount",
+            type: "uint256",
           },
           {
             internalType: "uint8",
