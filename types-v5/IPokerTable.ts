@@ -25,6 +25,7 @@ import type {
 
 export declare namespace IPokerTable {
   export type InfoStruct = {
+    tableId: PromiseOrValue<BigNumberish>;
     subject: PromiseOrValue<string>;
     lobby: PromiseOrValue<string>;
     gameType: PromiseOrValue<BigNumberish>;
@@ -34,6 +35,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStructOutput = [
+    number,
     string,
     string,
     number,
@@ -41,6 +43,7 @@ export declare namespace IPokerTable {
     number,
     BigNumber
   ] & {
+    tableId: number;
     subject: string;
     lobby: string;
     gameType: number;
@@ -65,6 +68,7 @@ export declare namespace IPokerTable {
     bets: PromiseOrValue<BigNumberish>;
     chips: PromiseOrValue<BigNumberish>;
     pendingBuyin: PromiseOrValue<BigNumberish>;
+    leftAt: PromiseOrValue<BigNumberish>;
   };
 
   export type PositionStructOutput = [
@@ -72,13 +76,15 @@ export declare namespace IPokerTable {
     IPokerTable.PlayerStructOutput,
     BigNumber,
     BigNumber,
-    BigNumber
+    BigNumber,
+    number
   ] & {
     pid: number;
     player: IPokerTable.PlayerStructOutput;
     bets: BigNumber;
     chips: BigNumber;
     pendingBuyin: BigNumber;
+    leftAt: number;
   };
 }
 

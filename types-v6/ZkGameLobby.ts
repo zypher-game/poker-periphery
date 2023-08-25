@@ -108,6 +108,8 @@ export interface ZkGameLobbyInterface extends Interface {
       | "ready"
       | "removeTable"
       | "renounceOwnership"
+      | "reportPlayerLeft"
+      | "reportTableEnded"
       | "revealSeats"
       | "setDefinition"
       | "show"
@@ -172,6 +174,20 @@ export interface ZkGameLobbyInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "reportPlayerLeft",
+    values: [
+      BigNumberish,
+      AddressLike,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "reportTableEnded",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "revealSeats",
     values: [BigNumberish, BytesLike[], BytesLike[]]
   ): string;
@@ -229,6 +245,14 @@ export interface ZkGameLobbyInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reportPlayerLeft",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reportTableEnded",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -532,6 +556,24 @@ export interface ZkGameLobby extends BaseContract {
 
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
+  reportPlayerLeft: TypedContractMethod<
+    [
+      tableId: BigNumberish,
+      player: AddressLike,
+      totalGames: BigNumberish,
+      totalBet: BigNumberish,
+      totalEarned: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  reportTableEnded: TypedContractMethod<
+    [tableId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   revealSeats: TypedContractMethod<
     [tableId: BigNumberish, tokens: BytesLike[], revealProofs: BytesLike[]],
     [boolean],
@@ -640,6 +682,22 @@ export interface ZkGameLobby extends BaseContract {
   getFunction(
     nameOrSignature: "renounceOwnership"
   ): TypedContractMethod<[], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "reportPlayerLeft"
+  ): TypedContractMethod<
+    [
+      tableId: BigNumberish,
+      player: AddressLike,
+      totalGames: BigNumberish,
+      totalBet: BigNumberish,
+      totalEarned: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "reportTableEnded"
+  ): TypedContractMethod<[tableId: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "revealSeats"
   ): TypedContractMethod<

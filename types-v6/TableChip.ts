@@ -23,107 +23,26 @@ import type {
   TypedContractMethod,
 } from "./common";
 
-export declare namespace IPokerTable {
-  export type InfoStruct = {
-    tableId: BigNumberish;
-    subject: string;
-    lobby: AddressLike;
-    gameType: BigNumberish;
-    status: BigNumberish;
-    seats: BigNumberish;
-    initialBuyin: BigNumberish;
-  };
-
-  export type InfoStructOutput = [
-    tableId: bigint,
-    subject: string,
-    lobby: string,
-    gameType: bigint,
-    status: bigint,
-    seats: bigint,
-    initialBuyin: bigint
-  ] & {
-    tableId: bigint;
-    subject: string;
-    lobby: string;
-    gameType: bigint;
-    status: bigint;
-    seats: bigint;
-    initialBuyin: bigint;
-  };
-
-  export type PlayerStruct = { wallet: AddressLike; name: string };
-
-  export type PlayerStructOutput = [wallet: string, name: string] & {
-    wallet: string;
-    name: string;
-  };
-
-  export type PositionStruct = {
-    pid: BigNumberish;
-    player: IPokerTable.PlayerStruct;
-    bets: BigNumberish;
-    chips: BigNumberish;
-    pendingBuyin: BigNumberish;
-    leftAt: BigNumberish;
-  };
-
-  export type PositionStructOutput = [
-    pid: bigint,
-    player: IPokerTable.PlayerStructOutput,
-    bets: bigint,
-    chips: bigint,
-    pendingBuyin: bigint,
-    leftAt: bigint
-  ] & {
-    pid: bigint;
-    player: IPokerTable.PlayerStructOutput;
-    bets: bigint;
-    chips: bigint;
-    pendingBuyin: bigint;
-    leftAt: bigint;
-  };
-}
-
-export interface PokerTableInterface extends Interface {
+export interface TableChipInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "TABLE_TIMEOUT"
       | "allowance"
       | "approve"
       | "balanceOf"
-      | "bets"
       | "decimals"
       | "decreaseAllowance"
       | "increaseAllowance"
-      | "info"
-      | "isPlaying"
       | "name"
-      | "newTable"
-      | "owner"
-      | "playerCounts"
-      | "position"
-      | "renounceOwnership"
       | "symbol"
-      | "totalPots"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
-      | "transferOwnership"
   ): FunctionFragment;
 
   getEvent(
-    nameOrSignatureOrTopic:
-      | "Approval"
-      | "Initialized"
-      | "OwnershipTransferred"
-      | "Transfer"
+    nameOrSignatureOrTopic: "Approval" | "Initialized" | "Transfer"
   ): EventFragment;
 
-  encodeFunctionData(
-    functionFragment: "TABLE_TIMEOUT",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [AddressLike, AddressLike]
@@ -136,7 +55,6 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "balanceOf",
     values: [AddressLike]
   ): string;
-  encodeFunctionData(functionFragment: "bets", values: [AddressLike]): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
@@ -146,28 +64,8 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "increaseAllowance",
     values: [AddressLike, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "info", values?: undefined): string;
-  encodeFunctionData(functionFragment: "isPlaying", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "newTable",
-    values: [IPokerTable.PlayerStruct[]]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "playerCounts",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "position",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -180,19 +78,10 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "transferFrom",
     values: [AddressLike, AddressLike, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [AddressLike]
-  ): string;
 
-  decodeFunctionResult(
-    functionFragment: "TABLE_TIMEOUT",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "bets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
@@ -202,22 +91,8 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "playerCounts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -225,10 +100,6 @@ export interface PokerTableInterface extends Interface {
   decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
 }
@@ -263,19 +134,6 @@ export namespace InitializedEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export namespace OwnershipTransferredEvent {
-  export type InputTuple = [previousOwner: AddressLike, newOwner: AddressLike];
-  export type OutputTuple = [previousOwner: string, newOwner: string];
-  export interface OutputObject {
-    previousOwner: string;
-    newOwner: string;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
-}
-
 export namespace TransferEvent {
   export type InputTuple = [
     from: AddressLike,
@@ -294,11 +152,11 @@ export namespace TransferEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export interface PokerTable extends BaseContract {
-  connect(runner?: ContractRunner | null): PokerTable;
+export interface TableChip extends BaseContract {
+  connect(runner?: ContractRunner | null): TableChip;
   waitForDeployment(): Promise<this>;
 
-  interface: PokerTableInterface;
+  interface: TableChipInterface;
 
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,
@@ -337,8 +195,6 @@ export interface PokerTable extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  TABLE_TIMEOUT: TypedContractMethod<[], [bigint], "view">;
-
   allowance: TypedContractMethod<
     [arg0: AddressLike, arg1: AddressLike],
     [bigint],
@@ -352,8 +208,6 @@ export interface PokerTable extends BaseContract {
   >;
 
   balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
-
-  bets: TypedContractMethod<[player: AddressLike], [bigint], "view">;
 
   decimals: TypedContractMethod<[], [bigint], "view">;
 
@@ -369,33 +223,9 @@ export interface PokerTable extends BaseContract {
     "nonpayable"
   >;
 
-  info: TypedContractMethod<[], [IPokerTable.InfoStructOutput], "view">;
-
-  isPlaying: TypedContractMethod<[], [boolean], "view">;
-
   name: TypedContractMethod<[], [string], "view">;
 
-  newTable: TypedContractMethod<
-    [players: IPokerTable.PlayerStruct[]],
-    [void],
-    "payable"
-  >;
-
-  owner: TypedContractMethod<[], [string], "view">;
-
-  playerCounts: TypedContractMethod<[], [bigint], "view">;
-
-  position: TypedContractMethod<
-    [pid: BigNumberish],
-    [IPokerTable.PositionStructOutput],
-    "view"
-  >;
-
-  renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-
   symbol: TypedContractMethod<[], [string], "view">;
-
-  totalPots: TypedContractMethod<[], [bigint], "view">;
 
   totalSupply: TypedContractMethod<[], [bigint], "view">;
 
@@ -411,19 +241,10 @@ export interface PokerTable extends BaseContract {
     "nonpayable"
   >;
 
-  transferOwnership: TypedContractMethod<
-    [newOwner: AddressLike],
-    [void],
-    "nonpayable"
-  >;
-
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
-  getFunction(
-    nameOrSignature: "TABLE_TIMEOUT"
-  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "allowance"
   ): TypedContractMethod<
@@ -442,9 +263,6 @@ export interface PokerTable extends BaseContract {
     nameOrSignature: "balanceOf"
   ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
   getFunction(
-    nameOrSignature: "bets"
-  ): TypedContractMethod<[player: AddressLike], [bigint], "view">;
-  getFunction(
     nameOrSignature: "decimals"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
@@ -462,43 +280,11 @@ export interface PokerTable extends BaseContract {
     "nonpayable"
   >;
   getFunction(
-    nameOrSignature: "info"
-  ): TypedContractMethod<[], [IPokerTable.InfoStructOutput], "view">;
-  getFunction(
-    nameOrSignature: "isPlaying"
-  ): TypedContractMethod<[], [boolean], "view">;
-  getFunction(
     nameOrSignature: "name"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "newTable"
-  ): TypedContractMethod<
-    [players: IPokerTable.PlayerStruct[]],
-    [void],
-    "payable"
-  >;
-  getFunction(
-    nameOrSignature: "owner"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "playerCounts"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "position"
-  ): TypedContractMethod<
-    [pid: BigNumberish],
-    [IPokerTable.PositionStructOutput],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "renounceOwnership"
-  ): TypedContractMethod<[], [void], "nonpayable">;
-  getFunction(
     nameOrSignature: "symbol"
   ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "totalPots"
-  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "totalSupply"
   ): TypedContractMethod<[], [bigint], "view">;
@@ -516,9 +302,6 @@ export interface PokerTable extends BaseContract {
     [boolean],
     "nonpayable"
   >;
-  getFunction(
-    nameOrSignature: "transferOwnership"
-  ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
 
   getEvent(
     key: "Approval"
@@ -533,13 +316,6 @@ export interface PokerTable extends BaseContract {
     InitializedEvent.InputTuple,
     InitializedEvent.OutputTuple,
     InitializedEvent.OutputObject
-  >;
-  getEvent(
-    key: "OwnershipTransferred"
-  ): TypedContractEvent<
-    OwnershipTransferredEvent.InputTuple,
-    OwnershipTransferredEvent.OutputTuple,
-    OwnershipTransferredEvent.OutputObject
   >;
   getEvent(
     key: "Transfer"
@@ -570,17 +346,6 @@ export interface PokerTable extends BaseContract {
       InitializedEvent.InputTuple,
       InitializedEvent.OutputTuple,
       InitializedEvent.OutputObject
-    >;
-
-    "OwnershipTransferred(address,address)": TypedContractEvent<
-      OwnershipTransferredEvent.InputTuple,
-      OwnershipTransferredEvent.OutputTuple,
-      OwnershipTransferredEvent.OutputObject
-    >;
-    OwnershipTransferred: TypedContractEvent<
-      OwnershipTransferredEvent.InputTuple,
-      OwnershipTransferredEvent.OutputTuple,
-      OwnershipTransferredEvent.OutputObject
     >;
 
     "Transfer(address,address,uint256)": TypedContractEvent<

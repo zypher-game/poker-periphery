@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -28,127 +27,36 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export declare namespace IPokerTable {
-  export type InfoStruct = {
-    tableId: PromiseOrValue<BigNumberish>;
-    subject: PromiseOrValue<string>;
-    lobby: PromiseOrValue<string>;
-    gameType: PromiseOrValue<BigNumberish>;
-    status: PromiseOrValue<BigNumberish>;
-    seats: PromiseOrValue<BigNumberish>;
-    initialBuyin: PromiseOrValue<BigNumberish>;
-  };
-
-  export type InfoStructOutput = [
-    number,
-    string,
-    string,
-    number,
-    number,
-    number,
-    BigNumber
-  ] & {
-    tableId: number;
-    subject: string;
-    lobby: string;
-    gameType: number;
-    status: number;
-    seats: number;
-    initialBuyin: BigNumber;
-  };
-
-  export type PlayerStruct = {
-    wallet: PromiseOrValue<string>;
-    name: PromiseOrValue<string>;
-  };
-
-  export type PlayerStructOutput = [string, string] & {
-    wallet: string;
-    name: string;
-  };
-
-  export type PositionStruct = {
-    pid: PromiseOrValue<BigNumberish>;
-    player: IPokerTable.PlayerStruct;
-    bets: PromiseOrValue<BigNumberish>;
-    chips: PromiseOrValue<BigNumberish>;
-    pendingBuyin: PromiseOrValue<BigNumberish>;
-    leftAt: PromiseOrValue<BigNumberish>;
-  };
-
-  export type PositionStructOutput = [
-    number,
-    IPokerTable.PlayerStructOutput,
-    BigNumber,
-    BigNumber,
-    BigNumber,
-    number
-  ] & {
-    pid: number;
-    player: IPokerTable.PlayerStructOutput;
-    bets: BigNumber;
-    chips: BigNumber;
-    pendingBuyin: BigNumber;
-    leftAt: number;
-  };
-}
-
-export interface PokerTableInterface extends utils.Interface {
+export interface TableChipInterface extends utils.Interface {
   functions: {
-    "TABLE_TIMEOUT()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
-    "bets(address)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "info()": FunctionFragment;
-    "isPlaying()": FunctionFragment;
     "name()": FunctionFragment;
-    "newTable((address,string)[])": FunctionFragment;
-    "owner()": FunctionFragment;
-    "playerCounts()": FunctionFragment;
-    "position(uint8)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
     "symbol()": FunctionFragment;
-    "totalPots()": FunctionFragment;
     "totalSupply()": FunctionFragment;
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "TABLE_TIMEOUT"
       | "allowance"
       | "approve"
       | "balanceOf"
-      | "bets"
       | "decimals"
       | "decreaseAllowance"
       | "increaseAllowance"
-      | "info"
-      | "isPlaying"
       | "name"
-      | "newTable"
-      | "owner"
-      | "playerCounts"
-      | "position"
-      | "renounceOwnership"
       | "symbol"
-      | "totalPots"
       | "totalSupply"
       | "transfer"
       | "transferFrom"
-      | "transferOwnership"
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "TABLE_TIMEOUT",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "allowance",
     values: [PromiseOrValue<string>, PromiseOrValue<string>]
@@ -161,10 +69,6 @@ export interface PokerTableInterface extends utils.Interface {
     functionFragment: "balanceOf",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(
-    functionFragment: "bets",
-    values: [PromiseOrValue<string>]
-  ): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "decreaseAllowance",
@@ -174,28 +78,8 @@ export interface PokerTableInterface extends utils.Interface {
     functionFragment: "increaseAllowance",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
-  encodeFunctionData(functionFragment: "info", values?: undefined): string;
-  encodeFunctionData(functionFragment: "isPlaying", values?: undefined): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "newTable",
-    values: [IPokerTable.PlayerStruct[]]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "playerCounts",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "position",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalSupply",
     values?: undefined
@@ -212,19 +96,10 @@ export interface PokerTableInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
 
-  decodeFunctionResult(
-    functionFragment: "TABLE_TIMEOUT",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "bets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "decreaseAllowance",
@@ -234,22 +109,8 @@ export interface PokerTableInterface extends utils.Interface {
     functionFragment: "increaseAllowance",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "playerCounts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalSupply",
     data: BytesLike
@@ -259,21 +120,15 @@ export interface PokerTableInterface extends utils.Interface {
     functionFragment: "transferFrom",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
     "Initialized(uint8)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
 
@@ -296,18 +151,6 @@ export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
-}
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
-
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
-
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -320,12 +163,12 @@ export type TransferEvent = TypedEvent<
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface PokerTable extends BaseContract {
+export interface TableChip extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PokerTableInterface;
+  interface: TableChipInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -347,8 +190,6 @@ export interface PokerTable extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    TABLE_TIMEOUT(overrides?: CallOverrides): Promise<[number]>;
-
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -366,11 +207,6 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
-    bets(
-      player: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
@@ -385,33 +221,9 @@ export interface PokerTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    info(overrides?: CallOverrides): Promise<[IPokerTable.InfoStructOutput]>;
-
-    isPlaying(overrides?: CallOverrides): Promise<[boolean]>;
-
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    newTable(
-      players: IPokerTable.PlayerStruct[],
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
-    playerCounts(overrides?: CallOverrides): Promise<[number]>;
-
-    position(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[IPokerTable.PositionStructOutput]>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    totalPots(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -427,14 +239,7 @@ export interface PokerTable extends BaseContract {
       arg2: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
   };
-
-  TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
 
   allowance(
     arg0: PromiseOrValue<string>,
@@ -453,11 +258,6 @@ export interface PokerTable extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  bets(
-    player: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
@@ -472,33 +272,9 @@ export interface PokerTable extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
-
-  isPlaying(overrides?: CallOverrides): Promise<boolean>;
-
   name(overrides?: CallOverrides): Promise<string>;
 
-  newTable(
-    players: IPokerTable.PlayerStruct[],
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
-
-  playerCounts(overrides?: CallOverrides): Promise<number>;
-
-  position(
-    pid: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<IPokerTable.PositionStructOutput>;
-
-  renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   symbol(overrides?: CallOverrides): Promise<string>;
-
-  totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -515,14 +291,7 @@ export interface PokerTable extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  transferOwnership(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   callStatic: {
-    TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
-
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -537,11 +306,6 @@ export interface PokerTable extends BaseContract {
 
     balanceOf(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    bets(
-      player: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -559,31 +323,9 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
-
-    isPlaying(overrides?: CallOverrides): Promise<boolean>;
-
     name(overrides?: CallOverrides): Promise<string>;
 
-    newTable(
-      players: IPokerTable.PlayerStruct[],
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    owner(overrides?: CallOverrides): Promise<string>;
-
-    playerCounts(overrides?: CallOverrides): Promise<number>;
-
-    position(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<IPokerTable.PositionStructOutput>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
     symbol(overrides?: CallOverrides): Promise<string>;
-
-    totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -599,11 +341,6 @@ export interface PokerTable extends BaseContract {
       arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
   };
 
   filters: {
@@ -621,15 +358,6 @@ export interface PokerTable extends BaseContract {
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
 
-    "OwnershipTransferred(address,address)"(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(
-      previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
-    ): OwnershipTransferredEventFilter;
-
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
@@ -643,8 +371,6 @@ export interface PokerTable extends BaseContract {
   };
 
   estimateGas: {
-    TABLE_TIMEOUT(overrides?: CallOverrides): Promise<BigNumber>;
-
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -659,11 +385,6 @@ export interface PokerTable extends BaseContract {
 
     balanceOf(
       account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    bets(
-      player: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -681,33 +402,9 @@ export interface PokerTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    info(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isPlaying(overrides?: CallOverrides): Promise<BigNumber>;
-
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    newTable(
-      players: IPokerTable.PlayerStruct[],
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    playerCounts(overrides?: CallOverrides): Promise<BigNumber>;
-
-    position(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -723,16 +420,9 @@ export interface PokerTable extends BaseContract {
       arg2: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    TABLE_TIMEOUT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -750,11 +440,6 @@ export interface PokerTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    bets(
-      player: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
@@ -769,33 +454,9 @@ export interface PokerTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    info(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isPlaying(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    newTable(
-      players: IPokerTable.PlayerStruct[],
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    playerCounts(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    position(
-      pid: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalPots(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -809,11 +470,6 @@ export interface PokerTable extends BaseContract {
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       arg2: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };

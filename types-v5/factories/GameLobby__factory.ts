@@ -366,6 +366,52 @@ const _abi = [
         type: "uint32",
       },
       {
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "totalGames",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalBet",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "totalEarned",
+        type: "uint256",
+      },
+    ],
+    name: "reportPlayerLeft",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint32",
+        name: "tableId",
+        type: "uint32",
+      },
+    ],
+    name: "reportTableEnded",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint32",
+        name: "tableId",
+        type: "uint32",
+      },
+      {
         internalType: "bytes[]",
         name: "tokens",
         type: "bytes[]",

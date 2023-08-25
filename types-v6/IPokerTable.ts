@@ -23,6 +23,7 @@ import type {
 
 export declare namespace IPokerTable {
   export type InfoStruct = {
+    tableId: BigNumberish;
     subject: string;
     lobby: AddressLike;
     gameType: BigNumberish;
@@ -32,6 +33,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStructOutput = [
+    tableId: bigint,
     subject: string,
     lobby: string,
     gameType: bigint,
@@ -39,6 +41,7 @@ export declare namespace IPokerTable {
     seats: bigint,
     initialBuyin: bigint
   ] & {
+    tableId: bigint;
     subject: string;
     lobby: string;
     gameType: bigint;
@@ -60,6 +63,7 @@ export declare namespace IPokerTable {
     bets: BigNumberish;
     chips: BigNumberish;
     pendingBuyin: BigNumberish;
+    leftAt: BigNumberish;
   };
 
   export type PositionStructOutput = [
@@ -67,13 +71,15 @@ export declare namespace IPokerTable {
     player: IPokerTable.PlayerStructOutput,
     bets: bigint,
     chips: bigint,
-    pendingBuyin: bigint
+    pendingBuyin: bigint,
+    leftAt: bigint
   ] & {
     pid: bigint;
     player: IPokerTable.PlayerStructOutput;
     bets: bigint;
     chips: bigint;
     pendingBuyin: bigint;
+    leftAt: bigint;
   };
 }
 

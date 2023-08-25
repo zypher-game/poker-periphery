@@ -8,7 +8,12 @@ import type { PokerTable, PokerTableInterface } from "../PokerTable";
 const _abi = [
   {
     inputs: [],
-    name: "Forbidden",
+    name: "ChipError",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "ChipForbidden",
     type: "error",
   },
   {
@@ -110,12 +115,12 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "owner",
+        name: "",
         type: "address",
       },
       {
         internalType: "address",
-        name: "spender",
+        name: "",
         type: "address",
       },
     ],
@@ -151,7 +156,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "pure",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -209,12 +214,12 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "spender",
+        name: "",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "subtractedValue",
+        name: "",
         type: "uint256",
       },
     ],
@@ -233,31 +238,12 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "player",
-        type: "address",
-      },
-    ],
-    name: "inTable",
-    outputs: [
-      {
-        internalType: "bool",
         name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "spender",
         type: "address",
       },
       {
         internalType: "uint256",
-        name: "addedValue",
+        name: "",
         type: "uint256",
       },
     ],
@@ -278,6 +264,11 @@ const _abi = [
     outputs: [
       {
         components: [
+          {
+            internalType: "uint32",
+            name: "tableId",
+            type: "uint32",
+          },
           {
             internalType: "string",
             name: "subject",
@@ -443,6 +434,11 @@ const _abi = [
             name: "pendingBuyin",
             type: "uint256",
           },
+          {
+            internalType: "uint32",
+            name: "leftAt",
+            type: "uint32",
+          },
         ],
         internalType: "struct IPokerTable.Position",
         name: "",
@@ -519,7 +515,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "pure",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -548,7 +544,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "pure",
+    stateMutability: "nonpayable",
     type: "function",
   },
   {

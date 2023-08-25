@@ -40,6 +40,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStruct = {
+    tableId: PromiseOrValue<BigNumberish>;
     subject: PromiseOrValue<string>;
     lobby: PromiseOrValue<string>;
     gameType: PromiseOrValue<BigNumberish>;
@@ -49,6 +50,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStructOutput = [
+    number,
     string,
     string,
     number,
@@ -56,6 +58,7 @@ export declare namespace IPokerTable {
     number,
     BigNumber
   ] & {
+    tableId: number;
     subject: string;
     lobby: string;
     gameType: number;
@@ -80,6 +83,7 @@ export declare namespace IPokerTable {
     bets: PromiseOrValue<BigNumberish>;
     chips: PromiseOrValue<BigNumberish>;
     pendingBuyin: PromiseOrValue<BigNumberish>;
+    leftAt: PromiseOrValue<BigNumberish>;
   };
 
   export type PositionStructOutput = [
@@ -87,13 +91,15 @@ export declare namespace IPokerTable {
     IPokerTable.PlayerStructOutput,
     BigNumber,
     BigNumber,
-    BigNumber
+    BigNumber,
+    number
   ] & {
     pid: number;
     player: IPokerTable.PlayerStructOutput;
     bets: BigNumber;
     chips: BigNumber;
     pendingBuyin: BigNumber;
+    leftAt: number;
   };
 }
 
@@ -147,7 +153,6 @@ export interface DemoTableInterface extends utils.Interface {
     "getPositionHandRanking(uint8)": FunctionFragment;
     "getSmallBlind()": FunctionFragment;
     "holeCards(uint8,bytes)": FunctionFragment;
-    "inTable(address)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
     "info()": FunctionFragment;
     "isPlaying()": FunctionFragment;
@@ -160,7 +165,7 @@ export interface DemoTableInterface extends utils.Interface {
     "positionStatus(uint8)": FunctionFragment;
     "raiseBets(uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "setup(string,uint8,uint256,uint256,uint256,uint256,address,bytes[])": FunctionFragment;
+    "setup(uint32,string,uint8,uint256,uint256,uint256,uint256,address,bytes[])": FunctionFragment;
     "showCards()": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalPots()": FunctionFragment;
@@ -196,7 +201,6 @@ export interface DemoTableInterface extends utils.Interface {
       | "getPositionHandRanking"
       | "getSmallBlind"
       | "holeCards"
-      | "inTable"
       | "increaseAllowance"
       | "info"
       | "isPlaying"
@@ -289,10 +293,6 @@ export interface DemoTableInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
-    functionFragment: "inTable",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
@@ -328,6 +328,7 @@ export interface DemoTableInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setup",
     values: [
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -410,7 +411,6 @@ export interface DemoTableInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "inTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
@@ -543,16 +543,16 @@ export interface DemoTable extends BaseContract {
     ): Promise<ContractTransaction>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     approve(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     balanceOf(
       account: PromiseOrValue<string>,
@@ -601,8 +601,8 @@ export interface DemoTable extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -645,14 +645,9 @@ export interface DemoTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[IPokerTable.PokerCardStructOutput[]]>;
 
-    inTable(
-      player: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -693,6 +688,7 @@ export interface DemoTable extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
@@ -717,15 +713,15 @@ export interface DemoTable extends BaseContract {
     transfer(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     transferFrom(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       arg2: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -740,16 +736,16 @@ export interface DemoTable extends BaseContract {
   ): Promise<ContractTransaction>;
 
   allowance(
-    owner: PromiseOrValue<string>,
-    spender: PromiseOrValue<string>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   approve(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   balanceOf(
     account: PromiseOrValue<string>,
@@ -798,8 +794,8 @@ export interface DemoTable extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: PromiseOrValue<string>,
-    subtractedValue: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -838,14 +834,9 @@ export interface DemoTable extends BaseContract {
     overrides?: CallOverrides
   ): Promise<IPokerTable.PokerCardStructOutput[]>;
 
-  inTable(
-    player: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   increaseAllowance(
-    spender: PromiseOrValue<string>,
-    addedValue: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -886,6 +877,7 @@ export interface DemoTable extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setup(
+    tableId: PromiseOrValue<BigNumberish>,
     subject: PromiseOrValue<string>,
     seats: PromiseOrValue<BigNumberish>,
     bbAmount: PromiseOrValue<BigNumberish>,
@@ -910,15 +902,15 @@ export interface DemoTable extends BaseContract {
   transfer(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   transferFrom(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<string>,
     arg2: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
@@ -931,8 +923,8 @@ export interface DemoTable extends BaseContract {
     allinBets(overrides?: CallOverrides): Promise<void>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -981,8 +973,8 @@ export interface DemoTable extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1015,14 +1007,9 @@ export interface DemoTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<IPokerTable.PokerCardStructOutput[]>;
 
-    inTable(
-      player: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -1061,6 +1048,7 @@ export interface DemoTable extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
@@ -1143,15 +1131,15 @@ export interface DemoTable extends BaseContract {
     ): Promise<BigNumber>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     balanceOf(
@@ -1197,8 +1185,8 @@ export interface DemoTable extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1231,14 +1219,9 @@ export interface DemoTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    inTable(
-      player: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1279,6 +1262,7 @@ export interface DemoTable extends BaseContract {
     ): Promise<BigNumber>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
@@ -1303,14 +1287,14 @@ export interface DemoTable extends BaseContract {
     transfer(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferFrom(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       arg2: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
@@ -1327,15 +1311,15 @@ export interface DemoTable extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     allowance(
-      owner: PromiseOrValue<string>,
-      spender: PromiseOrValue<string>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     approve(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     balanceOf(
@@ -1381,8 +1365,8 @@ export interface DemoTable extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: PromiseOrValue<string>,
-      subtractedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1415,14 +1399,9 @@ export interface DemoTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    inTable(
-      player: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     increaseAllowance(
-      spender: PromiseOrValue<string>,
-      addedValue: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1463,6 +1442,7 @@ export interface DemoTable extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
@@ -1487,14 +1467,14 @@ export interface DemoTable extends BaseContract {
     transfer(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       arg2: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(

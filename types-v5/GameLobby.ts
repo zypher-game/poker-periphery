@@ -106,6 +106,8 @@ export interface GameLobbyInterface extends utils.Interface {
     "kick(uint32,address)": FunctionFragment;
     "leave()": FunctionFragment;
     "ready()": FunctionFragment;
+    "reportPlayerLeft(uint32,address,uint256,uint256,uint256)": FunctionFragment;
+    "reportTableEnded(uint32)": FunctionFragment;
     "revealSeats(uint32,bytes[],bytes[])": FunctionFragment;
     "show(uint32,uint8)": FunctionFragment;
     "shuffleSeats(uint32,bytes[],bytes)": FunctionFragment;
@@ -122,6 +124,8 @@ export interface GameLobbyInterface extends utils.Interface {
       | "kick"
       | "leave"
       | "ready"
+      | "reportPlayerLeft"
+      | "reportTableEnded"
       | "revealSeats"
       | "show"
       | "shuffleSeats"
@@ -154,6 +158,20 @@ export interface GameLobbyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "reportPlayerLeft",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "reportTableEnded",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "revealSeats",
     values: [
@@ -196,6 +214,14 @@ export interface GameLobbyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "kick", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ready", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "reportPlayerLeft",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reportTableEnded",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "revealSeats",
     data: BytesLike
@@ -407,6 +433,20 @@ export interface GameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
       tokens: PromiseOrValue<BytesLike>[],
@@ -479,6 +519,20 @@ export interface GameLobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  reportPlayerLeft(
+    tableId: PromiseOrValue<BigNumberish>,
+    player: PromiseOrValue<string>,
+    totalGames: PromiseOrValue<BigNumberish>,
+    totalBet: PromiseOrValue<BigNumberish>,
+    totalEarned: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  reportTableEnded(
+    tableId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   revealSeats(
     tableId: PromiseOrValue<BigNumberish>,
     tokens: PromiseOrValue<BytesLike>[],
@@ -546,6 +600,20 @@ export interface GameLobby extends BaseContract {
     leave(overrides?: CallOverrides): Promise<BigNumber>;
 
     ready(overrides?: CallOverrides): Promise<boolean>;
+
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
@@ -719,6 +787,20 @@ export interface GameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
       tokens: PromiseOrValue<BytesLike>[],
@@ -783,6 +865,20 @@ export interface GameLobby extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     ready(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

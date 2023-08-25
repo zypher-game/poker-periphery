@@ -101,6 +101,8 @@ export interface ILobbyInterface extends Interface {
       | "join"
       | "leave"
       | "ready"
+      | "reportPlayerLeft"
+      | "reportTableEnded"
       | "revealSeats"
       | "shuffleSeats"
       | "tableExists"
@@ -136,6 +138,20 @@ export interface ILobbyInterface extends Interface {
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "reportPlayerLeft",
+    values: [
+      BigNumberish,
+      AddressLike,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "reportTableEnded",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "revealSeats",
     values: [BigNumberish, BytesLike[], BytesLike[]]
   ): string;
@@ -164,6 +180,14 @@ export interface ILobbyInterface extends Interface {
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ready", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "reportPlayerLeft",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reportTableEnded",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "revealSeats",
     data: BytesLike
@@ -413,6 +437,24 @@ export interface ILobby extends BaseContract {
 
   ready: TypedContractMethod<[], [boolean], "nonpayable">;
 
+  reportPlayerLeft: TypedContractMethod<
+    [
+      tableId: BigNumberish,
+      player: AddressLike,
+      totalGames: BigNumberish,
+      totalBet: BigNumberish,
+      totalEarned: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  reportTableEnded: TypedContractMethod<
+    [tableId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   revealSeats: TypedContractMethod<
     [tableId: BigNumberish, tokens: BytesLike[], revealProofs: BytesLike[]],
     [boolean],
@@ -464,6 +506,22 @@ export interface ILobby extends BaseContract {
   getFunction(
     nameOrSignature: "ready"
   ): TypedContractMethod<[], [boolean], "nonpayable">;
+  getFunction(
+    nameOrSignature: "reportPlayerLeft"
+  ): TypedContractMethod<
+    [
+      tableId: BigNumberish,
+      player: AddressLike,
+      totalGames: BigNumberish,
+      totalBet: BigNumberish,
+      totalEarned: BigNumberish
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "reportTableEnded"
+  ): TypedContractMethod<[tableId: BigNumberish], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "revealSeats"
   ): TypedContractMethod<

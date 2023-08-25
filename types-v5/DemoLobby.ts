@@ -112,6 +112,8 @@ export interface DemoLobbyInterface extends utils.Interface {
     "ready()": FunctionFragment;
     "removeTable(uint32)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "reportPlayerLeft(uint32,address,uint256,uint256,uint256)": FunctionFragment;
+    "reportTableEnded(uint32)": FunctionFragment;
     "revealSeats(uint32,bytes[],bytes[])": FunctionFragment;
     "setHelper(address)": FunctionFragment;
     "setReadyTime(uint32)": FunctionFragment;
@@ -144,6 +146,8 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "ready"
       | "removeTable"
       | "renounceOwnership"
+      | "reportPlayerLeft"
+      | "reportTableEnded"
       | "revealSeats"
       | "setHelper"
       | "setReadyTime"
@@ -206,6 +210,20 @@ export interface DemoLobbyInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "renounceOwnership",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "reportPlayerLeft",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "reportTableEnded",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "revealSeats",
@@ -302,6 +320,14 @@ export interface DemoLobbyInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reportPlayerLeft",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reportTableEnded",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -627,6 +653,20 @@ export interface DemoLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BigNumberish>,
+      arg4: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
       revealed: PromiseOrValue<BytesLike>[],
@@ -765,6 +805,20 @@ export interface DemoLobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  reportPlayerLeft(
+    tableId: PromiseOrValue<BigNumberish>,
+    player: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    arg3: PromiseOrValue<BigNumberish>,
+    arg4: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  reportTableEnded(
+    tableId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   revealSeats(
     tableId: PromiseOrValue<BigNumberish>,
     revealed: PromiseOrValue<BytesLike>[],
@@ -896,6 +950,20 @@ export interface DemoLobby extends BaseContract {
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BigNumberish>,
+      arg4: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
@@ -1166,6 +1234,20 @@ export interface DemoLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BigNumberish>,
+      arg4: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
       revealed: PromiseOrValue<BytesLike>[],
@@ -1298,6 +1380,20 @@ export interface DemoLobby extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BigNumberish>,
+      arg4: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

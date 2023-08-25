@@ -32,6 +32,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStruct = {
+    tableId: BigNumberish;
     subject: string;
     lobby: AddressLike;
     gameType: BigNumberish;
@@ -41,6 +42,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStructOutput = [
+    tableId: bigint,
     subject: string,
     lobby: string,
     gameType: bigint,
@@ -48,6 +50,7 @@ export declare namespace IPokerTable {
     seats: bigint,
     initialBuyin: bigint
   ] & {
+    tableId: bigint;
     subject: string;
     lobby: string;
     gameType: bigint;
@@ -69,6 +72,7 @@ export declare namespace IPokerTable {
     bets: BigNumberish;
     chips: BigNumberish;
     pendingBuyin: BigNumberish;
+    leftAt: BigNumberish;
   };
 
   export type PositionStructOutput = [
@@ -76,13 +80,15 @@ export declare namespace IPokerTable {
     player: IPokerTable.PlayerStructOutput,
     bets: bigint,
     chips: bigint,
-    pendingBuyin: bigint
+    pendingBuyin: bigint,
+    leftAt: bigint
   ] & {
     pid: bigint;
     player: IPokerTable.PlayerStructOutput;
     bets: bigint;
     chips: bigint;
     pendingBuyin: bigint;
+    leftAt: bigint;
   };
 }
 
@@ -137,7 +143,6 @@ export interface DemoTableInterface extends Interface {
       | "getPositionHandRanking"
       | "getSmallBlind"
       | "holeCards"
-      | "inTable"
       | "increaseAllowance"
       | "info"
       | "isPlaying"
@@ -232,10 +237,6 @@ export interface DemoTableInterface extends Interface {
     values: [BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "inTable",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(
     functionFragment: "increaseAllowance",
     values: [AddressLike, BigNumberish]
   ): string;
@@ -271,6 +272,7 @@ export interface DemoTableInterface extends Interface {
   encodeFunctionData(
     functionFragment: "setup",
     values: [
+      BigNumberish,
       string,
       BigNumberish,
       BigNumberish,
@@ -349,7 +351,6 @@ export interface DemoTableInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "inTable", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
     data: BytesLike
@@ -502,7 +503,7 @@ export interface DemoTable extends BaseContract {
   allinBets: TypedContractMethod<[], [void], "nonpayable">;
 
   allowance: TypedContractMethod<
-    [owner: AddressLike, spender: AddressLike],
+    [arg0: AddressLike, arg1: AddressLike],
     [bigint],
     "view"
   >;
@@ -510,7 +511,7 @@ export interface DemoTable extends BaseContract {
   approve: TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "view"
+    "nonpayable"
   >;
 
   balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
@@ -544,7 +545,7 @@ export interface DemoTable extends BaseContract {
   decimals: TypedContractMethod<[], [bigint], "view">;
 
   decreaseAllowance: TypedContractMethod<
-    [spender: AddressLike, subtractedValue: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -585,10 +586,8 @@ export interface DemoTable extends BaseContract {
     "view"
   >;
 
-  inTable: TypedContractMethod<[player: AddressLike], [boolean], "view">;
-
   increaseAllowance: TypedContractMethod<
-    [spender: AddressLike, addedValue: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -633,6 +632,7 @@ export interface DemoTable extends BaseContract {
 
   setup: TypedContractMethod<
     [
+      tableId: BigNumberish,
       subject: string,
       seats: BigNumberish,
       bbAmount: BigNumberish,
@@ -657,13 +657,13 @@ export interface DemoTable extends BaseContract {
   transfer: TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "view"
+    "nonpayable"
   >;
 
   transferFrom: TypedContractMethod<
     [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
     [boolean],
-    "view"
+    "nonpayable"
   >;
 
   transferOwnership: TypedContractMethod<
@@ -685,7 +685,7 @@ export interface DemoTable extends BaseContract {
   getFunction(
     nameOrSignature: "allowance"
   ): TypedContractMethod<
-    [owner: AddressLike, spender: AddressLike],
+    [arg0: AddressLike, arg1: AddressLike],
     [bigint],
     "view"
   >;
@@ -694,7 +694,7 @@ export interface DemoTable extends BaseContract {
   ): TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "view"
+    "nonpayable"
   >;
   getFunction(
     nameOrSignature: "balanceOf"
@@ -732,7 +732,7 @@ export interface DemoTable extends BaseContract {
   getFunction(
     nameOrSignature: "decreaseAllowance"
   ): TypedContractMethod<
-    [spender: AddressLike, subtractedValue: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -781,12 +781,9 @@ export interface DemoTable extends BaseContract {
     "view"
   >;
   getFunction(
-    nameOrSignature: "inTable"
-  ): TypedContractMethod<[player: AddressLike], [boolean], "view">;
-  getFunction(
     nameOrSignature: "increaseAllowance"
   ): TypedContractMethod<
-    [spender: AddressLike, addedValue: BigNumberish],
+    [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
     "nonpayable"
   >;
@@ -835,6 +832,7 @@ export interface DemoTable extends BaseContract {
     nameOrSignature: "setup"
   ): TypedContractMethod<
     [
+      tableId: BigNumberish,
       subject: string,
       seats: BigNumberish,
       bbAmount: BigNumberish,
@@ -864,14 +862,14 @@ export interface DemoTable extends BaseContract {
   ): TypedContractMethod<
     [arg0: AddressLike, arg1: BigNumberish],
     [boolean],
-    "view"
+    "nonpayable"
   >;
   getFunction(
     nameOrSignature: "transferFrom"
   ): TypedContractMethod<
     [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
     [boolean],
-    "view"
+    "nonpayable"
   >;
   getFunction(
     nameOrSignature: "transferOwnership"

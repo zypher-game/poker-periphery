@@ -105,6 +105,8 @@ export interface ILobbyInterface extends utils.Interface {
     "join(uint32,string,bytes,bytes,bytes)": FunctionFragment;
     "leave()": FunctionFragment;
     "ready()": FunctionFragment;
+    "reportPlayerLeft(uint32,address,uint256,uint256,uint256)": FunctionFragment;
+    "reportTableEnded(uint32)": FunctionFragment;
     "revealSeats(uint32,bytes[],bytes[])": FunctionFragment;
     "shuffleSeats(uint32,bytes[],bytes)": FunctionFragment;
     "tableExists(uint32)": FunctionFragment;
@@ -119,6 +121,8 @@ export interface ILobbyInterface extends utils.Interface {
       | "join"
       | "leave"
       | "ready"
+      | "reportPlayerLeft"
+      | "reportTableEnded"
       | "revealSeats"
       | "shuffleSeats"
       | "tableExists"
@@ -146,6 +150,20 @@ export interface ILobbyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "reportPlayerLeft",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "reportTableEnded",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "revealSeats",
     values: [
@@ -183,6 +201,14 @@ export interface ILobbyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ready", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "reportPlayerLeft",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "reportTableEnded",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "revealSeats",
     data: BytesLike
@@ -387,6 +413,20 @@ export interface ILobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
       tokens: PromiseOrValue<BytesLike>[],
@@ -441,6 +481,20 @@ export interface ILobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  reportPlayerLeft(
+    tableId: PromiseOrValue<BigNumberish>,
+    player: PromiseOrValue<string>,
+    totalGames: PromiseOrValue<BigNumberish>,
+    totalBet: PromiseOrValue<BigNumberish>,
+    totalEarned: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  reportTableEnded(
+    tableId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   revealSeats(
     tableId: PromiseOrValue<BigNumberish>,
     tokens: PromiseOrValue<BytesLike>[],
@@ -490,6 +544,20 @@ export interface ILobby extends BaseContract {
     leave(overrides?: CallOverrides): Promise<BigNumber>;
 
     ready(overrides?: CallOverrides): Promise<boolean>;
+
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
@@ -645,6 +713,20 @@ export interface ILobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     revealSeats(
       tableId: PromiseOrValue<BigNumberish>,
       tokens: PromiseOrValue<BytesLike>[],
@@ -697,6 +779,20 @@ export interface ILobby extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     ready(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    reportPlayerLeft(
+      tableId: PromiseOrValue<BigNumberish>,
+      player: PromiseOrValue<string>,
+      totalGames: PromiseOrValue<BigNumberish>,
+      totalBet: PromiseOrValue<BigNumberish>,
+      totalEarned: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    reportTableEnded(
+      tableId: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

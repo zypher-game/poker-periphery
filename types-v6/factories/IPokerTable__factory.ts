@@ -13,6 +13,11 @@ const _abi = [
       {
         components: [
           {
+            internalType: "uint32",
+            name: "tableId",
+            type: "uint32",
+          },
+          {
             internalType: "string",
             name: "subject",
             type: "string",
@@ -137,6 +142,11 @@ const _abi = [
             internalType: "uint256",
             name: "pendingBuyin",
             type: "uint256",
+          },
+          {
+            internalType: "uint32",
+            name: "leftAt",
+            type: "uint32",
           },
         ],
         internalType: "struct IPokerTable.Position",

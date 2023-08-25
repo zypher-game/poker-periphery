@@ -24,6 +24,7 @@ export { Multicall3__factory } from "./Multicall3__factory";
 export { OneTimeDrawInstance__factory } from "./OneTimeDrawInstance__factory";
 export { PokerTable__factory } from "./PokerTable__factory";
 export { RandSeat__factory } from "./RandSeat__factory";
+export { TableChip__factory } from "./TableChip__factory";
 export { TexasHoldemHelper__factory } from "./TexasHoldemHelper__factory";
 export { TexasHoldemPeriphery__factory } from "./TexasHoldemPeriphery__factory";
 export { TexasHoldemRound__factory } from "./TexasHoldemRound__factory";

@@ -30,6 +30,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStruct = {
+    tableId: BigNumberish;
     subject: string;
     lobby: AddressLike;
     gameType: BigNumberish;
@@ -39,6 +40,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStructOutput = [
+    tableId: bigint,
     subject: string,
     lobby: string,
     gameType: bigint,
@@ -46,6 +48,7 @@ export declare namespace IPokerTable {
     seats: bigint,
     initialBuyin: bigint
   ] & {
+    tableId: bigint;
     subject: string;
     lobby: string;
     gameType: bigint;
@@ -67,6 +70,7 @@ export declare namespace IPokerTable {
     bets: BigNumberish;
     chips: BigNumberish;
     pendingBuyin: BigNumberish;
+    leftAt: BigNumberish;
   };
 
   export type PositionStructOutput = [
@@ -74,13 +78,15 @@ export declare namespace IPokerTable {
     player: IPokerTable.PlayerStructOutput,
     bets: bigint,
     chips: bigint,
-    pendingBuyin: bigint
+    pendingBuyin: bigint,
+    leftAt: bigint
   ] & {
     pid: bigint;
     player: IPokerTable.PlayerStructOutput;
     bets: bigint;
     chips: bigint;
     pendingBuyin: bigint;
+    leftAt: bigint;
   };
 }
 
@@ -188,6 +194,7 @@ export interface ITexasHoldemTableInterface extends Interface {
   encodeFunctionData(
     functionFragment: "setup",
     values: [
+      BigNumberish,
       string,
       BigNumberish,
       BigNumberish,
@@ -358,6 +365,7 @@ export interface ITexasHoldemTable extends BaseContract {
 
   setup: TypedContractMethod<
     [
+      tableId: BigNumberish,
       subject: string,
       seats: BigNumberish,
       bbAmount: BigNumberish,
@@ -462,6 +470,7 @@ export interface ITexasHoldemTable extends BaseContract {
     nameOrSignature: "setup"
   ): TypedContractMethod<
     [
+      tableId: BigNumberish,
       subject: string,
       seats: BigNumberish,
       bbAmount: BigNumberish,

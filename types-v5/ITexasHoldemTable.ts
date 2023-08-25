@@ -36,6 +36,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStruct = {
+    tableId: PromiseOrValue<BigNumberish>;
     subject: PromiseOrValue<string>;
     lobby: PromiseOrValue<string>;
     gameType: PromiseOrValue<BigNumberish>;
@@ -45,6 +46,7 @@ export declare namespace IPokerTable {
   };
 
   export type InfoStructOutput = [
+    number,
     string,
     string,
     number,
@@ -52,6 +54,7 @@ export declare namespace IPokerTable {
     number,
     BigNumber
   ] & {
+    tableId: number;
     subject: string;
     lobby: string;
     gameType: number;
@@ -76,6 +79,7 @@ export declare namespace IPokerTable {
     bets: PromiseOrValue<BigNumberish>;
     chips: PromiseOrValue<BigNumberish>;
     pendingBuyin: PromiseOrValue<BigNumberish>;
+    leftAt: PromiseOrValue<BigNumberish>;
   };
 
   export type PositionStructOutput = [
@@ -83,13 +87,15 @@ export declare namespace IPokerTable {
     IPokerTable.PlayerStructOutput,
     BigNumber,
     BigNumber,
-    BigNumber
+    BigNumber,
+    number
   ] & {
     pid: number;
     player: IPokerTable.PlayerStructOutput;
     bets: BigNumber;
     chips: BigNumber;
     pendingBuyin: BigNumber;
+    leftAt: number;
   };
 }
 
@@ -140,7 +146,7 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
     "position(uint8)": FunctionFragment;
     "positionStatus(uint8)": FunctionFragment;
     "raiseBets(uint256)": FunctionFragment;
-    "setup(string,uint8,uint256,uint256,uint256,uint256,address,bytes[])": FunctionFragment;
+    "setup(uint32,string,uint8,uint256,uint256,uint256,uint256,address,bytes[])": FunctionFragment;
     "showCards()": FunctionFragment;
     "totalPots()": FunctionFragment;
   };
@@ -227,6 +233,7 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setup",
     values: [
+      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -398,6 +405,7 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<ContractTransaction>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
@@ -503,6 +511,7 @@ export interface ITexasHoldemTable extends BaseContract {
   ): Promise<ContractTransaction>;
 
   setup(
+    tableId: PromiseOrValue<BigNumberish>,
     subject: PromiseOrValue<string>,
     seats: PromiseOrValue<BigNumberish>,
     bbAmount: PromiseOrValue<BigNumberish>,
@@ -592,6 +601,7 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<void>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
@@ -692,6 +702,7 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<BigNumber>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
@@ -792,6 +803,7 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     setup(
+      tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
       seats: PromiseOrValue<BigNumberish>,
       bbAmount: PromiseOrValue<BigNumberish>,
