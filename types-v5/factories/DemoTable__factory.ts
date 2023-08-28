@@ -259,31 +259,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "burnCards",
-    outputs: [
-      {
-        components: [
-          {
-            internalType: "enum IPokerTable.PokerSuit",
-            name: "suit",
-            type: "uint8",
-          },
-          {
-            internalType: "enum IPokerTable.PokerRank",
-            name: "rank",
-            type: "uint8",
-          },
-        ],
-        internalType: "struct IPokerTable.PokerCard[]",
-        name: "",
-        type: "tuple[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -809,6 +784,46 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "pots",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint8[]",
+            name: "positions",
+            type: "uint8[]",
+          },
+          {
+            internalType: "uint8[]",
+            name: "winners",
+            type: "uint8[]",
+          },
+          {
+            internalType: "enum HandRanking",
+            name: "winnerHandRanking",
+            type: "uint8",
+          },
+          {
+            internalType: "uint64",
+            name: "winnerKickers",
+            type: "uint64",
+          },
+        ],
+        internalType: "struct ITexasHoldemTable.Pot[]",
+        name: "allPots",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -896,6 +911,41 @@ const _abi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "timer",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "uint32",
+            name: "initialTimeout",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "betTimeout",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "showdownTimeout",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "endTimeout",
+            type: "uint32",
+          },
+        ],
+        internalType: "struct ITexasHoldemTable.GameTimer",
+        name: "",
+        type: "tuple",
       },
     ],
     stateMutability: "view",

@@ -33,20 +33,129 @@ export declare namespace IPokerTable {
   };
 }
 
+export declare namespace ITexasHoldemTable {
+  export type GameCacheStruct = {
+    stage: PromiseOrValue<BigNumberish>;
+    position: PromiseOrValue<BigNumberish>;
+    timeout: PromiseOrValue<BigNumberish>;
+    minBet: PromiseOrValue<BigNumberish>;
+    lastRaise: PromiseOrValue<BigNumberish>;
+    folded: PromiseOrValue<BigNumberish>;
+    allin: PromiseOrValue<BigNumberish>;
+    betMatched: PromiseOrValue<BigNumberish>;
+    showed: PromiseOrValue<BigNumberish>;
+    claimable: PromiseOrValue<BigNumberish>;
+    foldedCount: PromiseOrValue<BigNumberish>;
+  };
+
+  export type GameCacheStructOutput = [
+    number,
+    number,
+    number,
+    BigNumber,
+    BigNumber,
+    number,
+    number,
+    number,
+    number,
+    number,
+    number
+  ] & {
+    stage: number;
+    position: number;
+    timeout: number;
+    minBet: BigNumber;
+    lastRaise: BigNumber;
+    folded: number;
+    allin: number;
+    betMatched: number;
+    showed: number;
+    claimable: number;
+    foldedCount: number;
+  };
+
+  export type GameTimerStruct = {
+    initialTimeout: PromiseOrValue<BigNumberish>;
+    betTimeout: PromiseOrValue<BigNumberish>;
+    showdownTimeout: PromiseOrValue<BigNumberish>;
+    endTimeout: PromiseOrValue<BigNumberish>;
+  };
+
+  export type GameTimerStructOutput = [number, number, number, number] & {
+    initialTimeout: number;
+    betTimeout: number;
+    showdownTimeout: number;
+    endTimeout: number;
+  };
+
+  export type PotStruct = {
+    amount: PromiseOrValue<BigNumberish>;
+    positions: PromiseOrValue<BigNumberish>[];
+    winners: PromiseOrValue<BigNumberish>[];
+    winnerHandRanking: PromiseOrValue<BigNumberish>;
+    winnerKickers: PromiseOrValue<BigNumberish>;
+  };
+
+  export type PotStructOutput = [
+    BigNumber,
+    number[],
+    number[],
+    number,
+    BigNumber
+  ] & {
+    amount: BigNumber;
+    positions: number[];
+    winners: number[];
+    winnerHandRanking: number;
+    winnerKickers: BigNumber;
+  };
+}
+
 export interface TexasHoldemHelperInterface extends utils.Interface {
   functions: {
     "bestHand((uint8,uint8)[7])": FunctionFragment;
+    "computeNextPlayer((uint8,uint8,uint32,uint256,uint256,uint16,uint16,uint16,uint16,uint16,uint8),(uint32,uint32,uint32,uint32),uint8,uint8,uint32)": FunctionFragment;
+    "computePots(uint256[],uint256[],uint16)": FunctionFragment;
+    "computeSortedAllinAmounts(uint256[],uint256)": FunctionFragment;
     "getHandRanking((uint8,uint8)[5])": FunctionFragment;
     "parseSigner(bytes,string)": FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic: "bestHand" | "getHandRanking" | "parseSigner"
+    nameOrSignatureOrTopic:
+      | "bestHand"
+      | "computeNextPlayer"
+      | "computePots"
+      | "computeSortedAllinAmounts"
+      | "getHandRanking"
+      | "parseSigner"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "bestHand",
     values: [IPokerTable.PokerCardStruct[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "computeNextPlayer",
+    values: [
+      ITexasHoldemTable.GameCacheStruct,
+      ITexasHoldemTable.GameTimerStruct,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "computePots",
+    values: [
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "computeSortedAllinAmounts",
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getHandRanking",
@@ -66,6 +175,18 @@ export interface TexasHoldemHelperInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "bestHand", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "computeNextPlayer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "computePots",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "computeSortedAllinAmounts",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getHandRanking",
     data: BytesLike
@@ -110,6 +231,32 @@ export interface TexasHoldemHelper extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
+    computeNextPlayer(
+      cache: ITexasHoldemTable.GameCacheStruct,
+      _timer: ITexasHoldemTable.GameTimerStruct,
+      playerCounts: PromiseOrValue<BigNumberish>,
+      fromPos: PromiseOrValue<BigNumberish>,
+      fromTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[ITexasHoldemTable.GameCacheStructOutput]>;
+
+    computePots(
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [ITexasHoldemTable.PotStructOutput[]] & {
+        pots: ITexasHoldemTable.PotStructOutput[];
+      }
+    >;
+
+    computeSortedAllinAmounts(
+      cachedSortedAllinAmounts: PromiseOrValue<BigNumberish>[],
+      newAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]] & { ascSortedAllInAmounts: BigNumber[] }>;
+
     getHandRanking(
       cards: [
         IPokerTable.PokerCardStruct,
@@ -133,6 +280,28 @@ export interface TexasHoldemHelper extends BaseContract {
     overrides?: CallOverrides
   ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
+  computeNextPlayer(
+    cache: ITexasHoldemTable.GameCacheStruct,
+    _timer: ITexasHoldemTable.GameTimerStruct,
+    playerCounts: PromiseOrValue<BigNumberish>,
+    fromPos: PromiseOrValue<BigNumberish>,
+    fromTime: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<ITexasHoldemTable.GameCacheStructOutput>;
+
+  computePots(
+    bets: PromiseOrValue<BigNumberish>[],
+    ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+    bFoldedPositions: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<ITexasHoldemTable.PotStructOutput[]>;
+
+  computeSortedAllinAmounts(
+    cachedSortedAllinAmounts: PromiseOrValue<BigNumberish>[],
+    newAmount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
   getHandRanking(
     cards: [
       IPokerTable.PokerCardStruct,
@@ -155,6 +324,28 @@ export interface TexasHoldemHelper extends BaseContract {
       cards: IPokerTable.PokerCardStruct[],
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
+
+    computeNextPlayer(
+      cache: ITexasHoldemTable.GameCacheStruct,
+      _timer: ITexasHoldemTable.GameTimerStruct,
+      playerCounts: PromiseOrValue<BigNumberish>,
+      fromPos: PromiseOrValue<BigNumberish>,
+      fromTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<ITexasHoldemTable.GameCacheStructOutput>;
+
+    computePots(
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<ITexasHoldemTable.PotStructOutput[]>;
+
+    computeSortedAllinAmounts(
+      cachedSortedAllinAmounts: PromiseOrValue<BigNumberish>[],
+      newAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     getHandRanking(
       cards: [
@@ -182,6 +373,28 @@ export interface TexasHoldemHelper extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    computeNextPlayer(
+      cache: ITexasHoldemTable.GameCacheStruct,
+      _timer: ITexasHoldemTable.GameTimerStruct,
+      playerCounts: PromiseOrValue<BigNumberish>,
+      fromPos: PromiseOrValue<BigNumberish>,
+      fromTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    computePots(
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    computeSortedAllinAmounts(
+      cachedSortedAllinAmounts: PromiseOrValue<BigNumberish>[],
+      newAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getHandRanking(
       cards: [
         IPokerTable.PokerCardStruct,
@@ -203,6 +416,28 @@ export interface TexasHoldemHelper extends BaseContract {
   populateTransaction: {
     bestHand(
       cards: IPokerTable.PokerCardStruct[],
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    computeNextPlayer(
+      cache: ITexasHoldemTable.GameCacheStruct,
+      _timer: ITexasHoldemTable.GameTimerStruct,
+      playerCounts: PromiseOrValue<BigNumberish>,
+      fromPos: PromiseOrValue<BigNumberish>,
+      fromTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    computePots(
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    computeSortedAllinAmounts(
+      cachedSortedAllinAmounts: PromiseOrValue<BigNumberish>[],
+      newAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

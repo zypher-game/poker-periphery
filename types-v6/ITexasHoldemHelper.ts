@@ -29,14 +29,121 @@ export declare namespace IPokerTable {
   };
 }
 
+export declare namespace ITexasHoldemTable {
+  export type GameCacheStruct = {
+    stage: BigNumberish;
+    position: BigNumberish;
+    timeout: BigNumberish;
+    minBet: BigNumberish;
+    lastRaise: BigNumberish;
+    folded: BigNumberish;
+    allin: BigNumberish;
+    betMatched: BigNumberish;
+    showed: BigNumberish;
+    claimable: BigNumberish;
+    foldedCount: BigNumberish;
+  };
+
+  export type GameCacheStructOutput = [
+    stage: bigint,
+    position: bigint,
+    timeout: bigint,
+    minBet: bigint,
+    lastRaise: bigint,
+    folded: bigint,
+    allin: bigint,
+    betMatched: bigint,
+    showed: bigint,
+    claimable: bigint,
+    foldedCount: bigint
+  ] & {
+    stage: bigint;
+    position: bigint;
+    timeout: bigint;
+    minBet: bigint;
+    lastRaise: bigint;
+    folded: bigint;
+    allin: bigint;
+    betMatched: bigint;
+    showed: bigint;
+    claimable: bigint;
+    foldedCount: bigint;
+  };
+
+  export type GameTimerStruct = {
+    initialTimeout: BigNumberish;
+    betTimeout: BigNumberish;
+    showdownTimeout: BigNumberish;
+    endTimeout: BigNumberish;
+  };
+
+  export type GameTimerStructOutput = [
+    initialTimeout: bigint,
+    betTimeout: bigint,
+    showdownTimeout: bigint,
+    endTimeout: bigint
+  ] & {
+    initialTimeout: bigint;
+    betTimeout: bigint;
+    showdownTimeout: bigint;
+    endTimeout: bigint;
+  };
+
+  export type PotStruct = {
+    amount: BigNumberish;
+    positions: BigNumberish[];
+    winners: BigNumberish[];
+    winnerHandRanking: BigNumberish;
+    winnerKickers: BigNumberish;
+  };
+
+  export type PotStructOutput = [
+    amount: bigint,
+    positions: bigint[],
+    winners: bigint[],
+    winnerHandRanking: bigint,
+    winnerKickers: bigint
+  ] & {
+    amount: bigint;
+    positions: bigint[];
+    winners: bigint[];
+    winnerHandRanking: bigint;
+    winnerKickers: bigint;
+  };
+}
+
 export interface ITexasHoldemHelperInterface extends Interface {
   getFunction(
-    nameOrSignature: "bestHand" | "getHandRanking" | "parseSigner"
+    nameOrSignature:
+      | "bestHand"
+      | "computeNextPlayer"
+      | "computePots"
+      | "computeSortedAllinAmounts"
+      | "getHandRanking"
+      | "parseSigner"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "bestHand",
     values: [IPokerTable.PokerCardStruct[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "computeNextPlayer",
+    values: [
+      ITexasHoldemTable.GameCacheStruct,
+      ITexasHoldemTable.GameTimerStruct,
+      BigNumberish,
+      BigNumberish,
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "computePots",
+    values: [BigNumberish[], BigNumberish[], BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "computeSortedAllinAmounts",
+    values: [BigNumberish[], BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getHandRanking",
@@ -56,6 +163,18 @@ export interface ITexasHoldemHelperInterface extends Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "bestHand", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "computeNextPlayer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "computePots",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "computeSortedAllinAmounts",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "getHandRanking",
     data: BytesLike
@@ -115,6 +234,34 @@ export interface ITexasHoldemHelper extends BaseContract {
     "view"
   >;
 
+  computeNextPlayer: TypedContractMethod<
+    [
+      cache: ITexasHoldemTable.GameCacheStruct,
+      _timer: ITexasHoldemTable.GameTimerStruct,
+      playerCounts: BigNumberish,
+      fromPos: BigNumberish,
+      fromTime: BigNumberish
+    ],
+    [ITexasHoldemTable.GameCacheStructOutput],
+    "view"
+  >;
+
+  computePots: TypedContractMethod<
+    [
+      bets: BigNumberish[],
+      ascSortedAllInAmounts: BigNumberish[],
+      bFoldedPositions: BigNumberish
+    ],
+    [ITexasHoldemTable.PotStructOutput[]],
+    "view"
+  >;
+
+  computeSortedAllinAmounts: TypedContractMethod<
+    [cachedSortedAllinAmounts: BigNumberish[], newAmount: BigNumberish],
+    [bigint[]],
+    "view"
+  >;
+
   getHandRanking: TypedContractMethod<
     [
       cards: [
@@ -144,6 +291,37 @@ export interface ITexasHoldemHelper extends BaseContract {
   ): TypedContractMethod<
     [cards: IPokerTable.PokerCardStruct[]],
     [[bigint, bigint] & { ranking: bigint; kickers: bigint }],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "computeNextPlayer"
+  ): TypedContractMethod<
+    [
+      cache: ITexasHoldemTable.GameCacheStruct,
+      _timer: ITexasHoldemTable.GameTimerStruct,
+      playerCounts: BigNumberish,
+      fromPos: BigNumberish,
+      fromTime: BigNumberish
+    ],
+    [ITexasHoldemTable.GameCacheStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "computePots"
+  ): TypedContractMethod<
+    [
+      bets: BigNumberish[],
+      ascSortedAllInAmounts: BigNumberish[],
+      bFoldedPositions: BigNumberish
+    ],
+    [ITexasHoldemTable.PotStructOutput[]],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "computeSortedAllinAmounts"
+  ): TypedContractMethod<
+    [cachedSortedAllinAmounts: BigNumberish[], newAmount: BigNumberish],
+    [bigint[]],
     "view"
   >;
   getFunction(

@@ -138,23 +138,6 @@ const _abi = [
           {
             components: [
               {
-                internalType: "enum IPokerTable.PokerSuit",
-                name: "suit",
-                type: "uint8",
-              },
-              {
-                internalType: "enum IPokerTable.PokerRank",
-                name: "rank",
-                type: "uint8",
-              },
-            ],
-            internalType: "struct IPokerTable.PokerCard[]",
-            name: "burnCards",
-            type: "tuple[]",
-          },
-          {
-            components: [
-              {
                 internalType: "uint8",
                 name: "pid",
                 type: "uint8",
@@ -225,6 +208,11 @@ const _abi = [
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",
+          },
+          {
+            internalType: "uint32",
+            name: "actingTimeStart",
+            type: "uint32",
           },
           {
             internalType: "uint32",
@@ -462,23 +450,6 @@ const _abi = [
           {
             components: [
               {
-                internalType: "enum IPokerTable.PokerSuit",
-                name: "suit",
-                type: "uint8",
-              },
-              {
-                internalType: "enum IPokerTable.PokerRank",
-                name: "rank",
-                type: "uint8",
-              },
-            ],
-            internalType: "struct IPokerTable.PokerCard[]",
-            name: "burnCards",
-            type: "tuple[]",
-          },
-          {
-            components: [
-              {
                 internalType: "uint8",
                 name: "pid",
                 type: "uint8",
@@ -549,6 +520,11 @@ const _abi = [
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",
+          },
+          {
+            internalType: "uint32",
+            name: "actingTimeStart",
+            type: "uint32",
           },
           {
             internalType: "uint32",
@@ -621,23 +597,6 @@ const _abi = [
           {
             components: [
               {
-                internalType: "enum IPokerTable.PokerSuit",
-                name: "suit",
-                type: "uint8",
-              },
-              {
-                internalType: "enum IPokerTable.PokerRank",
-                name: "rank",
-                type: "uint8",
-              },
-            ],
-            internalType: "struct IPokerTable.PokerCard[]",
-            name: "burnCards",
-            type: "tuple[]",
-          },
-          {
-            components: [
-              {
                 internalType: "uint8",
                 name: "pid",
                 type: "uint8",
@@ -708,6 +667,11 @@ const _abi = [
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",
+          },
+          {
+            internalType: "uint32",
+            name: "actingTimeStart",
+            type: "uint32",
           },
           {
             internalType: "uint32",
