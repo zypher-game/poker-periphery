@@ -65,6 +65,8 @@ export type TableStatusStruct = {
   stage: PromiseOrValue<BigNumberish>;
   communityCards: IPokerTable.PokerCardStruct[];
   positions: TablePositionStruct[];
+  mainPot: ITexasHoldemTable.PotStruct;
+  sidePots: ITexasHoldemTable.PotStruct[];
   minRaise: PromiseOrValue<BigNumberish>;
   betAmount: PromiseOrValue<BigNumberish>;
   actingPosition: PromiseOrValue<BigNumberish>;
@@ -79,6 +81,8 @@ export type TableStatusStructOutput = [
   number,
   IPokerTable.PokerCardStructOutput[],
   TablePositionStructOutput[],
+  ITexasHoldemTable.PotStructOutput,
+  ITexasHoldemTable.PotStructOutput[],
   BigNumber,
   BigNumber,
   number,
@@ -91,6 +95,8 @@ export type TableStatusStructOutput = [
   stage: number;
   communityCards: IPokerTable.PokerCardStructOutput[];
   positions: TablePositionStructOutput[];
+  mainPot: ITexasHoldemTable.PotStructOutput;
+  sidePots: ITexasHoldemTable.PotStructOutput[];
   minRaise: BigNumber;
   betAmount: BigNumber;
   actingPosition: number;
@@ -108,6 +114,30 @@ export declare namespace IPokerTable {
   export type PokerCardStructOutput = [number, number] & {
     suit: number;
     rank: number;
+  };
+}
+
+export declare namespace ITexasHoldemTable {
+  export type PotStruct = {
+    amount: PromiseOrValue<BigNumberish>;
+    positions: PromiseOrValue<BigNumberish>[];
+    winners: PromiseOrValue<BigNumberish>[];
+    winnerHandRanking: PromiseOrValue<BigNumberish>;
+    winnerKickers: PromiseOrValue<BigNumberish>;
+  };
+
+  export type PotStructOutput = [
+    BigNumber,
+    number[],
+    number[],
+    number,
+    BigNumber
+  ] & {
+    amount: BigNumber;
+    positions: number[];
+    winners: number[];
+    winnerHandRanking: number;
+    winnerKickers: BigNumber;
   };
 }
 

@@ -196,6 +196,70 @@ const _abi = [
             type: "tuple[]",
           },
           {
+            components: [
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+              {
+                internalType: "uint8[]",
+                name: "positions",
+                type: "uint8[]",
+              },
+              {
+                internalType: "uint8[]",
+                name: "winners",
+                type: "uint8[]",
+              },
+              {
+                internalType: "enum HandRanking",
+                name: "winnerHandRanking",
+                type: "uint8",
+              },
+              {
+                internalType: "uint64",
+                name: "winnerKickers",
+                type: "uint64",
+              },
+            ],
+            internalType: "struct ITexasHoldemTable.Pot",
+            name: "mainPot",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+              {
+                internalType: "uint8[]",
+                name: "positions",
+                type: "uint8[]",
+              },
+              {
+                internalType: "uint8[]",
+                name: "winners",
+                type: "uint8[]",
+              },
+              {
+                internalType: "enum HandRanking",
+                name: "winnerHandRanking",
+                type: "uint8",
+              },
+              {
+                internalType: "uint64",
+                name: "winnerKickers",
+                type: "uint64",
+              },
+            ],
+            internalType: "struct ITexasHoldemTable.Pot[]",
+            name: "sidePots",
+            type: "tuple[]",
+          },
+          {
             internalType: "uint256",
             name: "minRaise",
             type: "uint256",
@@ -508,6 +572,70 @@ const _abi = [
             type: "tuple[]",
           },
           {
+            components: [
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+              {
+                internalType: "uint8[]",
+                name: "positions",
+                type: "uint8[]",
+              },
+              {
+                internalType: "uint8[]",
+                name: "winners",
+                type: "uint8[]",
+              },
+              {
+                internalType: "enum HandRanking",
+                name: "winnerHandRanking",
+                type: "uint8",
+              },
+              {
+                internalType: "uint64",
+                name: "winnerKickers",
+                type: "uint64",
+              },
+            ],
+            internalType: "struct ITexasHoldemTable.Pot",
+            name: "mainPot",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+              {
+                internalType: "uint8[]",
+                name: "positions",
+                type: "uint8[]",
+              },
+              {
+                internalType: "uint8[]",
+                name: "winners",
+                type: "uint8[]",
+              },
+              {
+                internalType: "enum HandRanking",
+                name: "winnerHandRanking",
+                type: "uint8",
+              },
+              {
+                internalType: "uint64",
+                name: "winnerKickers",
+                type: "uint64",
+              },
+            ],
+            internalType: "struct ITexasHoldemTable.Pot[]",
+            name: "sidePots",
+            type: "tuple[]",
+          },
+          {
             internalType: "uint256",
             name: "minRaise",
             type: "uint256",
@@ -652,6 +780,70 @@ const _abi = [
             ],
             internalType: "struct TablePosition[]",
             name: "positions",
+            type: "tuple[]",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+              {
+                internalType: "uint8[]",
+                name: "positions",
+                type: "uint8[]",
+              },
+              {
+                internalType: "uint8[]",
+                name: "winners",
+                type: "uint8[]",
+              },
+              {
+                internalType: "enum HandRanking",
+                name: "winnerHandRanking",
+                type: "uint8",
+              },
+              {
+                internalType: "uint64",
+                name: "winnerKickers",
+                type: "uint64",
+              },
+            ],
+            internalType: "struct ITexasHoldemTable.Pot",
+            name: "mainPot",
+            type: "tuple",
+          },
+          {
+            components: [
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+              {
+                internalType: "uint8[]",
+                name: "positions",
+                type: "uint8[]",
+              },
+              {
+                internalType: "uint8[]",
+                name: "winners",
+                type: "uint8[]",
+              },
+              {
+                internalType: "enum HandRanking",
+                name: "winnerHandRanking",
+                type: "uint8",
+              },
+              {
+                internalType: "uint64",
+                name: "winnerKickers",
+                type: "uint64",
+              },
+            ],
+            internalType: "struct ITexasHoldemTable.Pot[]",
+            name: "sidePots",
             type: "tuple[]",
           },
           {

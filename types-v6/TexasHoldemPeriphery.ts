@@ -60,6 +60,8 @@ export type TableStatusStruct = {
   stage: BigNumberish;
   communityCards: IPokerTable.PokerCardStruct[];
   positions: TablePositionStruct[];
+  mainPot: ITexasHoldemTable.PotStruct;
+  sidePots: ITexasHoldemTable.PotStruct[];
   minRaise: BigNumberish;
   betAmount: BigNumberish;
   actingPosition: BigNumberish;
@@ -74,6 +76,8 @@ export type TableStatusStructOutput = [
   stage: bigint,
   communityCards: IPokerTable.PokerCardStructOutput[],
   positions: TablePositionStructOutput[],
+  mainPot: ITexasHoldemTable.PotStructOutput,
+  sidePots: ITexasHoldemTable.PotStructOutput[],
   minRaise: bigint,
   betAmount: bigint,
   actingPosition: bigint,
@@ -86,6 +90,8 @@ export type TableStatusStructOutput = [
   stage: bigint;
   communityCards: IPokerTable.PokerCardStructOutput[];
   positions: TablePositionStructOutput[];
+  mainPot: ITexasHoldemTable.PotStructOutput;
+  sidePots: ITexasHoldemTable.PotStructOutput[];
   minRaise: bigint;
   betAmount: bigint;
   actingPosition: bigint;
@@ -100,6 +106,30 @@ export declare namespace IPokerTable {
   export type PokerCardStructOutput = [suit: bigint, rank: bigint] & {
     suit: bigint;
     rank: bigint;
+  };
+}
+
+export declare namespace ITexasHoldemTable {
+  export type PotStruct = {
+    amount: BigNumberish;
+    positions: BigNumberish[];
+    winners: BigNumberish[];
+    winnerHandRanking: BigNumberish;
+    winnerKickers: BigNumberish;
+  };
+
+  export type PotStructOutput = [
+    amount: bigint,
+    positions: bigint[],
+    winners: bigint[],
+    winnerHandRanking: bigint,
+    winnerKickers: bigint
+  ] & {
+    amount: bigint;
+    positions: bigint[];
+    winners: bigint[];
+    winnerHandRanking: bigint;
+    winnerKickers: bigint;
   };
 }
 
