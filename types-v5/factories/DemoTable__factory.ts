@@ -460,30 +460,6 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint8",
-        name: "pos",
-        type: "uint8",
-      },
-    ],
-    name: "getPositionHandRanking",
-    outputs: [
-      {
-        internalType: "enum HandRanking",
-        name: "ranking",
-        type: "uint8",
-      },
-      {
-        internalType: "uint64",
-        name: "kickers",
-        type: "uint64",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "getSmallBlind",
     outputs: [
@@ -799,21 +775,6 @@ const _abi = [
             name: "positions",
             type: "uint8[]",
           },
-          {
-            internalType: "uint8[]",
-            name: "winners",
-            type: "uint8[]",
-          },
-          {
-            internalType: "enum HandRanking",
-            name: "winnerHandRanking",
-            type: "uint8",
-          },
-          {
-            internalType: "uint64",
-            name: "winnerKickers",
-            type: "uint64",
-          },
         ],
         internalType: "struct ITexasHoldemTable.Pot[]",
         name: "allPots",
@@ -1041,6 +1002,35 @@ const _abi = [
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "index",
+        type: "uint8",
+      },
+    ],
+    name: "winner",
+    outputs: [
+      {
+        internalType: "uint8[]",
+        name: "positions",
+        type: "uint8[]",
+      },
+      {
+        internalType: "enum HandRanking",
+        name: "ranking",
+        type: "uint8",
+      },
+      {
+        internalType: "uint64",
+        name: "kickers",
+        type: "uint64",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ] as const;

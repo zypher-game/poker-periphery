@@ -398,21 +398,6 @@ const _abi = [
             name: "positions",
             type: "uint8[]",
           },
-          {
-            internalType: "uint8[]",
-            name: "winners",
-            type: "uint8[]",
-          },
-          {
-            internalType: "enum HandRanking",
-            name: "winnerHandRanking",
-            type: "uint8",
-          },
-          {
-            internalType: "uint64",
-            name: "winnerKickers",
-            type: "uint64",
-          },
         ],
         internalType: "struct ITexasHoldemTable.Pot[]",
         name: "",
@@ -538,6 +523,35 @@ const _abi = [
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "pot",
+        type: "uint8",
+      },
+    ],
+    name: "winner",
+    outputs: [
+      {
+        internalType: "uint8[]",
+        name: "positions",
+        type: "uint8[]",
+      },
+      {
+        internalType: "enum HandRanking",
+        name: "winnerHandRanking",
+        type: "uint8",
+      },
+      {
+        internalType: "uint64",
+        name: "winnerKickers",
+        type: "uint64",
       },
     ],
     stateMutability: "view",

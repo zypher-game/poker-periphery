@@ -125,23 +125,11 @@ export declare namespace ITexasHoldemTable {
   export type PotStruct = {
     amount: PromiseOrValue<BigNumberish>;
     positions: PromiseOrValue<BigNumberish>[];
-    winners: PromiseOrValue<BigNumberish>[];
-    winnerHandRanking: PromiseOrValue<BigNumberish>;
-    winnerKickers: PromiseOrValue<BigNumberish>;
   };
 
-  export type PotStructOutput = [
-    BigNumber,
-    number[],
-    number[],
-    number,
-    BigNumber
-  ] & {
+  export type PotStructOutput = [BigNumber, number[]] & {
     amount: BigNumber;
     positions: number[];
-    winners: number[];
-    winnerHandRanking: number;
-    winnerKickers: BigNumber;
   };
 
   export type GameTimerStruct = {
@@ -186,6 +174,7 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
     "showCards()": FunctionFragment;
     "timer()": FunctionFragment;
     "totalPots()": FunctionFragment;
+    "winner(uint8)": FunctionFragment;
   };
 
   getFunction(
@@ -215,6 +204,7 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
       | "showCards"
       | "timer"
       | "totalPots"
+      | "winner"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
@@ -285,6 +275,10 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "showCards", values?: undefined): string;
   encodeFunctionData(functionFragment: "timer", values?: undefined): string;
   encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "winner",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
 
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "buyin", data: BytesLike): Result;
@@ -323,6 +317,7 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "showCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "timer", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "winner", data: BytesLike): Result;
 
   events: {};
 }
@@ -466,6 +461,17 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<[ITexasHoldemTable.GameTimerStructOutput]>;
 
     totalPots(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    winner(
+      pot: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [number[], number, BigNumber] & {
+        positions: number[];
+        winnerHandRanking: number;
+        winnerKickers: BigNumber;
+      }
+    >;
   };
 
   allinBets(
@@ -575,6 +581,17 @@ export interface ITexasHoldemTable extends BaseContract {
 
   totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
+  winner(
+    pot: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [number[], number, BigNumber] & {
+      positions: number[];
+      winnerHandRanking: number;
+      winnerKickers: BigNumber;
+    }
+  >;
+
   callStatic: {
     allinBets(overrides?: CallOverrides): Promise<void>;
 
@@ -666,6 +683,17 @@ export interface ITexasHoldemTable extends BaseContract {
     ): Promise<ITexasHoldemTable.GameTimerStructOutput>;
 
     totalPots(overrides?: CallOverrides): Promise<BigNumber>;
+
+    winner(
+      pot: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [number[], number, BigNumber] & {
+        positions: number[];
+        winnerHandRanking: number;
+        winnerKickers: BigNumber;
+      }
+    >;
   };
 
   filters: {};
@@ -771,6 +799,11 @@ export interface ITexasHoldemTable extends BaseContract {
     timer(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalPots(overrides?: CallOverrides): Promise<BigNumber>;
+
+    winner(
+      pot: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -874,5 +907,10 @@ export interface ITexasHoldemTable extends BaseContract {
     timer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalPots(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    winner(
+      pot: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

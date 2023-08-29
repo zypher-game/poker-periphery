@@ -198,11 +198,6 @@
               },
               {
                 "internalType": "uint8[]",
-                "name": "positions",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint8[]",
                 "name": "winners",
                 "type": "uint8[]"
               },
@@ -210,14 +205,9 @@
                 "internalType": "enum HandRanking",
                 "name": "winnerHandRanking",
                 "type": "uint8"
-              },
-              {
-                "internalType": "uint64",
-                "name": "winnerKickers",
-                "type": "uint64"
               }
             ],
-            "internalType": "struct ITexasHoldemTable.Pot",
+            "internalType": "struct PotMeta",
             "name": "mainPot",
             "type": "tuple"
           },
@@ -230,11 +220,6 @@
               },
               {
                 "internalType": "uint8[]",
-                "name": "positions",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint8[]",
                 "name": "winners",
                 "type": "uint8[]"
               },
@@ -242,14 +227,9 @@
                 "internalType": "enum HandRanking",
                 "name": "winnerHandRanking",
                 "type": "uint8"
-              },
-              {
-                "internalType": "uint64",
-                "name": "winnerKickers",
-                "type": "uint64"
               }
             ],
-            "internalType": "struct ITexasHoldemTable.Pot[]",
+            "internalType": "struct PotMeta[]",
             "name": "sidePots",
             "type": "tuple[]"
           },
@@ -579,11 +559,6 @@
               },
               {
                 "internalType": "uint8[]",
-                "name": "positions",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint8[]",
                 "name": "winners",
                 "type": "uint8[]"
               },
@@ -591,14 +566,9 @@
                 "internalType": "enum HandRanking",
                 "name": "winnerHandRanking",
                 "type": "uint8"
-              },
-              {
-                "internalType": "uint64",
-                "name": "winnerKickers",
-                "type": "uint64"
               }
             ],
-            "internalType": "struct ITexasHoldemTable.Pot",
+            "internalType": "struct PotMeta",
             "name": "mainPot",
             "type": "tuple"
           },
@@ -611,11 +581,6 @@
               },
               {
                 "internalType": "uint8[]",
-                "name": "positions",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint8[]",
                 "name": "winners",
                 "type": "uint8[]"
               },
@@ -623,14 +588,9 @@
                 "internalType": "enum HandRanking",
                 "name": "winnerHandRanking",
                 "type": "uint8"
-              },
-              {
-                "internalType": "uint64",
-                "name": "winnerKickers",
-                "type": "uint64"
               }
             ],
-            "internalType": "struct ITexasHoldemTable.Pot[]",
+            "internalType": "struct PotMeta[]",
             "name": "sidePots",
             "type": "tuple[]"
           },
@@ -795,11 +755,6 @@
               },
               {
                 "internalType": "uint8[]",
-                "name": "positions",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint8[]",
                 "name": "winners",
                 "type": "uint8[]"
               },
@@ -807,14 +762,9 @@
                 "internalType": "enum HandRanking",
                 "name": "winnerHandRanking",
                 "type": "uint8"
-              },
-              {
-                "internalType": "uint64",
-                "name": "winnerKickers",
-                "type": "uint64"
               }
             ],
-            "internalType": "struct ITexasHoldemTable.Pot",
+            "internalType": "struct PotMeta",
             "name": "mainPot",
             "type": "tuple"
           },
@@ -827,11 +777,6 @@
               },
               {
                 "internalType": "uint8[]",
-                "name": "positions",
-                "type": "uint8[]"
-              },
-              {
-                "internalType": "uint8[]",
                 "name": "winners",
                 "type": "uint8[]"
               },
@@ -839,14 +784,9 @@
                 "internalType": "enum HandRanking",
                 "name": "winnerHandRanking",
                 "type": "uint8"
-              },
-              {
-                "internalType": "uint64",
-                "name": "winnerKickers",
-                "type": "uint64"
               }
             ],
-            "internalType": "struct ITexasHoldemTable.Pot[]",
+            "internalType": "struct PotMeta[]",
             "name": "sidePots",
             "type": "tuple[]"
           },

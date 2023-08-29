@@ -115,26 +115,11 @@ export declare namespace ITexasHoldemTable {
     actingTimeout: bigint;
   };
 
-  export type PotStruct = {
-    amount: BigNumberish;
-    positions: BigNumberish[];
-    winners: BigNumberish[];
-    winnerHandRanking: BigNumberish;
-    winnerKickers: BigNumberish;
-  };
+  export type PotStruct = { amount: BigNumberish; positions: BigNumberish[] };
 
-  export type PotStructOutput = [
-    amount: bigint,
-    positions: bigint[],
-    winners: bigint[],
-    winnerHandRanking: bigint,
-    winnerKickers: bigint
-  ] & {
+  export type PotStructOutput = [amount: bigint, positions: bigint[]] & {
     amount: bigint;
     positions: bigint[];
-    winners: bigint[];
-    winnerHandRanking: bigint;
-    winnerKickers: bigint;
   };
 
   export type GameTimerStruct = {
@@ -180,7 +165,6 @@ export interface DemoTableInterface extends Interface {
       | "forceStopGame"
       | "game"
       | "getBigBlind"
-      | "getPositionHandRanking"
       | "getSmallBlind"
       | "holeCards"
       | "increaseAllowance"
@@ -205,6 +189,7 @@ export interface DemoTableInterface extends Interface {
       | "transfer"
       | "transferFrom"
       | "transferOwnership"
+      | "winner"
   ): FunctionFragment;
 
   getEvent(
@@ -264,10 +249,6 @@ export interface DemoTableInterface extends Interface {
   encodeFunctionData(
     functionFragment: "getBigBlind",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPositionHandRanking",
-    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getSmallBlind",
@@ -345,6 +326,10 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "transferOwnership",
     values: [AddressLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "winner",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "TABLE_TIMEOUT",
@@ -382,10 +367,6 @@ export interface DemoTableInterface extends Interface {
   decodeFunctionResult(functionFragment: "game", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getBigBlind",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPositionHandRanking",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -436,6 +417,7 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "winner", data: BytesLike): Result;
 }
 
 export namespace ApprovalEvent {
@@ -606,12 +588,6 @@ export interface DemoTable extends BaseContract {
     "view"
   >;
 
-  getPositionHandRanking: TypedContractMethod<
-    [pos: BigNumberish],
-    [[bigint, bigint] & { ranking: bigint; kickers: bigint }],
-    "view"
-  >;
-
   getSmallBlind: TypedContractMethod<
     [],
     [[string, bigint] & { player: string; amount: bigint }],
@@ -718,6 +694,18 @@ export interface DemoTable extends BaseContract {
     "nonpayable"
   >;
 
+  winner: TypedContractMethod<
+    [index: BigNumberish],
+    [
+      [bigint[], bigint, bigint] & {
+        positions: bigint[];
+        ranking: bigint;
+        kickers: bigint;
+      }
+    ],
+    "view"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -800,13 +788,6 @@ export interface DemoTable extends BaseContract {
   ): TypedContractMethod<
     [],
     [[string, bigint] & { player: string; amount: bigint }],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "getPositionHandRanking"
-  ): TypedContractMethod<
-    [pos: BigNumberish],
-    [[bigint, bigint] & { ranking: bigint; kickers: bigint }],
     "view"
   >;
   getFunction(
@@ -923,6 +904,19 @@ export interface DemoTable extends BaseContract {
   getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "winner"
+  ): TypedContractMethod<
+    [index: BigNumberish],
+    [
+      [bigint[], bigint, bigint] & {
+        positions: bigint[];
+        ranking: bigint;
+        kickers: bigint;
+      }
+    ],
+    "view"
+  >;
 
   getEvent(
     key: "Approval"

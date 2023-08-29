@@ -129,23 +129,11 @@ export declare namespace ITexasHoldemTable {
   export type PotStruct = {
     amount: PromiseOrValue<BigNumberish>;
     positions: PromiseOrValue<BigNumberish>[];
-    winners: PromiseOrValue<BigNumberish>[];
-    winnerHandRanking: PromiseOrValue<BigNumberish>;
-    winnerKickers: PromiseOrValue<BigNumberish>;
   };
 
-  export type PotStructOutput = [
-    BigNumber,
-    number[],
-    number[],
-    number,
-    BigNumber
-  ] & {
+  export type PotStructOutput = [BigNumber, number[]] & {
     amount: BigNumber;
     positions: number[];
-    winners: number[];
-    winnerHandRanking: number;
-    winnerKickers: BigNumber;
   };
 
   export type GameTimerStruct = {
@@ -185,7 +173,6 @@ export interface DemoTableInterface extends utils.Interface {
     "forceStopGame()": FunctionFragment;
     "game()": FunctionFragment;
     "getBigBlind()": FunctionFragment;
-    "getPositionHandRanking(uint8)": FunctionFragment;
     "getSmallBlind()": FunctionFragment;
     "holeCards(uint8,bytes)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
@@ -210,6 +197,7 @@ export interface DemoTableInterface extends utils.Interface {
     "transfer(address,uint256)": FunctionFragment;
     "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "winner(uint8)": FunctionFragment;
   };
 
   getFunction(
@@ -234,7 +222,6 @@ export interface DemoTableInterface extends utils.Interface {
       | "forceStopGame"
       | "game"
       | "getBigBlind"
-      | "getPositionHandRanking"
       | "getSmallBlind"
       | "holeCards"
       | "increaseAllowance"
@@ -259,6 +246,7 @@ export interface DemoTableInterface extends utils.Interface {
       | "transfer"
       | "transferFrom"
       | "transferOwnership"
+      | "winner"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -316,10 +304,6 @@ export interface DemoTableInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "getBigBlind",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPositionHandRanking",
-    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getSmallBlind",
@@ -401,6 +385,10 @@ export interface DemoTableInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "winner",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "TABLE_TIMEOUT",
@@ -438,10 +426,6 @@ export interface DemoTableInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "game", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getBigBlind",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getPositionHandRanking",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -492,6 +476,7 @@ export interface DemoTableInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "winner", data: BytesLike): Result;
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
@@ -666,11 +651,6 @@ export interface DemoTable extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { player: string; amount: BigNumber }>;
 
-    getPositionHandRanking(
-      pos: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
-
     getSmallBlind(
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { player: string; amount: BigNumber }>;
@@ -775,6 +755,17 @@ export interface DemoTable extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    winner(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [number[], number, BigNumber] & {
+        positions: number[];
+        ranking: number;
+        kickers: BigNumber;
+      }
+    >;
   };
 
   TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
@@ -862,11 +853,6 @@ export interface DemoTable extends BaseContract {
   getBigBlind(
     overrides?: CallOverrides
   ): Promise<[string, BigNumber] & { player: string; amount: BigNumber }>;
-
-  getPositionHandRanking(
-    pos: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
   getSmallBlind(
     overrides?: CallOverrides
@@ -967,6 +953,17 @@ export interface DemoTable extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  winner(
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<
+    [number[], number, BigNumber] & {
+      positions: number[];
+      ranking: number;
+      kickers: BigNumber;
+    }
+  >;
+
   callStatic: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
 
@@ -1037,11 +1034,6 @@ export interface DemoTable extends BaseContract {
     getBigBlind(
       overrides?: CallOverrides
     ): Promise<[string, BigNumber] & { player: string; amount: BigNumber }>;
-
-    getPositionHandRanking(
-      pos: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
     getSmallBlind(
       overrides?: CallOverrides
@@ -1139,6 +1131,17 @@ export interface DemoTable extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    winner(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [number[], number, BigNumber] & {
+        positions: number[];
+        ranking: number;
+        kickers: BigNumber;
+      }
+    >;
   };
 
   filters: {
@@ -1258,11 +1261,6 @@ export interface DemoTable extends BaseContract {
 
     getBigBlind(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPositionHandRanking(
-      pos: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     getSmallBlind(overrides?: CallOverrides): Promise<BigNumber>;
 
     holeCards(
@@ -1357,6 +1355,11 @@ export interface DemoTable extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    winner(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1439,11 +1442,6 @@ export interface DemoTable extends BaseContract {
     game(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getBigBlind(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getPositionHandRanking(
-      pos: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
 
     getSmallBlind(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1538,6 +1536,11 @@ export interface DemoTable extends BaseContract {
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    winner(
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

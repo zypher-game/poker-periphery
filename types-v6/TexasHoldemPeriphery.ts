@@ -57,14 +57,26 @@ export type TablePositionStructOutput = [
   claimable: bigint;
 };
 
+export type PotMetaStruct = {
+  amount: BigNumberish;
+  winners: BigNumberish[];
+  winnerHandRanking: BigNumberish;
+};
+
+export type PotMetaStructOutput = [
+  amount: bigint,
+  winners: bigint[],
+  winnerHandRanking: bigint
+] & { amount: bigint; winners: bigint[]; winnerHandRanking: bigint };
+
 export type TableStatusStruct = {
   table: AddressLike;
   subject: string;
   stage: BigNumberish;
   communityCards: IPokerTable.PokerCardStruct[];
   positions: TablePositionStruct[];
-  mainPot: ITexasHoldemTable.PotStruct;
-  sidePots: ITexasHoldemTable.PotStruct[];
+  mainPot: PotMetaStruct;
+  sidePots: PotMetaStruct[];
   minRaise: BigNumberish;
   betAmount: BigNumberish;
   actingPosition: BigNumberish;
@@ -79,8 +91,8 @@ export type TableStatusStructOutput = [
   stage: bigint,
   communityCards: IPokerTable.PokerCardStructOutput[],
   positions: TablePositionStructOutput[],
-  mainPot: ITexasHoldemTable.PotStructOutput,
-  sidePots: ITexasHoldemTable.PotStructOutput[],
+  mainPot: PotMetaStructOutput,
+  sidePots: PotMetaStructOutput[],
   minRaise: bigint,
   betAmount: bigint,
   actingPosition: bigint,
@@ -93,8 +105,8 @@ export type TableStatusStructOutput = [
   stage: bigint;
   communityCards: IPokerTable.PokerCardStructOutput[];
   positions: TablePositionStructOutput[];
-  mainPot: ITexasHoldemTable.PotStructOutput;
-  sidePots: ITexasHoldemTable.PotStructOutput[];
+  mainPot: PotMetaStructOutput;
+  sidePots: PotMetaStructOutput[];
   minRaise: bigint;
   betAmount: bigint;
   actingPosition: bigint;
@@ -109,30 +121,6 @@ export declare namespace IPokerTable {
   export type PokerCardStructOutput = [suit: bigint, rank: bigint] & {
     suit: bigint;
     rank: bigint;
-  };
-}
-
-export declare namespace ITexasHoldemTable {
-  export type PotStruct = {
-    amount: BigNumberish;
-    positions: BigNumberish[];
-    winners: BigNumberish[];
-    winnerHandRanking: BigNumberish;
-    winnerKickers: BigNumberish;
-  };
-
-  export type PotStructOutput = [
-    amount: bigint,
-    positions: bigint[],
-    winners: bigint[],
-    winnerHandRanking: bigint,
-    winnerKickers: bigint
-  ] & {
-    amount: bigint;
-    positions: bigint[];
-    winners: bigint[];
-    winnerHandRanking: bigint;
-    winnerKickers: bigint;
   };
 }
 

@@ -24,9 +24,26 @@ const _abi = [
             type: "uint8",
           },
         ],
-        internalType: "struct IPokerTable.PokerCard[7]",
-        name: "cards",
-        type: "tuple[7]",
+        internalType: "struct IPokerTable.PokerCard[]",
+        name: "communityCards",
+        type: "tuple[]",
+      },
+      {
+        components: [
+          {
+            internalType: "enum IPokerTable.PokerSuit",
+            name: "suit",
+            type: "uint8",
+          },
+          {
+            internalType: "enum IPokerTable.PokerRank",
+            name: "rank",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct IPokerTable.PokerCard[]",
+        name: "holeCards",
+        type: "tuple[]",
       },
     ],
     name: "bestHand",
@@ -217,7 +234,124 @@ const _abi = [
         type: "tuple",
       },
     ],
-    stateMutability: "pure",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "enum HandRanking",
+            name: "ranking",
+            type: "uint8",
+          },
+          {
+            internalType: "uint64",
+            name: "kickers",
+            type: "uint64",
+          },
+          {
+            internalType: "uint16",
+            name: "positions",
+            type: "uint16",
+          },
+          {
+            internalType: "uint16",
+            name: "claimed",
+            type: "uint16",
+          },
+        ],
+        internalType: "struct PotWinner[]",
+        name: "prevWinners",
+        type: "tuple[]",
+      },
+      {
+        internalType: "uint8",
+        name: "position",
+        type: "uint8",
+      },
+      {
+        components: [
+          {
+            internalType: "enum IPokerTable.PokerSuit",
+            name: "suit",
+            type: "uint8",
+          },
+          {
+            internalType: "enum IPokerTable.PokerRank",
+            name: "rank",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct IPokerTable.PokerCard[]",
+        name: "holeCards",
+        type: "tuple[]",
+      },
+      {
+        components: [
+          {
+            internalType: "enum IPokerTable.PokerSuit",
+            name: "suit",
+            type: "uint8",
+          },
+          {
+            internalType: "enum IPokerTable.PokerRank",
+            name: "rank",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct IPokerTable.PokerCard[]",
+        name: "communityCards",
+        type: "tuple[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "bets",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "ascSortedAllInAmounts",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint16",
+        name: "bFoldedPositions",
+        type: "uint16",
+      },
+    ],
+    name: "computePotWinners",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "enum HandRanking",
+            name: "ranking",
+            type: "uint8",
+          },
+          {
+            internalType: "uint64",
+            name: "kickers",
+            type: "uint64",
+          },
+          {
+            internalType: "uint16",
+            name: "positions",
+            type: "uint16",
+          },
+          {
+            internalType: "uint16",
+            name: "claimed",
+            type: "uint16",
+          },
+        ],
+        internalType: "struct PotWinner[]",
+        name: "winners",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -252,28 +386,13 @@ const _abi = [
             name: "positions",
             type: "uint8[]",
           },
-          {
-            internalType: "uint8[]",
-            name: "winners",
-            type: "uint8[]",
-          },
-          {
-            internalType: "enum HandRanking",
-            name: "winnerHandRanking",
-            type: "uint8",
-          },
-          {
-            internalType: "uint64",
-            name: "winnerKickers",
-            type: "uint64",
-          },
         ],
         internalType: "struct ITexasHoldemTable.Pot[]",
         name: "pots",
         type: "tuple[]",
       },
     ],
-    stateMutability: "pure",
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -298,6 +417,30 @@ const _abi = [
       },
     ],
     stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "subject",
+        type: "string",
+      },
+      {
+        internalType: "uint64",
+        name: "id",
+        type: "uint64",
+      },
+    ],
+    name: "createSignMessage",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

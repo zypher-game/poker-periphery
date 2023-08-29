@@ -113,26 +113,11 @@ export declare namespace ITexasHoldemTable {
     actingTimeout: bigint;
   };
 
-  export type PotStruct = {
-    amount: BigNumberish;
-    positions: BigNumberish[];
-    winners: BigNumberish[];
-    winnerHandRanking: BigNumberish;
-    winnerKickers: BigNumberish;
-  };
+  export type PotStruct = { amount: BigNumberish; positions: BigNumberish[] };
 
-  export type PotStructOutput = [
-    amount: bigint,
-    positions: bigint[],
-    winners: bigint[],
-    winnerHandRanking: bigint,
-    winnerKickers: bigint
-  ] & {
+  export type PotStructOutput = [amount: bigint, positions: bigint[]] & {
     amount: bigint;
     positions: bigint[];
-    winners: bigint[];
-    winnerHandRanking: bigint;
-    winnerKickers: bigint;
   };
 
   export type GameTimerStruct = {
@@ -183,6 +168,7 @@ export interface ITexasHoldemTableInterface extends Interface {
       | "showCards"
       | "timer"
       | "totalPots"
+      | "winner"
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
@@ -250,6 +236,10 @@ export interface ITexasHoldemTableInterface extends Interface {
   encodeFunctionData(functionFragment: "showCards", values?: undefined): string;
   encodeFunctionData(functionFragment: "timer", values?: undefined): string;
   encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "winner",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "buyin", data: BytesLike): Result;
@@ -288,6 +278,7 @@ export interface ITexasHoldemTableInterface extends Interface {
   decodeFunctionResult(functionFragment: "showCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "timer", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "winner", data: BytesLike): Result;
 }
 
 export interface ITexasHoldemTable extends BaseContract {
@@ -429,6 +420,18 @@ export interface ITexasHoldemTable extends BaseContract {
 
   totalPots: TypedContractMethod<[], [bigint], "view">;
 
+  winner: TypedContractMethod<
+    [pot: BigNumberish],
+    [
+      [bigint[], bigint, bigint] & {
+        positions: bigint[];
+        winnerHandRanking: bigint;
+        winnerKickers: bigint;
+      }
+    ],
+    "view"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -538,6 +541,19 @@ export interface ITexasHoldemTable extends BaseContract {
   getFunction(
     nameOrSignature: "totalPots"
   ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "winner"
+  ): TypedContractMethod<
+    [pot: BigNumberish],
+    [
+      [bigint[], bigint, bigint] & {
+        positions: bigint[];
+        winnerHandRanking: bigint;
+        winnerKickers: bigint;
+      }
+    ],
+    "view"
+  >;
 
   filters: {};
 }

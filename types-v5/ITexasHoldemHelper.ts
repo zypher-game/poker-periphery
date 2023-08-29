@@ -21,6 +21,20 @@ import type {
   PromiseOrValue,
 } from "./common";
 
+export type PotWinnerStruct = {
+  ranking: PromiseOrValue<BigNumberish>;
+  kickers: PromiseOrValue<BigNumberish>;
+  positions: PromiseOrValue<BigNumberish>;
+  claimed: PromiseOrValue<BigNumberish>;
+};
+
+export type PotWinnerStructOutput = [number, BigNumber, number, number] & {
+  ranking: number;
+  kickers: BigNumber;
+  positions: number;
+  claimed: number;
+};
+
 export declare namespace IPokerTable {
   export type PokerCardStruct = {
     suit: PromiseOrValue<BigNumberish>;
@@ -91,32 +105,22 @@ export declare namespace ITexasHoldemTable {
   export type PotStruct = {
     amount: PromiseOrValue<BigNumberish>;
     positions: PromiseOrValue<BigNumberish>[];
-    winners: PromiseOrValue<BigNumberish>[];
-    winnerHandRanking: PromiseOrValue<BigNumberish>;
-    winnerKickers: PromiseOrValue<BigNumberish>;
   };
 
-  export type PotStructOutput = [
-    BigNumber,
-    number[],
-    number[],
-    number,
-    BigNumber
-  ] & {
+  export type PotStructOutput = [BigNumber, number[]] & {
     amount: BigNumber;
     positions: number[];
-    winners: number[];
-    winnerHandRanking: number;
-    winnerKickers: BigNumber;
   };
 }
 
 export interface ITexasHoldemHelperInterface extends utils.Interface {
   functions: {
-    "bestHand((uint8,uint8)[7])": FunctionFragment;
+    "bestHand((uint8,uint8)[],(uint8,uint8)[])": FunctionFragment;
     "computeNextPlayer((uint8,uint8,uint32,uint256,uint256,uint16,uint16,uint16,uint16,uint16,uint8),(uint32,uint32,uint32,uint32),uint8,uint8,uint32)": FunctionFragment;
+    "computePotWinners((uint8,uint64,uint16,uint16)[],uint8,(uint8,uint8)[],(uint8,uint8)[],uint256[],uint256[],uint16)": FunctionFragment;
     "computePots(uint256[],uint256[],uint16)": FunctionFragment;
     "computeSortedAllinAmounts(uint256[],uint256)": FunctionFragment;
+    "createSignMessage(string,uint64)": FunctionFragment;
     "getHandRanking((uint8,uint8)[5])": FunctionFragment;
     "parseSigner(bytes,string)": FunctionFragment;
   };
@@ -125,15 +129,17 @@ export interface ITexasHoldemHelperInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "bestHand"
       | "computeNextPlayer"
+      | "computePotWinners"
       | "computePots"
       | "computeSortedAllinAmounts"
+      | "createSignMessage"
       | "getHandRanking"
       | "parseSigner"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "bestHand",
-    values: [IPokerTable.PokerCardStruct[]]
+    values: [IPokerTable.PokerCardStruct[], IPokerTable.PokerCardStruct[]]
   ): string;
   encodeFunctionData(
     functionFragment: "computeNextPlayer",
@@ -142,6 +148,18 @@ export interface ITexasHoldemHelperInterface extends utils.Interface {
       ITexasHoldemTable.GameTimerStruct,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "computePotWinners",
+    values: [
+      PotWinnerStruct[],
+      PromiseOrValue<BigNumberish>,
+      IPokerTable.PokerCardStruct[],
+      IPokerTable.PokerCardStruct[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -156,6 +174,10 @@ export interface ITexasHoldemHelperInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "computeSortedAllinAmounts",
     values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createSignMessage",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getHandRanking",
@@ -180,11 +202,19 @@ export interface ITexasHoldemHelperInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "computePotWinners",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "computePots",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "computeSortedAllinAmounts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "createSignMessage",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -227,7 +257,8 @@ export interface ITexasHoldemHelper extends BaseContract {
 
   functions: {
     bestHand(
-      cards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      holeCards: IPokerTable.PokerCardStruct[],
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
@@ -242,6 +273,19 @@ export interface ITexasHoldemHelper extends BaseContract {
       [ITexasHoldemTable.GameCacheStructOutput] & {
         nextCache: ITexasHoldemTable.GameCacheStructOutput;
       }
+    >;
+
+    computePotWinners(
+      prevWinners: PotWinnerStruct[],
+      position: PromiseOrValue<BigNumberish>,
+      holeCards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<
+      [PotWinnerStructOutput[]] & { winners: PotWinnerStructOutput[] }
     >;
 
     computePots(
@@ -260,6 +304,12 @@ export interface ITexasHoldemHelper extends BaseContract {
       newAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber[]] & { ascSortedAllInAmounts: BigNumber[] }>;
+
+    createSignMessage(
+      subject: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     getHandRanking(
       cards: [
@@ -280,7 +330,8 @@ export interface ITexasHoldemHelper extends BaseContract {
   };
 
   bestHand(
-    cards: IPokerTable.PokerCardStruct[],
+    communityCards: IPokerTable.PokerCardStruct[],
+    holeCards: IPokerTable.PokerCardStruct[],
     overrides?: CallOverrides
   ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
@@ -292,6 +343,17 @@ export interface ITexasHoldemHelper extends BaseContract {
     fromTime: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<ITexasHoldemTable.GameCacheStructOutput>;
+
+  computePotWinners(
+    prevWinners: PotWinnerStruct[],
+    position: PromiseOrValue<BigNumberish>,
+    holeCards: IPokerTable.PokerCardStruct[],
+    communityCards: IPokerTable.PokerCardStruct[],
+    bets: PromiseOrValue<BigNumberish>[],
+    ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+    bFoldedPositions: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<PotWinnerStructOutput[]>;
 
   computePots(
     bets: PromiseOrValue<BigNumberish>[],
@@ -305,6 +367,12 @@ export interface ITexasHoldemHelper extends BaseContract {
     newAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
+
+  createSignMessage(
+    subject: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   getHandRanking(
     cards: [
@@ -325,7 +393,8 @@ export interface ITexasHoldemHelper extends BaseContract {
 
   callStatic: {
     bestHand(
-      cards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      holeCards: IPokerTable.PokerCardStruct[],
       overrides?: CallOverrides
     ): Promise<[number, BigNumber] & { ranking: number; kickers: BigNumber }>;
 
@@ -337,6 +406,17 @@ export interface ITexasHoldemHelper extends BaseContract {
       fromTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<ITexasHoldemTable.GameCacheStructOutput>;
+
+    computePotWinners(
+      prevWinners: PotWinnerStruct[],
+      position: PromiseOrValue<BigNumberish>,
+      holeCards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PotWinnerStructOutput[]>;
 
     computePots(
       bets: PromiseOrValue<BigNumberish>[],
@@ -350,6 +430,12 @@ export interface ITexasHoldemHelper extends BaseContract {
       newAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
+
+    createSignMessage(
+      subject: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     getHandRanking(
       cards: [
@@ -373,7 +459,8 @@ export interface ITexasHoldemHelper extends BaseContract {
 
   estimateGas: {
     bestHand(
-      cards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      holeCards: IPokerTable.PokerCardStruct[],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -383,6 +470,17 @@ export interface ITexasHoldemHelper extends BaseContract {
       playerCounts: PromiseOrValue<BigNumberish>,
       fromPos: PromiseOrValue<BigNumberish>,
       fromTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    computePotWinners(
+      prevWinners: PotWinnerStruct[],
+      position: PromiseOrValue<BigNumberish>,
+      holeCards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -396,6 +494,12 @@ export interface ITexasHoldemHelper extends BaseContract {
     computeSortedAllinAmounts(
       cachedSortedAllinAmounts: PromiseOrValue<BigNumberish>[],
       newAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    createSignMessage(
+      subject: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -419,7 +523,8 @@ export interface ITexasHoldemHelper extends BaseContract {
 
   populateTransaction: {
     bestHand(
-      cards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      holeCards: IPokerTable.PokerCardStruct[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -429,6 +534,17 @@ export interface ITexasHoldemHelper extends BaseContract {
       playerCounts: PromiseOrValue<BigNumberish>,
       fromPos: PromiseOrValue<BigNumberish>,
       fromTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    computePotWinners(
+      prevWinners: PotWinnerStruct[],
+      position: PromiseOrValue<BigNumberish>,
+      holeCards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      bets: PromiseOrValue<BigNumberish>[],
+      ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
+      bFoldedPositions: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -442,6 +558,12 @@ export interface ITexasHoldemHelper extends BaseContract {
     computeSortedAllinAmounts(
       cachedSortedAllinAmounts: PromiseOrValue<BigNumberish>[],
       newAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    createSignMessage(
+      subject: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

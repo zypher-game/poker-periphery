@@ -20,6 +20,20 @@ import type {
   TypedContractMethod,
 } from "./common";
 
+export type PotWinnerStruct = {
+  ranking: BigNumberish;
+  kickers: BigNumberish;
+  positions: BigNumberish;
+  claimed: BigNumberish;
+};
+
+export type PotWinnerStructOutput = [
+  ranking: bigint,
+  kickers: bigint,
+  positions: bigint,
+  claimed: bigint
+] & { ranking: bigint; kickers: bigint; positions: bigint; claimed: bigint };
+
 export declare namespace IPokerTable {
   export type PokerCardStruct = { suit: BigNumberish; rank: BigNumberish };
 
@@ -89,26 +103,11 @@ export declare namespace ITexasHoldemTable {
     endTimeout: bigint;
   };
 
-  export type PotStruct = {
-    amount: BigNumberish;
-    positions: BigNumberish[];
-    winners: BigNumberish[];
-    winnerHandRanking: BigNumberish;
-    winnerKickers: BigNumberish;
-  };
+  export type PotStruct = { amount: BigNumberish; positions: BigNumberish[] };
 
-  export type PotStructOutput = [
-    amount: bigint,
-    positions: bigint[],
-    winners: bigint[],
-    winnerHandRanking: bigint,
-    winnerKickers: bigint
-  ] & {
+  export type PotStructOutput = [amount: bigint, positions: bigint[]] & {
     amount: bigint;
     positions: bigint[];
-    winners: bigint[];
-    winnerHandRanking: bigint;
-    winnerKickers: bigint;
   };
 }
 
@@ -117,15 +116,17 @@ export interface TexasHoldemHelperInterface extends Interface {
     nameOrSignature:
       | "bestHand"
       | "computeNextPlayer"
+      | "computePotWinners"
       | "computePots"
       | "computeSortedAllinAmounts"
+      | "createSignMessage"
       | "getHandRanking"
       | "parseSigner"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "bestHand",
-    values: [IPokerTable.PokerCardStruct[]]
+    values: [IPokerTable.PokerCardStruct[], IPokerTable.PokerCardStruct[]]
   ): string;
   encodeFunctionData(
     functionFragment: "computeNextPlayer",
@@ -138,12 +139,28 @@ export interface TexasHoldemHelperInterface extends Interface {
     ]
   ): string;
   encodeFunctionData(
+    functionFragment: "computePotWinners",
+    values: [
+      PotWinnerStruct[],
+      BigNumberish,
+      IPokerTable.PokerCardStruct[],
+      IPokerTable.PokerCardStruct[],
+      BigNumberish[],
+      BigNumberish[],
+      BigNumberish
+    ]
+  ): string;
+  encodeFunctionData(
     functionFragment: "computePots",
     values: [BigNumberish[], BigNumberish[], BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "computeSortedAllinAmounts",
     values: [BigNumberish[], BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "createSignMessage",
+    values: [string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getHandRanking",
@@ -168,11 +185,19 @@ export interface TexasHoldemHelperInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "computePotWinners",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "computePots",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "computeSortedAllinAmounts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "createSignMessage",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -229,7 +254,10 @@ export interface TexasHoldemHelper extends BaseContract {
   ): Promise<this>;
 
   bestHand: TypedContractMethod<
-    [cards: IPokerTable.PokerCardStruct[]],
+    [
+      communityCards: IPokerTable.PokerCardStruct[],
+      holeCards: IPokerTable.PokerCardStruct[]
+    ],
     [[bigint, bigint] & { ranking: bigint; kickers: bigint }],
     "view"
   >;
@@ -246,6 +274,20 @@ export interface TexasHoldemHelper extends BaseContract {
     "view"
   >;
 
+  computePotWinners: TypedContractMethod<
+    [
+      prevWinners: PotWinnerStruct[],
+      position: BigNumberish,
+      holeCards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      bets: BigNumberish[],
+      ascSortedAllInAmounts: BigNumberish[],
+      bFoldedPositions: BigNumberish
+    ],
+    [PotWinnerStructOutput[]],
+    "view"
+  >;
+
   computePots: TypedContractMethod<
     [
       bets: BigNumberish[],
@@ -259,6 +301,12 @@ export interface TexasHoldemHelper extends BaseContract {
   computeSortedAllinAmounts: TypedContractMethod<
     [cachedSortedAllinAmounts: BigNumberish[], newAmount: BigNumberish],
     [bigint[]],
+    "view"
+  >;
+
+  createSignMessage: TypedContractMethod<
+    [subject: string, id: BigNumberish],
+    [string],
     "view"
   >;
 
@@ -289,7 +337,10 @@ export interface TexasHoldemHelper extends BaseContract {
   getFunction(
     nameOrSignature: "bestHand"
   ): TypedContractMethod<
-    [cards: IPokerTable.PokerCardStruct[]],
+    [
+      communityCards: IPokerTable.PokerCardStruct[],
+      holeCards: IPokerTable.PokerCardStruct[]
+    ],
     [[bigint, bigint] & { ranking: bigint; kickers: bigint }],
     "view"
   >;
@@ -304,6 +355,21 @@ export interface TexasHoldemHelper extends BaseContract {
       fromTime: BigNumberish
     ],
     [ITexasHoldemTable.GameCacheStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "computePotWinners"
+  ): TypedContractMethod<
+    [
+      prevWinners: PotWinnerStruct[],
+      position: BigNumberish,
+      holeCards: IPokerTable.PokerCardStruct[],
+      communityCards: IPokerTable.PokerCardStruct[],
+      bets: BigNumberish[],
+      ascSortedAllInAmounts: BigNumberish[],
+      bFoldedPositions: BigNumberish
+    ],
+    [PotWinnerStructOutput[]],
     "view"
   >;
   getFunction(
@@ -324,6 +390,9 @@ export interface TexasHoldemHelper extends BaseContract {
     [bigint[]],
     "view"
   >;
+  getFunction(
+    nameOrSignature: "createSignMessage"
+  ): TypedContractMethod<[subject: string, id: BigNumberish], [string], "view">;
   getFunction(
     nameOrSignature: "getHandRanking"
   ): TypedContractMethod<

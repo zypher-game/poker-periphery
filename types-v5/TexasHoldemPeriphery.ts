@@ -62,14 +62,26 @@ export type TablePositionStructOutput = [
   claimable: BigNumber;
 };
 
+export type PotMetaStruct = {
+  amount: PromiseOrValue<BigNumberish>;
+  winners: PromiseOrValue<BigNumberish>[];
+  winnerHandRanking: PromiseOrValue<BigNumberish>;
+};
+
+export type PotMetaStructOutput = [BigNumber, number[], number] & {
+  amount: BigNumber;
+  winners: number[];
+  winnerHandRanking: number;
+};
+
 export type TableStatusStruct = {
   table: PromiseOrValue<string>;
   subject: PromiseOrValue<string>;
   stage: PromiseOrValue<BigNumberish>;
   communityCards: IPokerTable.PokerCardStruct[];
   positions: TablePositionStruct[];
-  mainPot: ITexasHoldemTable.PotStruct;
-  sidePots: ITexasHoldemTable.PotStruct[];
+  mainPot: PotMetaStruct;
+  sidePots: PotMetaStruct[];
   minRaise: PromiseOrValue<BigNumberish>;
   betAmount: PromiseOrValue<BigNumberish>;
   actingPosition: PromiseOrValue<BigNumberish>;
@@ -84,8 +96,8 @@ export type TableStatusStructOutput = [
   number,
   IPokerTable.PokerCardStructOutput[],
   TablePositionStructOutput[],
-  ITexasHoldemTable.PotStructOutput,
-  ITexasHoldemTable.PotStructOutput[],
+  PotMetaStructOutput,
+  PotMetaStructOutput[],
   BigNumber,
   BigNumber,
   number,
@@ -98,8 +110,8 @@ export type TableStatusStructOutput = [
   stage: number;
   communityCards: IPokerTable.PokerCardStructOutput[];
   positions: TablePositionStructOutput[];
-  mainPot: ITexasHoldemTable.PotStructOutput;
-  sidePots: ITexasHoldemTable.PotStructOutput[];
+  mainPot: PotMetaStructOutput;
+  sidePots: PotMetaStructOutput[];
   minRaise: BigNumber;
   betAmount: BigNumber;
   actingPosition: number;
@@ -117,30 +129,6 @@ export declare namespace IPokerTable {
   export type PokerCardStructOutput = [number, number] & {
     suit: number;
     rank: number;
-  };
-}
-
-export declare namespace ITexasHoldemTable {
-  export type PotStruct = {
-    amount: PromiseOrValue<BigNumberish>;
-    positions: PromiseOrValue<BigNumberish>[];
-    winners: PromiseOrValue<BigNumberish>[];
-    winnerHandRanking: PromiseOrValue<BigNumberish>;
-    winnerKickers: PromiseOrValue<BigNumberish>;
-  };
-
-  export type PotStructOutput = [
-    BigNumber,
-    number[],
-    number[],
-    number,
-    BigNumber
-  ] & {
-    amount: BigNumber;
-    positions: number[];
-    winners: number[];
-    winnerHandRanking: number;
-    winnerKickers: BigNumber;
   };
 }
 
