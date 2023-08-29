@@ -189,6 +189,11 @@ const _abi = [
                 name: "pendingBuyin",
                 type: "uint256",
               },
+              {
+                internalType: "uint256",
+                name: "claimable",
+                type: "uint256",
+              },
             ],
             internalType: "struct TablePosition[]",
             name: "positions",
@@ -565,6 +570,11 @@ const _abi = [
                 name: "pendingBuyin",
                 type: "uint256",
               },
+              {
+                internalType: "uint256",
+                name: "claimable",
+                type: "uint256",
+              },
             ],
             internalType: "struct TablePosition[]",
             name: "positions",
@@ -774,6 +784,11 @@ const _abi = [
               {
                 internalType: "uint256",
                 name: "pendingBuyin",
+                type: "uint256",
+              },
+              {
+                internalType: "uint256",
+                name: "claimable",
                 type: "uint256",
               },
             ],
