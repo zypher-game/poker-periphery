@@ -149,6 +149,7 @@ export declare namespace ITexasHoldemTable {
 
 export interface ITexasHoldemTableInterface extends utils.Interface {
   functions: {
+    "activePlayerCounts()": FunctionFragment;
     "allinBets()": FunctionFragment;
     "buyin(uint256)": FunctionFragment;
     "callBets()": FunctionFragment;
@@ -179,6 +180,7 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "activePlayerCounts"
       | "allinBets"
       | "buyin"
       | "callBets"
@@ -207,6 +209,10 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
       | "winner"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "buyin",
@@ -280,6 +286,10 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "buyin", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "callBets", data: BytesLike): Result;
@@ -349,6 +359,8 @@ export interface ITexasHoldemTable extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    activePlayerCounts(overrides?: CallOverrides): Promise<[number]>;
+
     allinBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -474,6 +486,8 @@ export interface ITexasHoldemTable extends BaseContract {
     >;
   };
 
+  activePlayerCounts(overrides?: CallOverrides): Promise<number>;
+
   allinBets(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -593,6 +607,8 @@ export interface ITexasHoldemTable extends BaseContract {
   >;
 
   callStatic: {
+    activePlayerCounts(overrides?: CallOverrides): Promise<number>;
+
     allinBets(overrides?: CallOverrides): Promise<void>;
 
     buyin(
@@ -699,6 +715,8 @@ export interface ITexasHoldemTable extends BaseContract {
   filters: {};
 
   estimateGas: {
+    activePlayerCounts(overrides?: CallOverrides): Promise<BigNumber>;
+
     allinBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -807,6 +825,10 @@ export interface ITexasHoldemTable extends BaseContract {
   };
 
   populateTransaction: {
+    activePlayerCounts(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     allinBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

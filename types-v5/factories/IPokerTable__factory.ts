@@ -9,6 +9,19 @@ import type { IPokerTable, IPokerTableInterface } from "../IPokerTable";
 const _abi = [
   {
     inputs: [],
+    name: "activePlayerCounts",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "info",
     outputs: [
       {

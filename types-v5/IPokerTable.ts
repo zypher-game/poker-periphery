@@ -90,6 +90,7 @@ export declare namespace IPokerTable {
 
 export interface IPokerTableInterface extends utils.Interface {
   functions: {
+    "activePlayerCounts()": FunctionFragment;
     "info()": FunctionFragment;
     "isPlaying()": FunctionFragment;
     "newTable((address,string)[])": FunctionFragment;
@@ -99,6 +100,7 @@ export interface IPokerTableInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "activePlayerCounts"
       | "info"
       | "isPlaying"
       | "newTable"
@@ -106,6 +108,10 @@ export interface IPokerTableInterface extends utils.Interface {
       | "totalPots"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
   encodeFunctionData(functionFragment: "isPlaying", values?: undefined): string;
   encodeFunctionData(
@@ -118,6 +124,10 @@ export interface IPokerTableInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
@@ -154,6 +164,8 @@ export interface IPokerTable extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    activePlayerCounts(overrides?: CallOverrides): Promise<[number]>;
+
     info(overrides?: CallOverrides): Promise<[IPokerTable.InfoStructOutput]>;
 
     isPlaying(overrides?: CallOverrides): Promise<[boolean]>;
@@ -170,6 +182,8 @@ export interface IPokerTable extends BaseContract {
 
     totalPots(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
+
+  activePlayerCounts(overrides?: CallOverrides): Promise<number>;
 
   info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
 
@@ -188,6 +202,8 @@ export interface IPokerTable extends BaseContract {
   totalPots(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
+    activePlayerCounts(overrides?: CallOverrides): Promise<number>;
+
     info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
 
     isPlaying(overrides?: CallOverrides): Promise<boolean>;
@@ -208,6 +224,8 @@ export interface IPokerTable extends BaseContract {
   filters: {};
 
   estimateGas: {
+    activePlayerCounts(overrides?: CallOverrides): Promise<BigNumber>;
+
     info(overrides?: CallOverrides): Promise<BigNumber>;
 
     isPlaying(overrides?: CallOverrides): Promise<BigNumber>;
@@ -226,6 +244,10 @@ export interface IPokerTable extends BaseContract {
   };
 
   populateTransaction: {
+    activePlayerCounts(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     info(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isPlaying(overrides?: CallOverrides): Promise<PopulatedTransaction>;

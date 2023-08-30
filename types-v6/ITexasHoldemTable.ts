@@ -143,6 +143,7 @@ export declare namespace ITexasHoldemTable {
 export interface ITexasHoldemTableInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "activePlayerCounts"
       | "allinBets"
       | "buyin"
       | "callBets"
@@ -171,6 +172,10 @@ export interface ITexasHoldemTableInterface extends Interface {
       | "winner"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
   encodeFunctionData(functionFragment: "buyin", values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: "callBets", values?: undefined): string;
@@ -241,6 +246,10 @@ export interface ITexasHoldemTableInterface extends Interface {
     values: [BigNumberish]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "buyin", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "callBets", data: BytesLike): Result;
@@ -323,6 +332,8 @@ export interface ITexasHoldemTable extends BaseContract {
   removeAllListeners<TCEvent extends TypedContractEvent>(
     event?: TCEvent
   ): Promise<this>;
+
+  activePlayerCounts: TypedContractMethod<[], [bigint], "view">;
 
   allinBets: TypedContractMethod<[], [void], "nonpayable">;
 
@@ -440,6 +451,9 @@ export interface ITexasHoldemTable extends BaseContract {
     key: string | FunctionFragment
   ): T;
 
+  getFunction(
+    nameOrSignature: "activePlayerCounts"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "allinBets"
   ): TypedContractMethod<[], [void], "nonpayable">;

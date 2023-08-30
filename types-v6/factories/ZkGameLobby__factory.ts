@@ -685,6 +685,11 @@ const _abi = [
             type: "uint8",
           },
           {
+            internalType: "uint8",
+            name: "activePlayers",
+            type: "uint8",
+          },
+          {
             internalType: "enum IPokerTable.TableStatus",
             name: "status",
             type: "uint8",

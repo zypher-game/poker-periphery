@@ -57,6 +57,7 @@ export declare namespace ILobby {
     id: PromiseOrValue<BigNumberish>;
     table: PromiseOrValue<string>;
     seats: PromiseOrValue<BigNumberish>;
+    activePlayers: PromiseOrValue<BigNumberish>;
     status: PromiseOrValue<BigNumberish>;
     waitings: ILobby.WaitingStruct[];
     config: MentalPokerHelper.ConfigStruct;
@@ -68,6 +69,7 @@ export declare namespace ILobby {
     string,
     number,
     number,
+    number,
     ILobby.WaitingStructOutput[],
     MentalPokerHelper.ConfigStructOutput,
     ILobby.PendingActionStructOutput
@@ -75,6 +77,7 @@ export declare namespace ILobby {
     id: number;
     table: string;
     seats: number;
+    activePlayers: number;
     status: number;
     waitings: ILobby.WaitingStructOutput[];
     config: MentalPokerHelper.ConfigStructOutput;

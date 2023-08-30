@@ -11,6 +11,19 @@ import type {
 const _abi = [
   {
     inputs: [],
+    name: "activePlayerCounts",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "allinBets",
     outputs: [],
     stateMutability: "nonpayable",

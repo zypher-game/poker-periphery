@@ -52,6 +52,7 @@ export declare namespace ILobby {
     id: BigNumberish;
     table: AddressLike;
     seats: BigNumberish;
+    activePlayers: BigNumberish;
     status: BigNumberish;
     waitings: ILobby.WaitingStruct[];
     config: MentalPokerHelper.ConfigStruct;
@@ -62,6 +63,7 @@ export declare namespace ILobby {
     id: bigint,
     table: string,
     seats: bigint,
+    activePlayers: bigint,
     status: bigint,
     waitings: ILobby.WaitingStructOutput[],
     config: MentalPokerHelper.ConfigStructOutput,
@@ -70,6 +72,7 @@ export declare namespace ILobby {
     id: bigint;
     table: string;
     seats: bigint;
+    activePlayers: bigint;
     status: bigint;
     waitings: ILobby.WaitingStructOutput[];
     config: MentalPokerHelper.ConfigStructOutput;

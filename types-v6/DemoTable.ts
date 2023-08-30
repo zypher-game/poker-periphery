@@ -146,6 +146,7 @@ export interface DemoTableInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "TABLE_TIMEOUT"
+      | "activePlayerCounts"
       | "allinBets"
       | "allowance"
       | "approve"
@@ -202,6 +203,10 @@ export interface DemoTableInterface extends Interface {
 
   encodeFunctionData(
     functionFragment: "TABLE_TIMEOUT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
@@ -333,6 +338,10 @@ export interface DemoTableInterface extends Interface {
 
   decodeFunctionResult(
     functionFragment: "TABLE_TIMEOUT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
@@ -526,6 +535,8 @@ export interface DemoTable extends BaseContract {
 
   TABLE_TIMEOUT: TypedContractMethod<[], [bigint], "view">;
 
+  activePlayerCounts: TypedContractMethod<[], [bigint], "view">;
+
   allinBets: TypedContractMethod<[], [void], "nonpayable">;
 
   allowance: TypedContractMethod<
@@ -712,6 +723,9 @@ export interface DemoTable extends BaseContract {
 
   getFunction(
     nameOrSignature: "TABLE_TIMEOUT"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "activePlayerCounts"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "allinBets"

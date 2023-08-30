@@ -86,6 +86,7 @@ export declare namespace IPokerTable {
 export interface IPokerTableInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "activePlayerCounts"
       | "info"
       | "isPlaying"
       | "newTable"
@@ -93,6 +94,10 @@ export interface IPokerTableInterface extends Interface {
       | "totalPots"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
   encodeFunctionData(functionFragment: "isPlaying", values?: undefined): string;
   encodeFunctionData(
@@ -105,6 +110,10 @@ export interface IPokerTableInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
 
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "newTable", data: BytesLike): Result;
@@ -155,6 +164,8 @@ export interface IPokerTable extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  activePlayerCounts: TypedContractMethod<[], [bigint], "view">;
+
   info: TypedContractMethod<[], [IPokerTable.InfoStructOutput], "view">;
 
   isPlaying: TypedContractMethod<[], [boolean], "view">;
@@ -177,6 +188,9 @@ export interface IPokerTable extends BaseContract {
     key: string | FunctionFragment
   ): T;
 
+  getFunction(
+    nameOrSignature: "activePlayerCounts"
+  ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "info"
   ): TypedContractMethod<[], [IPokerTable.InfoStructOutput], "view">;

@@ -154,6 +154,7 @@ export declare namespace ITexasHoldemTable {
 export interface DemoTableInterface extends utils.Interface {
   functions: {
     "TABLE_TIMEOUT()": FunctionFragment;
+    "activePlayerCounts()": FunctionFragment;
     "allinBets()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
@@ -203,6 +204,7 @@ export interface DemoTableInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "TABLE_TIMEOUT"
+      | "activePlayerCounts"
       | "allinBets"
       | "allowance"
       | "approve"
@@ -251,6 +253,10 @@ export interface DemoTableInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "TABLE_TIMEOUT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
@@ -392,6 +398,10 @@ export interface DemoTableInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "TABLE_TIMEOUT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
@@ -562,6 +572,8 @@ export interface DemoTable extends BaseContract {
 
   functions: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<[number]>;
+
+    activePlayerCounts(overrides?: CallOverrides): Promise<[number]>;
 
     allinBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -770,6 +782,8 @@ export interface DemoTable extends BaseContract {
 
   TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
 
+  activePlayerCounts(overrides?: CallOverrides): Promise<number>;
+
   allinBets(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -966,6 +980,8 @@ export interface DemoTable extends BaseContract {
 
   callStatic: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
+
+    activePlayerCounts(overrides?: CallOverrides): Promise<number>;
 
     allinBets(overrides?: CallOverrides): Promise<void>;
 
@@ -1183,6 +1199,8 @@ export interface DemoTable extends BaseContract {
   estimateGas: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<BigNumber>;
 
+    activePlayerCounts(overrides?: CallOverrides): Promise<BigNumber>;
+
     allinBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1364,6 +1382,10 @@ export interface DemoTable extends BaseContract {
 
   populateTransaction: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    activePlayerCounts(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     allinBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }

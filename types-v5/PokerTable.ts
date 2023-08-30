@@ -96,6 +96,7 @@ export declare namespace IPokerTable {
 export interface PokerTableInterface extends utils.Interface {
   functions: {
     "TABLE_TIMEOUT()": FunctionFragment;
+    "activePlayerCounts()": FunctionFragment;
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
@@ -122,6 +123,7 @@ export interface PokerTableInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "TABLE_TIMEOUT"
+      | "activePlayerCounts"
       | "allowance"
       | "approve"
       | "balanceOf"
@@ -147,6 +149,10 @@ export interface PokerTableInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "TABLE_TIMEOUT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -219,6 +225,10 @@ export interface PokerTableInterface extends utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "TABLE_TIMEOUT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
@@ -349,6 +359,8 @@ export interface PokerTable extends BaseContract {
   functions: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<[number]>;
 
+    activePlayerCounts(overrides?: CallOverrides): Promise<[number]>;
+
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -436,6 +448,8 @@ export interface PokerTable extends BaseContract {
 
   TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
 
+  activePlayerCounts(overrides?: CallOverrides): Promise<number>;
+
   allowance(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<string>,
@@ -522,6 +536,8 @@ export interface PokerTable extends BaseContract {
 
   callStatic: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<number>;
+
+    activePlayerCounts(overrides?: CallOverrides): Promise<number>;
 
     allowance(
       arg0: PromiseOrValue<string>,
@@ -645,6 +661,8 @@ export interface PokerTable extends BaseContract {
   estimateGas: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<BigNumber>;
 
+    activePlayerCounts(overrides?: CallOverrides): Promise<BigNumber>;
+
     allowance(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
@@ -732,6 +750,10 @@ export interface PokerTable extends BaseContract {
 
   populateTransaction: {
     TABLE_TIMEOUT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    activePlayerCounts(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     allowance(
       arg0: PromiseOrValue<string>,

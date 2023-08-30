@@ -89,6 +89,7 @@ export interface PokerTableInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "TABLE_TIMEOUT"
+      | "activePlayerCounts"
       | "allowance"
       | "approve"
       | "balanceOf"
@@ -122,6 +123,10 @@ export interface PokerTableInterface extends Interface {
 
   encodeFunctionData(
     functionFragment: "TABLE_TIMEOUT",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "activePlayerCounts",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -187,6 +192,10 @@ export interface PokerTableInterface extends Interface {
 
   decodeFunctionResult(
     functionFragment: "TABLE_TIMEOUT",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "activePlayerCounts",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
@@ -339,6 +348,8 @@ export interface PokerTable extends BaseContract {
 
   TABLE_TIMEOUT: TypedContractMethod<[], [bigint], "view">;
 
+  activePlayerCounts: TypedContractMethod<[], [bigint], "view">;
+
   allowance: TypedContractMethod<
     [arg0: AddressLike, arg1: AddressLike],
     [bigint],
@@ -423,6 +434,9 @@ export interface PokerTable extends BaseContract {
 
   getFunction(
     nameOrSignature: "TABLE_TIMEOUT"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "activePlayerCounts"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "allowance"
