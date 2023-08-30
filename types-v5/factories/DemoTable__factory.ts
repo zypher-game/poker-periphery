@@ -295,9 +295,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "player",
-        type: "address",
+        internalType: "uint8",
+        name: "pos",
+        type: "uint8",
       },
     ],
     name: "claimPots",

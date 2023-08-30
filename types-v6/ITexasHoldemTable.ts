@@ -178,7 +178,7 @@ export interface ITexasHoldemTableInterface extends Interface {
   encodeFunctionData(functionFragment: "checkBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "claimPots",
-    values: [AddressLike]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "communityCards",
@@ -334,7 +334,11 @@ export interface ITexasHoldemTable extends BaseContract {
 
   checkBets: TypedContractMethod<[], [void], "nonpayable">;
 
-  claimPots: TypedContractMethod<[player: AddressLike], [bigint], "nonpayable">;
+  claimPots: TypedContractMethod<
+    [position: BigNumberish],
+    [bigint],
+    "nonpayable"
+  >;
 
   communityCards: TypedContractMethod<
     [],
@@ -453,7 +457,7 @@ export interface ITexasHoldemTable extends BaseContract {
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "claimPots"
-  ): TypedContractMethod<[player: AddressLike], [bigint], "nonpayable">;
+  ): TypedContractMethod<[position: BigNumberish], [bigint], "nonpayable">;
   getFunction(
     nameOrSignature: "communityCards"
   ): TypedContractMethod<[], [IPokerTable.PokerCardStructOutput[]], "view">;

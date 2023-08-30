@@ -32,7 +32,6 @@ export type TablePositionStruct = {
   bets: BigNumberish;
   chips: BigNumberish;
   pendingBuyin: BigNumberish;
-  claimable: BigNumberish;
 };
 
 export type TablePositionStructOutput = [
@@ -43,8 +42,7 @@ export type TablePositionStructOutput = [
   holeCards: IPokerTable.PokerCardStructOutput[],
   bets: bigint,
   chips: bigint,
-  pendingBuyin: bigint,
-  claimable: bigint
+  pendingBuyin: bigint
 ] & {
   pid: bigint;
   wallet: string;
@@ -54,7 +52,6 @@ export type TablePositionStructOutput = [
   bets: bigint;
   chips: bigint;
   pendingBuyin: bigint;
-  claimable: bigint;
 };
 
 export type PotMetaStruct = {

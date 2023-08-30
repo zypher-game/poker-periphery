@@ -108,7 +108,7 @@
           },
           {
             "internalType": "uint16",
-            "name": "claimable",
+            "name": "claimed",
             "type": "uint16"
           },
           {
@@ -215,7 +215,7 @@
           },
           {
             "internalType": "uint16",
-            "name": "claimable",
+            "name": "claimed",
             "type": "uint16"
           },
           {
@@ -245,6 +245,16 @@
             "internalType": "uint64",
             "name": "kickers",
             "type": "uint64"
+          },
+          {
+            "internalType": "uint256",
+            "name": "sharedReward",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "sharedCount",
+            "type": "uint8"
           },
           {
             "internalType": "uint16",
@@ -331,6 +341,16 @@
             "type": "uint64"
           },
           {
+            "internalType": "uint256",
+            "name": "sharedReward",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "sharedCount",
+            "type": "uint8"
+          },
+          {
             "internalType": "uint16",
             "name": "positions",
             "type": "uint16"
@@ -346,7 +366,7 @@
         "type": "tuple[]"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {
@@ -387,7 +407,7 @@
         "type": "tuple[]"
       }
     ],
-    "stateMutability": "view",
+    "stateMutability": "pure",
     "type": "function"
   },
   {

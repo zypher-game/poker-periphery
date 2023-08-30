@@ -23,6 +23,8 @@ import type {
 export type PotWinnerStruct = {
   ranking: BigNumberish;
   kickers: BigNumberish;
+  sharedReward: BigNumberish;
+  sharedCount: BigNumberish;
   positions: BigNumberish;
   claimed: BigNumberish;
 };
@@ -30,9 +32,18 @@ export type PotWinnerStruct = {
 export type PotWinnerStructOutput = [
   ranking: bigint,
   kickers: bigint,
+  sharedReward: bigint,
+  sharedCount: bigint,
   positions: bigint,
   claimed: bigint
-] & { ranking: bigint; kickers: bigint; positions: bigint; claimed: bigint };
+] & {
+  ranking: bigint;
+  kickers: bigint;
+  sharedReward: bigint;
+  sharedCount: bigint;
+  positions: bigint;
+  claimed: bigint;
+};
 
 export declare namespace IPokerTable {
   export type PokerCardStruct = { suit: BigNumberish; rank: BigNumberish };
@@ -54,7 +65,7 @@ export declare namespace ITexasHoldemTable {
     allin: BigNumberish;
     betMatched: BigNumberish;
     showed: BigNumberish;
-    claimable: BigNumberish;
+    claimed: BigNumberish;
     foldedCount: BigNumberish;
   };
 
@@ -68,7 +79,7 @@ export declare namespace ITexasHoldemTable {
     allin: bigint,
     betMatched: bigint,
     showed: bigint,
-    claimable: bigint,
+    claimed: bigint,
     foldedCount: bigint
   ] & {
     stage: bigint;
@@ -80,7 +91,7 @@ export declare namespace ITexasHoldemTable {
     allin: bigint;
     betMatched: bigint;
     showed: bigint;
-    claimable: bigint;
+    claimed: bigint;
     foldedCount: bigint;
   };
 

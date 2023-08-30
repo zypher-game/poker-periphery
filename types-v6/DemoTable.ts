@@ -224,7 +224,7 @@ export interface DemoTableInterface extends Interface {
   encodeFunctionData(functionFragment: "checkBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "claimPots",
-    values: [AddressLike]
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "communityCards",
@@ -552,7 +552,7 @@ export interface DemoTable extends BaseContract {
 
   checkBets: TypedContractMethod<[], [void], "nonpayable">;
 
-  claimPots: TypedContractMethod<[player: AddressLike], [bigint], "nonpayable">;
+  claimPots: TypedContractMethod<[pos: BigNumberish], [bigint], "nonpayable">;
 
   communityCards: TypedContractMethod<
     [],
@@ -750,7 +750,7 @@ export interface DemoTable extends BaseContract {
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "claimPots"
-  ): TypedContractMethod<[player: AddressLike], [bigint], "nonpayable">;
+  ): TypedContractMethod<[pos: BigNumberish], [bigint], "nonpayable">;
   getFunction(
     nameOrSignature: "communityCards"
   ): TypedContractMethod<[], [IPokerTable.PokerCardStructOutput[]], "view">;

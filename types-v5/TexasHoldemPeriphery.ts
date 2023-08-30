@@ -37,7 +37,6 @@ export type TablePositionStruct = {
   bets: PromiseOrValue<BigNumberish>;
   chips: PromiseOrValue<BigNumberish>;
   pendingBuyin: PromiseOrValue<BigNumberish>;
-  claimable: PromiseOrValue<BigNumberish>;
 };
 
 export type TablePositionStructOutput = [
@@ -46,7 +45,6 @@ export type TablePositionStructOutput = [
   string,
   number,
   IPokerTable.PokerCardStructOutput[],
-  BigNumber,
   BigNumber,
   BigNumber,
   BigNumber
@@ -59,7 +57,6 @@ export type TablePositionStructOutput = [
   bets: BigNumber;
   chips: BigNumber;
   pendingBuyin: BigNumber;
-  claimable: BigNumber;
 };
 
 export type PotMetaStruct = {

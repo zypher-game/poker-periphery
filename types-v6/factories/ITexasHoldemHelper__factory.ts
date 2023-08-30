@@ -113,7 +113,7 @@ const _abi = [
           },
           {
             internalType: "uint16",
-            name: "claimable",
+            name: "claimed",
             type: "uint16",
           },
           {
@@ -220,7 +220,7 @@ const _abi = [
           },
           {
             internalType: "uint16",
-            name: "claimable",
+            name: "claimed",
             type: "uint16",
           },
           {
@@ -250,6 +250,16 @@ const _abi = [
             internalType: "uint64",
             name: "kickers",
             type: "uint64",
+          },
+          {
+            internalType: "uint256",
+            name: "sharedReward",
+            type: "uint256",
+          },
+          {
+            internalType: "uint8",
+            name: "sharedCount",
+            type: "uint8",
           },
           {
             internalType: "uint16",
@@ -334,6 +344,16 @@ const _abi = [
             internalType: "uint64",
             name: "kickers",
             type: "uint64",
+          },
+          {
+            internalType: "uint256",
+            name: "sharedReward",
+            type: "uint256",
+          },
+          {
+            internalType: "uint8",
+            name: "sharedCount",
+            type: "uint8",
           },
           {
             internalType: "uint16",

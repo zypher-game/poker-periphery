@@ -24,13 +24,24 @@ import type {
 export type PotWinnerStruct = {
   ranking: PromiseOrValue<BigNumberish>;
   kickers: PromiseOrValue<BigNumberish>;
+  sharedReward: PromiseOrValue<BigNumberish>;
+  sharedCount: PromiseOrValue<BigNumberish>;
   positions: PromiseOrValue<BigNumberish>;
   claimed: PromiseOrValue<BigNumberish>;
 };
 
-export type PotWinnerStructOutput = [number, BigNumber, number, number] & {
+export type PotWinnerStructOutput = [
+  number,
+  BigNumber,
+  BigNumber,
+  number,
+  number,
+  number
+] & {
   ranking: number;
   kickers: BigNumber;
+  sharedReward: BigNumber;
+  sharedCount: number;
   positions: number;
   claimed: number;
 };
@@ -58,7 +69,7 @@ export declare namespace ITexasHoldemTable {
     allin: PromiseOrValue<BigNumberish>;
     betMatched: PromiseOrValue<BigNumberish>;
     showed: PromiseOrValue<BigNumberish>;
-    claimable: PromiseOrValue<BigNumberish>;
+    claimed: PromiseOrValue<BigNumberish>;
     foldedCount: PromiseOrValue<BigNumberish>;
   };
 
@@ -84,7 +95,7 @@ export declare namespace ITexasHoldemTable {
     allin: number;
     betMatched: number;
     showed: number;
-    claimable: number;
+    claimed: number;
     foldedCount: number;
   };
 
@@ -117,7 +128,7 @@ export interface TexasHoldemHelperInterface extends utils.Interface {
   functions: {
     "bestHand((uint8,uint8)[],(uint8,uint8)[])": FunctionFragment;
     "computeNextPlayer((uint8,uint8,uint32,uint256,uint256,uint16,uint16,uint16,uint16,uint16,uint8),(uint32,uint32,uint32,uint32),uint8,uint8,uint32)": FunctionFragment;
-    "computePotWinners((uint8,uint64,uint16,uint16)[],uint8,(uint8,uint8)[],(uint8,uint8)[],uint256[],uint256[],uint16)": FunctionFragment;
+    "computePotWinners((uint8,uint64,uint256,uint8,uint16,uint16)[],uint8,(uint8,uint8)[],(uint8,uint8)[],uint256[],uint256[],uint16)": FunctionFragment;
     "computePots(uint256[],uint256[],uint16)": FunctionFragment;
     "computeSortedAllinAmounts(uint256[],uint256)": FunctionFragment;
     "createSignMessage(string,uint64)": FunctionFragment;

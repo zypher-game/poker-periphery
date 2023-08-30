@@ -1,6 +1,6 @@
 {
   "name": "@zypher-game/poker-periphery",
-  "version": "0.230829.71071",
+  "version": "0.230830.19982",
   "license": "MIT",
   "main": "./contracts.json"
 }

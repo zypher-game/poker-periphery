@@ -163,7 +163,7 @@ export interface DemoTableInterface extends utils.Interface {
     "callBets()": FunctionFragment;
     "cashOut()": FunctionFragment;
     "checkBets()": FunctionFragment;
-    "claimPots(address)": FunctionFragment;
+    "claimPots(uint8)": FunctionFragment;
     "communityCards()": FunctionFragment;
     "cutCards()": FunctionFragment;
     "decimals()": FunctionFragment;
@@ -279,7 +279,7 @@ export interface DemoTableInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "checkBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "claimPots",
-    values: [PromiseOrValue<string>]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "communityCards",
@@ -607,7 +607,7 @@ export interface DemoTable extends BaseContract {
     ): Promise<ContractTransaction>;
 
     claimPots(
-      player: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -814,7 +814,7 @@ export interface DemoTable extends BaseContract {
   ): Promise<ContractTransaction>;
 
   claimPots(
-    player: PromiseOrValue<string>,
+    pos: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1003,7 +1003,7 @@ export interface DemoTable extends BaseContract {
     checkBets(overrides?: CallOverrides): Promise<void>;
 
     claimPots(
-      player: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1227,7 +1227,7 @@ export interface DemoTable extends BaseContract {
     ): Promise<BigNumber>;
 
     claimPots(
-      player: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1409,7 +1409,7 @@ export interface DemoTable extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     claimPots(
-      player: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
