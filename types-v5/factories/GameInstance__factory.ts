@@ -4,50 +4,804 @@
 
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
-import type { GameInstance, GameInstanceInterface } from "../GameInstance";
+import type {
+  GameInstance,
+  GameInstanceInterface,
+  IGameInstance,
+} from "../GameInstance";
 
 const _abi = [
-  "constructor(address,address,bytes,tuple(bytes,bytes,string)[],uint256)",
-  "event PlayerJoined(address indexed,bytes,bytes)",
-  "event PlayerLeft(address indexed)",
-  "event PlayerShuffledDeck(address indexed,bytes[])",
-  "event RevealedCards(uint256[],bytes32[])",
-  "function NONE() view returns (bytes32)",
-  "function addRevealTokens(address,bool,uint256[],bytes[],bytes[])",
-  "function addrList(uint256) view returns (address)",
-  "function addrToPlayers(address) view returns (address, bytes, bytes)",
-  "function cardHash(bytes) pure returns (bytes32)",
-  "function controller() view returns (address)",
-  "function currentDeck() view returns (bytes[])",
-  "function deck(uint256) view returns (bytes, bytes, string)",
-  "function getPlayer(address) view returns (tuple(address,bytes,bytes,uint256[]))",
-  "function getRevealTokens(uint256) view returns (bytes[])",
-  "function hashToMaskedCards(bytes32) view returns (bytes)",
-  "function hashToPlayingCards(bytes32) view returns (string)",
-  "function hashedCards(uint256) view returns (bytes32)",
-  "function isFull() view returns (bool)",
-  "function isOpen(uint256) view returns (bool)",
-  "function isPlayer(address) view returns (bool)",
-  "function isUsed(uint256) view returns (bool)",
-  "function joinGame(address,bytes,bytes,bytes)",
-  "function leaveGame(address)",
-  "function numJoinedPlayers() view returns (uint256)",
-  "function numPlayers() view returns (uint256)",
-  "function numUsed() view returns (uint256)",
-  "function numUsedCards() view returns (uint256)",
-  "function openedCards(uint256) view returns (bytes32)",
-  "function params() view returns (bytes)",
-  "function players() view returns (address[])",
-  "function playingCard(uint256) view returns (string)",
-  "function poker() view returns (address)",
-  "function readyToReveal(uint256[]) view returns (bool)",
-  "function resetGame(bytes,uint256)",
-  "function revealTokens(uint256,uint256) view returns (bytes)",
-  "function setUsed(uint256[])",
-  "function sharedKey() view returns (bytes)",
-  "function shuffleDeck(address,bytes[],bytes)",
-  "function tableFee() view returns (uint256)",
-  "function usedCards(uint256) view returns (bool)",
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_controller",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_poker",
+        type: "address",
+      },
+      {
+        internalType: "bytes",
+        name: "_params",
+        type: "bytes",
+      },
+      {
+        components: [
+          {
+            internalType: "bytes",
+            name: "_encoded",
+            type: "bytes",
+          },
+          {
+            internalType: "bytes",
+            name: "_masked",
+            type: "bytes",
+          },
+          {
+            internalType: "string",
+            name: "_playingCardID",
+            type: "string",
+          },
+        ],
+        internalType: "struct IGameInstance.AnyCard[]",
+        name: "_deck",
+        type: "tuple[]",
+      },
+      {
+        internalType: "uint256",
+        name: "_numPlayers",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bytes",
+        name: "pubKey",
+        type: "bytes",
+      },
+      {
+        indexed: false,
+        internalType: "bytes",
+        name: "memo",
+        type: "bytes",
+      },
+    ],
+    name: "PlayerJoined",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+    ],
+    name: "PlayerLeft",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "bytes[]",
+        name: "shuffledDeck",
+        type: "bytes[]",
+      },
+    ],
+    name: "PlayerShuffledDeck",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "indexes",
+        type: "uint256[]",
+      },
+      {
+        indexed: false,
+        internalType: "bytes32[]",
+        name: "hashes",
+        type: "bytes32[]",
+      },
+    ],
+    name: "RevealedCards",
+    type: "event",
+  },
+  {
+    inputs: [],
+    name: "NONE",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "_revealMine",
+        type: "bool",
+      },
+      {
+        internalType: "uint256[]",
+        name: "_cardIndexes",
+        type: "uint256[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealTokens",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealProofs",
+        type: "bytes[]",
+      },
+    ],
+    name: "addRevealTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "addrList",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "addrToPlayers",
+    outputs: [
+      {
+        internalType: "address",
+        name: "_acc",
+        type: "address",
+      },
+      {
+        internalType: "bytes",
+        name: "_key",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "_memo",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "_card",
+        type: "bytes",
+      },
+    ],
+    name: "cardHash",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "controller",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentDeck",
+    outputs: [
+      {
+        internalType: "bytes[]",
+        name: "cards",
+        type: "bytes[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "deck",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "_encoded",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "_masked",
+        type: "bytes",
+      },
+      {
+        internalType: "string",
+        name: "_playingCardID",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_account",
+        type: "address",
+      },
+    ],
+    name: "getPlayer",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "_acc",
+            type: "address",
+          },
+          {
+            internalType: "bytes",
+            name: "_key",
+            type: "bytes",
+          },
+          {
+            internalType: "bytes",
+            name: "_memo",
+            type: "bytes",
+          },
+          {
+            internalType: "uint256[]",
+            name: "_cards",
+            type: "uint256[]",
+          },
+        ],
+        internalType: "struct IGameInstance.Player",
+        name: "",
+        type: "tuple",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_cardIndex",
+        type: "uint256",
+      },
+    ],
+    name: "getRevealTokens",
+    outputs: [
+      {
+        internalType: "bytes[]",
+        name: "",
+        type: "bytes[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    name: "hashToMaskedCards",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    name: "hashToPlayingCards",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "hashedCards",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "isFull",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_cardIndex",
+        type: "uint256",
+      },
+    ],
+    name: "isOpen",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_account",
+        type: "address",
+      },
+    ],
+    name: "isPlayer",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_cardIndex",
+        type: "uint256",
+      },
+    ],
+    name: "isUsed",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
+      },
+      {
+        internalType: "bytes",
+        name: "_pubKey",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "_memo",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "_keyProof",
+        type: "bytes",
+      },
+    ],
+    name: "joinGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
+      },
+    ],
+    name: "leaveGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "numJoinedPlayers",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "numPlayers",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "numUsed",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "numUsedCards",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "openedCards",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "params",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "players",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_cardIndex",
+        type: "uint256",
+      },
+    ],
+    name: "playingCard",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "poker",
+    outputs: [
+      {
+        internalType: "contract IMentalPoker",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "_cardIndexes",
+        type: "uint256[]",
+      },
+    ],
+    name: "readyToReveal",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "_params",
+        type: "bytes",
+      },
+      {
+        internalType: "uint256",
+        name: "_numPlayers",
+        type: "uint256",
+      },
+    ],
+    name: "resetGame",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "revealTokens",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256[]",
+        name: "_cardIndexes",
+        type: "uint256[]",
+      },
+    ],
+    name: "setUsed",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "sharedKey",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_shuffledDeck",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes",
+        name: "_shuffleProof",
+        type: "bytes",
+      },
+    ],
+    name: "shuffleDeck",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "tableFee",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "usedCards",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ] as const;
 
 export class GameInstance__factory {

@@ -6,10 +6,114 @@ import { Contract, Interface, type ContractRunner } from "ethers";
 import type { IOneTimeDraw, IOneTimeDrawInterface } from "../IOneTimeDraw";
 
 const _abi = [
-  "event PlayerDrewCards(address indexed,uint256[])",
-  "function drawCardsNSubmitRevealTokens(address,uint256[],uint256[],bytes[],bytes[])",
-  "function foldCards(address,uint256[],bytes[],bytes[])",
-  "function showHand(address,uint256[],bytes[],bytes[])",
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "player",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "cards",
+        type: "uint256[]",
+      },
+    ],
+    name: "PlayerDrewCards",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
+      },
+      {
+        internalType: "uint256[]",
+        name: "_myIndexes",
+        type: "uint256[]",
+      },
+      {
+        internalType: "uint256[]",
+        name: "_othersIndexes",
+        type: "uint256[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealTokens",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealProofs",
+        type: "bytes[]",
+      },
+    ],
+    name: "drawCardsNSubmitRevealTokens",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
+      },
+      {
+        internalType: "uint256[]",
+        name: "_unrevealedIndexes",
+        type: "uint256[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealTokens",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealProofs",
+        type: "bytes[]",
+      },
+    ],
+    name: "foldCards",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_player",
+        type: "address",
+      },
+      {
+        internalType: "uint256[]",
+        name: "_cardIndexes",
+        type: "uint256[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealTokens",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "_revealProofs",
+        type: "bytes[]",
+      },
+    ],
+    name: "showHand",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ] as const;
 
 export class IOneTimeDraw__factory {

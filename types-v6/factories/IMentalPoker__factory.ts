@@ -6,13 +6,214 @@ import { Contract, Interface, type ContractRunner } from "ethers";
 import type { IMentalPoker, IMentalPokerInterface } from "../IMentalPoker";
 
 const _abi = [
-  "function computeAggregateKey(bytes[]) pure returns (bytes)",
-  "function mask(bytes,bytes,bytes) pure returns (bytes)",
-  "function reveal(bytes[],bytes) pure returns (bytes)",
-  "function test(bytes,bytes[]) view returns (bytes)",
-  "function verifyKeyOwnership(bytes,bytes,bytes,bytes) pure returns (bool)",
-  "function verifyReveal(bytes,bytes,bytes,bytes,bytes) pure returns (bool)",
-  "function verifyShuffle(bytes,bytes,bytes[],bytes[],bytes) pure returns (bool)",
+  {
+    inputs: [
+      {
+        internalType: "bytes[]",
+        name: "pubKeys",
+        type: "bytes[]",
+      },
+    ],
+    name: "computeAggregateKey",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "params",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "sharedKey",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "encoded",
+        type: "bytes",
+      },
+    ],
+    name: "mask",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes[]",
+        name: "revealTokens",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes",
+        name: "masked",
+        type: "bytes",
+      },
+    ],
+    name: "reveal",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "param1",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes[]",
+        name: "param2",
+        type: "bytes[]",
+      },
+    ],
+    name: "test",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "params",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "pubKey",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "memo",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "keyProof",
+        type: "bytes",
+      },
+    ],
+    name: "verifyKeyOwnership",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "params",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "pubKey",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "revealToken",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "masked",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "revealProof",
+        type: "bytes",
+      },
+    ],
+    name: "verifyReveal",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "params",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "sharedKey",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes[]",
+        name: "curDeck",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes[]",
+        name: "newDeck",
+        type: "bytes[]",
+      },
+      {
+        internalType: "bytes",
+        name: "shuffleProof",
+        type: "bytes",
+      },
+    ],
+    name: "verifyShuffle",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
 ] as const;
 
 export class IMentalPoker__factory {

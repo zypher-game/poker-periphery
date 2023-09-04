@@ -3,7 +3,9 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BytesLike,
   FunctionFragment,
+  Result,
   Interface,
   ContractRunner,
   ContractMethod,
@@ -14,9 +16,18 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
+  TypedContractMethod,
 } from "./common";
 
-export interface DummyInterface extends Interface {}
+export interface DummyInterface extends Interface {
+  getFunction(nameOrSignature: "data" | "set"): FunctionFragment;
+
+  encodeFunctionData(functionFragment: "data", values?: undefined): string;
+  encodeFunctionData(functionFragment: "set", values: [BytesLike]): string;
+
+  decodeFunctionResult(functionFragment: "data", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "set", data: BytesLike): Result;
+}
 
 export interface Dummy extends BaseContract {
   connect(runner?: ContractRunner | null): Dummy;
@@ -61,9 +72,20 @@ export interface Dummy extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  data: TypedContractMethod<[], [string], "view">;
+
+  set: TypedContractMethod<[d: BytesLike], [void], "nonpayable">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
+
+  getFunction(
+    nameOrSignature: "data"
+  ): TypedContractMethod<[], [string], "view">;
+  getFunction(
+    nameOrSignature: "set"
+  ): TypedContractMethod<[d: BytesLike], [void], "nonpayable">;
 
   filters: {};
 }

@@ -3,7 +3,9 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BytesLike,
   FunctionFragment,
+  Result,
   Interface,
   ContractRunner,
   ContractMethod,
@@ -14,9 +16,22 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
+  TypedContractMethod,
 } from "./common";
 
-export interface IBeaconUpgradeableInterface extends Interface {}
+export interface IBeaconUpgradeableInterface extends Interface {
+  getFunction(nameOrSignature: "implementation"): FunctionFragment;
+
+  encodeFunctionData(
+    functionFragment: "implementation",
+    values?: undefined
+  ): string;
+
+  decodeFunctionResult(
+    functionFragment: "implementation",
+    data: BytesLike
+  ): Result;
+}
 
 export interface IBeaconUpgradeable extends BaseContract {
   connect(runner?: ContractRunner | null): IBeaconUpgradeable;
@@ -61,9 +76,15 @@ export interface IBeaconUpgradeable extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  implementation: TypedContractMethod<[], [string], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
+
+  getFunction(
+    nameOrSignature: "implementation"
+  ): TypedContractMethod<[], [string], "view">;
 
   filters: {};
 }

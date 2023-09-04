@@ -8,7 +8,21 @@ import type {
   IBeaconUpgradeableInterface,
 } from "../IBeaconUpgradeable";
 
-const _abi = ["function implementation() view returns (address)"] as const;
+const _abi = [
+  {
+    inputs: [],
+    name: "implementation",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;
 
 export class IBeaconUpgradeable__factory {
   static readonly abi = _abi;

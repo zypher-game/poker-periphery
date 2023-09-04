@@ -3,8 +3,13 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BigNumberish,
+  BytesLike,
   FunctionFragment,
+  Result,
   Interface,
+  EventFragment,
+  AddressLike,
   ContractRunner,
   ContractMethod,
   Listener,
@@ -13,10 +18,57 @@ import type {
   TypedContractEvent,
   TypedDeferredTopicFilter,
   TypedEventLog,
+  TypedLogDescription,
   TypedListener,
+  TypedContractMethod,
 } from "./common";
 
-export interface IOneTimeDrawInterface extends Interface {}
+export interface IOneTimeDrawInterface extends Interface {
+  getFunction(
+    nameOrSignature: "drawCardsNSubmitRevealTokens" | "foldCards" | "showHand"
+  ): FunctionFragment;
+
+  getEvent(nameOrSignatureOrTopic: "PlayerDrewCards"): EventFragment;
+
+  encodeFunctionData(
+    functionFragment: "drawCardsNSubmitRevealTokens",
+    values: [
+      AddressLike,
+      BigNumberish[],
+      BigNumberish[],
+      BytesLike[],
+      BytesLike[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "foldCards",
+    values: [AddressLike, BigNumberish[], BytesLike[], BytesLike[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "showHand",
+    values: [AddressLike, BigNumberish[], BytesLike[], BytesLike[]]
+  ): string;
+
+  decodeFunctionResult(
+    functionFragment: "drawCardsNSubmitRevealTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "foldCards", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "showHand", data: BytesLike): Result;
+}
+
+export namespace PlayerDrewCardsEvent {
+  export type InputTuple = [player: AddressLike, cards: BigNumberish[]];
+  export type OutputTuple = [player: string, cards: bigint[]];
+  export interface OutputObject {
+    player: string;
+    cards: bigint[];
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
 
 export interface IOneTimeDraw extends BaseContract {
   connect(runner?: ContractRunner | null): IOneTimeDraw;
@@ -61,9 +113,100 @@ export interface IOneTimeDraw extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  drawCardsNSubmitRevealTokens: TypedContractMethod<
+    [
+      _player: AddressLike,
+      _myIndexes: BigNumberish[],
+      _othersIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  foldCards: TypedContractMethod<
+    [
+      _player: AddressLike,
+      _unrevealedIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  showHand: TypedContractMethod<
+    [
+      _player: AddressLike,
+      _cardIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
 
-  filters: {};
+  getFunction(
+    nameOrSignature: "drawCardsNSubmitRevealTokens"
+  ): TypedContractMethod<
+    [
+      _player: AddressLike,
+      _myIndexes: BigNumberish[],
+      _othersIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "foldCards"
+  ): TypedContractMethod<
+    [
+      _player: AddressLike,
+      _unrevealedIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "showHand"
+  ): TypedContractMethod<
+    [
+      _player: AddressLike,
+      _cardIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  getEvent(
+    key: "PlayerDrewCards"
+  ): TypedContractEvent<
+    PlayerDrewCardsEvent.InputTuple,
+    PlayerDrewCardsEvent.OutputTuple,
+    PlayerDrewCardsEvent.OutputObject
+  >;
+
+  filters: {
+    "PlayerDrewCards(address,uint256[])": TypedContractEvent<
+      PlayerDrewCardsEvent.InputTuple,
+      PlayerDrewCardsEvent.OutputTuple,
+      PlayerDrewCardsEvent.OutputObject
+    >;
+    PlayerDrewCards: TypedContractEvent<
+      PlayerDrewCardsEvent.InputTuple,
+      PlayerDrewCardsEvent.OutputTuple,
+      PlayerDrewCardsEvent.OutputObject
+    >;
+  };
 }

@@ -3,8 +3,12 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BigNumberish,
+  BytesLike,
   FunctionFragment,
+  Result,
   Interface,
+  AddressLike,
   ContractRunner,
   ContractMethod,
   Listener,
@@ -14,9 +18,137 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
+  TypedContractMethod,
 } from "./common";
 
-export interface IGameInstanceInterface extends Interface {}
+export declare namespace IGameInstance {
+  export type PlayerStruct = {
+    _acc: AddressLike;
+    _key: BytesLike;
+    _memo: BytesLike;
+    _cards: BigNumberish[];
+  };
+
+  export type PlayerStructOutput = [
+    _acc: string,
+    _key: string,
+    _memo: string,
+    _cards: bigint[]
+  ] & { _acc: string; _key: string; _memo: string; _cards: bigint[] };
+}
+
+export interface IGameInstanceInterface extends Interface {
+  getFunction(
+    nameOrSignature:
+      | "addRevealTokens"
+      | "cardHash"
+      | "getPlayer"
+      | "getRevealTokens"
+      | "isFull"
+      | "isOpen"
+      | "isPlayer"
+      | "isUsed"
+      | "joinGame"
+      | "leaveGame"
+      | "numUsed"
+      | "players"
+      | "playingCard"
+      | "readyToReveal"
+      | "resetGame"
+      | "setUsed"
+      | "shuffleDeck"
+  ): FunctionFragment;
+
+  encodeFunctionData(
+    functionFragment: "addRevealTokens",
+    values: [AddressLike, boolean, BigNumberish[], BytesLike[], BytesLike[]]
+  ): string;
+  encodeFunctionData(functionFragment: "cardHash", values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: "getPlayer",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getRevealTokens",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "isFull", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "isOpen",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isPlayer",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isUsed",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "joinGame",
+    values: [AddressLike, BytesLike, BytesLike, BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "leaveGame",
+    values: [AddressLike]
+  ): string;
+  encodeFunctionData(functionFragment: "numUsed", values?: undefined): string;
+  encodeFunctionData(functionFragment: "players", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "playingCard",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "readyToReveal",
+    values: [BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "resetGame",
+    values: [BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setUsed",
+    values: [BigNumberish[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "shuffleDeck",
+    values: [AddressLike, BytesLike[], BytesLike]
+  ): string;
+
+  decodeFunctionResult(
+    functionFragment: "addRevealTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "cardHash", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getPlayer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getRevealTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "isFull", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isOpen", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isPlayer", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isUsed", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "joinGame", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "leaveGame", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "numUsed", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "players", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "playingCard",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "readyToReveal",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "resetGame", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setUsed", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "shuffleDeck",
+    data: BytesLike
+  ): Result;
+}
 
 export interface IGameInstance extends BaseContract {
   connect(runner?: ContractRunner | null): IGameInstance;
@@ -61,9 +193,181 @@ export interface IGameInstance extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  addRevealTokens: TypedContractMethod<
+    [
+      _player: AddressLike,
+      _revealMine: boolean,
+      _cardIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  cardHash: TypedContractMethod<[_card: BytesLike], [string], "view">;
+
+  getPlayer: TypedContractMethod<
+    [_account: AddressLike],
+    [IGameInstance.PlayerStructOutput],
+    "view"
+  >;
+
+  getRevealTokens: TypedContractMethod<
+    [_cardIndex: BigNumberish],
+    [string[]],
+    "view"
+  >;
+
+  isFull: TypedContractMethod<[], [boolean], "view">;
+
+  isOpen: TypedContractMethod<[_cardIndex: BigNumberish], [boolean], "view">;
+
+  isPlayer: TypedContractMethod<[_account: AddressLike], [boolean], "view">;
+
+  isUsed: TypedContractMethod<[_cardIndex: BigNumberish], [boolean], "view">;
+
+  joinGame: TypedContractMethod<
+    [
+      _player: AddressLike,
+      _pubKey: BytesLike,
+      _memo: BytesLike,
+      _keyProof: BytesLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+
+  leaveGame: TypedContractMethod<[_player: AddressLike], [void], "nonpayable">;
+
+  numUsed: TypedContractMethod<[], [bigint], "view">;
+
+  players: TypedContractMethod<[], [string[]], "view">;
+
+  playingCard: TypedContractMethod<
+    [_cardIndex: BigNumberish],
+    [string],
+    "view"
+  >;
+
+  readyToReveal: TypedContractMethod<
+    [_cardIndexes: BigNumberish[]],
+    [boolean],
+    "view"
+  >;
+
+  resetGame: TypedContractMethod<
+    [_params: BytesLike, _numPlayers: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setUsed: TypedContractMethod<
+    [_cardIndexes: BigNumberish[]],
+    [void],
+    "nonpayable"
+  >;
+
+  shuffleDeck: TypedContractMethod<
+    [
+      _player: AddressLike,
+      _shuffledDeck: BytesLike[],
+      _shuffleProof: BytesLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
+
+  getFunction(
+    nameOrSignature: "addRevealTokens"
+  ): TypedContractMethod<
+    [
+      _player: AddressLike,
+      _revealMine: boolean,
+      _cardIndexes: BigNumberish[],
+      _revealTokens: BytesLike[],
+      _revealProofs: BytesLike[]
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "cardHash"
+  ): TypedContractMethod<[_card: BytesLike], [string], "view">;
+  getFunction(
+    nameOrSignature: "getPlayer"
+  ): TypedContractMethod<
+    [_account: AddressLike],
+    [IGameInstance.PlayerStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "getRevealTokens"
+  ): TypedContractMethod<[_cardIndex: BigNumberish], [string[]], "view">;
+  getFunction(
+    nameOrSignature: "isFull"
+  ): TypedContractMethod<[], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "isOpen"
+  ): TypedContractMethod<[_cardIndex: BigNumberish], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "isPlayer"
+  ): TypedContractMethod<[_account: AddressLike], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "isUsed"
+  ): TypedContractMethod<[_cardIndex: BigNumberish], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "joinGame"
+  ): TypedContractMethod<
+    [
+      _player: AddressLike,
+      _pubKey: BytesLike,
+      _memo: BytesLike,
+      _keyProof: BytesLike
+    ],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "leaveGame"
+  ): TypedContractMethod<[_player: AddressLike], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "numUsed"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
+    nameOrSignature: "players"
+  ): TypedContractMethod<[], [string[]], "view">;
+  getFunction(
+    nameOrSignature: "playingCard"
+  ): TypedContractMethod<[_cardIndex: BigNumberish], [string], "view">;
+  getFunction(
+    nameOrSignature: "readyToReveal"
+  ): TypedContractMethod<[_cardIndexes: BigNumberish[]], [boolean], "view">;
+  getFunction(
+    nameOrSignature: "resetGame"
+  ): TypedContractMethod<
+    [_params: BytesLike, _numPlayers: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+  getFunction(
+    nameOrSignature: "setUsed"
+  ): TypedContractMethod<[_cardIndexes: BigNumberish[]], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "shuffleDeck"
+  ): TypedContractMethod<
+    [
+      _player: AddressLike,
+      _shuffledDeck: BytesLike[],
+      _shuffleProof: BytesLike
+    ],
+    [void],
+    "nonpayable"
+  >;
 
   filters: {};
 }

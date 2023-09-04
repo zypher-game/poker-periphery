@@ -6,8 +6,32 @@ import { Contract, Interface, type ContractRunner } from "ethers";
 import type { Dummy, DummyInterface } from "../Dummy";
 
 const _abi = [
-  "function data() view returns (bytes)",
-  "function set(bytes)",
+  {
+    inputs: [],
+    name: "data",
+    outputs: [
+      {
+        internalType: "bytes",
+        name: "",
+        type: "bytes",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "d",
+        type: "bytes",
+      },
+    ],
+    name: "set",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
 ] as const;
 
 export class Dummy__factory {

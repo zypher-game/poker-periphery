@@ -8,7 +8,21 @@ import type {
   ContextUpgradeableInterface,
 } from "../ContextUpgradeable";
 
-const _abi = ["event Initialized(uint8)"] as const;
+const _abi = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "uint8",
+        name: "version",
+        type: "uint8",
+      },
+    ],
+    name: "Initialized",
+    type: "event",
+  },
+] as const;
 
 export class ContextUpgradeable__factory {
   static readonly abi = _abi;

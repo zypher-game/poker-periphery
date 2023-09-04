@@ -3,8 +3,10 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BigNumberish,
   FunctionFragment,
   Interface,
+  EventFragment,
   ContractRunner,
   ContractMethod,
   Listener,
@@ -13,10 +15,25 @@ import type {
   TypedContractEvent,
   TypedDeferredTopicFilter,
   TypedEventLog,
+  TypedLogDescription,
   TypedListener,
 } from "./common";
 
-export interface InitializableInterface extends Interface {}
+export interface InitializableInterface extends Interface {
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+}
+
+export namespace InitializedEvent {
+  export type InputTuple = [version: BigNumberish];
+  export type OutputTuple = [version: bigint];
+  export interface OutputObject {
+    version: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
 
 export interface Initializable extends BaseContract {
   connect(runner?: ContractRunner | null): Initializable;
@@ -65,5 +82,24 @@ export interface Initializable extends BaseContract {
     key: string | FunctionFragment
   ): T;
 
-  filters: {};
+  getEvent(
+    key: "Initialized"
+  ): TypedContractEvent<
+    InitializedEvent.InputTuple,
+    InitializedEvent.OutputTuple,
+    InitializedEvent.OutputObject
+  >;
+
+  filters: {
+    "Initialized(uint8)": TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
+    Initialized: TypedContractEvent<
+      InitializedEvent.InputTuple,
+      InitializedEvent.OutputTuple,
+      InitializedEvent.OutputObject
+    >;
+  };
 }

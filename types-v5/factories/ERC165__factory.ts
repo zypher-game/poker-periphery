@@ -7,7 +7,25 @@ import type { Provider } from "@ethersproject/providers";
 import type { ERC165, ERC165Interface } from "../ERC165";
 
 const _abi = [
-  "function supportsInterface(bytes4) view returns (bool)",
+  {
+    inputs: [
+      {
+        internalType: "bytes4",
+        name: "interfaceId",
+        type: "bytes4",
+      },
+    ],
+    name: "supportsInterface",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ] as const;
 
 export class ERC165__factory {

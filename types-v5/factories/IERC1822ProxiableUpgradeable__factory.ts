@@ -9,7 +9,21 @@ import type {
   IERC1822ProxiableUpgradeableInterface,
 } from "../IERC1822ProxiableUpgradeable";
 
-const _abi = ["function proxiableUUID() view returns (bytes32)"] as const;
+const _abi = [
+  {
+    inputs: [],
+    name: "proxiableUUID",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+] as const;
 
 export class IERC1822ProxiableUpgradeable__factory {
   static readonly abi = _abi;

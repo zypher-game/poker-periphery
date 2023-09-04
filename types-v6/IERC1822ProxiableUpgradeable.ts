@@ -3,7 +3,9 @@
 /* eslint-disable */
 import type {
   BaseContract,
+  BytesLike,
   FunctionFragment,
+  Result,
   Interface,
   ContractRunner,
   ContractMethod,
@@ -14,9 +16,22 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
+  TypedContractMethod,
 } from "./common";
 
-export interface IERC1822ProxiableUpgradeableInterface extends Interface {}
+export interface IERC1822ProxiableUpgradeableInterface extends Interface {
+  getFunction(nameOrSignature: "proxiableUUID"): FunctionFragment;
+
+  encodeFunctionData(
+    functionFragment: "proxiableUUID",
+    values?: undefined
+  ): string;
+
+  decodeFunctionResult(
+    functionFragment: "proxiableUUID",
+    data: BytesLike
+  ): Result;
+}
 
 export interface IERC1822ProxiableUpgradeable extends BaseContract {
   connect(runner?: ContractRunner | null): IERC1822ProxiableUpgradeable;
@@ -61,9 +76,15 @@ export interface IERC1822ProxiableUpgradeable extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  proxiableUUID: TypedContractMethod<[], [string], "view">;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
+
+  getFunction(
+    nameOrSignature: "proxiableUUID"
+  ): TypedContractMethod<[], [string], "view">;
 
   filters: {};
 }

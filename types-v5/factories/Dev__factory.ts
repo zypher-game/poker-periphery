@@ -7,9 +7,73 @@ import type { Provider } from "@ethersproject/providers";
 import type { Dev, DevInterface } from "../Dev";
 
 const _abi = [
-  "function RATE(uint256) view returns (uint256)",
-  "function buyout(uint256,uint256) view returns (uint256)",
-  "function sum(uint8,uint8) pure returns (uint8)",
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "RATE",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "minAmount",
+        type: "uint256",
+      },
+    ],
+    name: "buyout",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint8",
+        name: "a",
+        type: "uint8",
+      },
+      {
+        internalType: "uint8",
+        name: "b",
+        type: "uint8",
+      },
+    ],
+    name: "sum",
+    outputs: [
+      {
+        internalType: "uint8",
+        name: "",
+        type: "uint8",
+      },
+    ],
+    stateMutability: "pure",
+    type: "function",
+  },
 ] as const;
 
 export class Dev__factory {
