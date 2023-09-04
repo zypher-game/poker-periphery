@@ -3,10 +3,7 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumberish,
-  BytesLike,
   FunctionFragment,
-  Result,
   Interface,
   ContractRunner,
   ContractMethod,
@@ -17,26 +14,9 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
-  TypedContractMethod,
 } from "./common";
 
-export interface DevInterface extends Interface {
-  getFunction(nameOrSignature: "RATE" | "buyout" | "sum"): FunctionFragment;
-
-  encodeFunctionData(functionFragment: "RATE", values: [BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: "buyout",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "sum",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-
-  decodeFunctionResult(functionFragment: "RATE", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "buyout", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "sum", data: BytesLike): Result;
-}
+export interface DevInterface extends Interface {}
 
 export interface Dev extends BaseContract {
   connect(runner?: ContractRunner | null): Dev;
@@ -81,37 +61,9 @@ export interface Dev extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  RATE: TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
-
-  buyout: TypedContractMethod<
-    [amount: BigNumberish, minAmount: BigNumberish],
-    [bigint],
-    "view"
-  >;
-
-  sum: TypedContractMethod<
-    [a: BigNumberish, b: BigNumberish],
-    [bigint],
-    "view"
-  >;
-
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
-
-  getFunction(
-    nameOrSignature: "RATE"
-  ): TypedContractMethod<[arg0: BigNumberish], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "buyout"
-  ): TypedContractMethod<
-    [amount: BigNumberish, minAmount: BigNumberish],
-    [bigint],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "sum"
-  ): TypedContractMethod<[a: BigNumberish, b: BigNumberish], [bigint], "view">;
 
   filters: {};
 }

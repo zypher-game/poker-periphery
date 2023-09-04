@@ -6,70 +6,10 @@ import { Contract, Interface, type ContractRunner } from "ethers";
 import type { Cloner, ClonerInterface } from "../Cloner";
 
 const _abi = [
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "target",
-        type: "address",
-      },
-    ],
-    name: "cloneIt",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "count",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "last",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "results",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
+  "function cloneIt(address) returns (address)",
+  "function count() view returns (uint256)",
+  "function last() view returns (address)",
+  "function results(uint256) view returns (address)",
 ] as const;
 
 export class Cloner__factory {

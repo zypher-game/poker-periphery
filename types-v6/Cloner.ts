@@ -3,12 +3,8 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BigNumberish,
-  BytesLike,
   FunctionFragment,
-  Result,
   Interface,
-  AddressLike,
   ContractRunner,
   ContractMethod,
   Listener,
@@ -18,30 +14,9 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
-  TypedContractMethod,
 } from "./common";
 
-export interface ClonerInterface extends Interface {
-  getFunction(
-    nameOrSignature: "cloneIt" | "count" | "last" | "results"
-  ): FunctionFragment;
-
-  encodeFunctionData(
-    functionFragment: "cloneIt",
-    values: [AddressLike]
-  ): string;
-  encodeFunctionData(functionFragment: "count", values?: undefined): string;
-  encodeFunctionData(functionFragment: "last", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "results",
-    values: [BigNumberish]
-  ): string;
-
-  decodeFunctionResult(functionFragment: "cloneIt", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "count", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "last", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "results", data: BytesLike): Result;
-}
+export interface ClonerInterface extends Interface {}
 
 export interface Cloner extends BaseContract {
   connect(runner?: ContractRunner | null): Cloner;
@@ -86,30 +61,9 @@ export interface Cloner extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  cloneIt: TypedContractMethod<[target: AddressLike], [string], "nonpayable">;
-
-  count: TypedContractMethod<[], [bigint], "view">;
-
-  last: TypedContractMethod<[], [string], "view">;
-
-  results: TypedContractMethod<[arg0: BigNumberish], [string], "view">;
-
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
-
-  getFunction(
-    nameOrSignature: "cloneIt"
-  ): TypedContractMethod<[target: AddressLike], [string], "nonpayable">;
-  getFunction(
-    nameOrSignature: "count"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "last"
-  ): TypedContractMethod<[], [string], "view">;
-  getFunction(
-    nameOrSignature: "results"
-  ): TypedContractMethod<[arg0: BigNumberish], [string], "view">;
 
   filters: {};
 }

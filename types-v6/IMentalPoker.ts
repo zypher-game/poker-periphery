@@ -3,9 +3,7 @@
 /* eslint-disable */
 import type {
   BaseContract,
-  BytesLike,
   FunctionFragment,
-  Result,
   Interface,
   ContractRunner,
   ContractMethod,
@@ -16,70 +14,9 @@ import type {
   TypedDeferredTopicFilter,
   TypedEventLog,
   TypedListener,
-  TypedContractMethod,
 } from "./common";
 
-export interface IMentalPokerInterface extends Interface {
-  getFunction(
-    nameOrSignature:
-      | "computeAggregateKey"
-      | "mask"
-      | "reveal"
-      | "test"
-      | "verifyKeyOwnership"
-      | "verifyReveal"
-      | "verifyShuffle"
-  ): FunctionFragment;
-
-  encodeFunctionData(
-    functionFragment: "computeAggregateKey",
-    values: [BytesLike[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mask",
-    values: [BytesLike, BytesLike, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "reveal",
-    values: [BytesLike[], BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "test",
-    values: [BytesLike, BytesLike[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "verifyKeyOwnership",
-    values: [BytesLike, BytesLike, BytesLike, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "verifyReveal",
-    values: [BytesLike, BytesLike, BytesLike, BytesLike, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "verifyShuffle",
-    values: [BytesLike, BytesLike, BytesLike[], BytesLike[], BytesLike]
-  ): string;
-
-  decodeFunctionResult(
-    functionFragment: "computeAggregateKey",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "mask", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "reveal", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "test", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "verifyKeyOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "verifyReveal",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "verifyShuffle",
-    data: BytesLike
-  ): Result;
-}
+export interface IMentalPokerInterface extends Interface {}
 
 export interface IMentalPoker extends BaseContract {
   connect(runner?: ContractRunner | null): IMentalPoker;
@@ -124,131 +61,9 @@ export interface IMentalPoker extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  computeAggregateKey: TypedContractMethod<
-    [pubKeys: BytesLike[]],
-    [string],
-    "view"
-  >;
-
-  mask: TypedContractMethod<
-    [params: BytesLike, sharedKey: BytesLike, encoded: BytesLike],
-    [string],
-    "view"
-  >;
-
-  reveal: TypedContractMethod<
-    [revealTokens: BytesLike[], masked: BytesLike],
-    [string],
-    "view"
-  >;
-
-  test: TypedContractMethod<
-    [param1: BytesLike, param2: BytesLike[]],
-    [string],
-    "view"
-  >;
-
-  verifyKeyOwnership: TypedContractMethod<
-    [
-      params: BytesLike,
-      pubKey: BytesLike,
-      memo: BytesLike,
-      keyProof: BytesLike
-    ],
-    [boolean],
-    "view"
-  >;
-
-  verifyReveal: TypedContractMethod<
-    [
-      params: BytesLike,
-      pubKey: BytesLike,
-      revealToken: BytesLike,
-      masked: BytesLike,
-      revealProof: BytesLike
-    ],
-    [boolean],
-    "view"
-  >;
-
-  verifyShuffle: TypedContractMethod<
-    [
-      params: BytesLike,
-      sharedKey: BytesLike,
-      curDeck: BytesLike[],
-      newDeck: BytesLike[],
-      shuffleProof: BytesLike
-    ],
-    [boolean],
-    "view"
-  >;
-
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
-
-  getFunction(
-    nameOrSignature: "computeAggregateKey"
-  ): TypedContractMethod<[pubKeys: BytesLike[]], [string], "view">;
-  getFunction(
-    nameOrSignature: "mask"
-  ): TypedContractMethod<
-    [params: BytesLike, sharedKey: BytesLike, encoded: BytesLike],
-    [string],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "reveal"
-  ): TypedContractMethod<
-    [revealTokens: BytesLike[], masked: BytesLike],
-    [string],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "test"
-  ): TypedContractMethod<
-    [param1: BytesLike, param2: BytesLike[]],
-    [string],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "verifyKeyOwnership"
-  ): TypedContractMethod<
-    [
-      params: BytesLike,
-      pubKey: BytesLike,
-      memo: BytesLike,
-      keyProof: BytesLike
-    ],
-    [boolean],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "verifyReveal"
-  ): TypedContractMethod<
-    [
-      params: BytesLike,
-      pubKey: BytesLike,
-      revealToken: BytesLike,
-      masked: BytesLike,
-      revealProof: BytesLike
-    ],
-    [boolean],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "verifyShuffle"
-  ): TypedContractMethod<
-    [
-      params: BytesLike,
-      sharedKey: BytesLike,
-      curDeck: BytesLike[],
-      newDeck: BytesLike[],
-      shuffleProof: BytesLike
-    ],
-    [boolean],
-    "view"
-  >;
 
   filters: {};
 }
