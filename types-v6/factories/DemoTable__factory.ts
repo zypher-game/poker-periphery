@@ -12,6 +12,11 @@ const _abi = [
     type: "error",
   },
   {
+    inputs: [],
+    name: "AlreadyInitialized",
+    type: "error",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -35,6 +40,21 @@ const _abi = [
   {
     inputs: [],
     name: "ChipForbidden",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "Initializing",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotInitializing",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "OwnableInvalid",
     type: "error",
   },
   {
@@ -99,6 +119,18 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint64",
+        name: "gameId",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "enum ITexasHoldemTable.GameStage",
+        name: "stage",
+        type: "uint8",
+      },
+      {
+        indexed: true,
         internalType: "uint8",
         name: "position",
         type: "uint8",
@@ -123,6 +155,25 @@ const _abi = [
       },
     ],
     name: "Bet",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint32",
+        name: "tableId",
+        type: "uint32",
+      },
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "gameId",
+        type: "uint64",
+      },
+    ],
+    name: "GameStarted",
     type: "event",
   },
   {

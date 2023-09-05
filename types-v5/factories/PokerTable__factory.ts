@@ -9,12 +9,32 @@ import type { PokerTable, PokerTableInterface } from "../PokerTable";
 const _abi = [
   {
     inputs: [],
+    name: "AlreadyInitialized",
+    type: "error",
+  },
+  {
+    inputs: [],
     name: "ChipError",
     type: "error",
   },
   {
     inputs: [],
     name: "ChipForbidden",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "Initializing",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "NotInitializing",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "OwnableInvalid",
     type: "error",
   },
   {

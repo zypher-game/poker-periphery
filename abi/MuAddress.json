@@ -1,0 +1,17 @@
+[
+  {
+    "inputs": [],
+    "name": "AddressError",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AddressInsuffcientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "AddressNotContract",
+    "type": "error"
+  }
+]

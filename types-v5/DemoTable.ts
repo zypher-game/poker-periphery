@@ -480,7 +480,8 @@ export interface DemoTableInterface extends utils.Interface {
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
-    "Bet(uint8,uint8,uint256,uint256)": EventFragment;
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": EventFragment;
+    "GameStarted(uint32,uint64)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
@@ -488,6 +489,7 @@ export interface DemoTableInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Bet"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GameStarted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
@@ -506,17 +508,30 @@ export type ApprovalEvent = TypedEvent<
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
 export interface BetEventObject {
+  gameId: BigNumber;
+  stage: number;
   position: number;
   option: number;
   callAmount: BigNumber;
   raiseAmount: BigNumber;
 }
 export type BetEvent = TypedEvent<
-  [number, number, BigNumber, BigNumber],
+  [BigNumber, number, number, number, BigNumber, BigNumber],
   BetEventObject
 >;
 
 export type BetEventFilter = TypedEventFilter<BetEvent>;
+
+export interface GameStartedEventObject {
+  tableId: number;
+  gameId: BigNumber;
+}
+export type GameStartedEvent = TypedEvent<
+  [number, BigNumber],
+  GameStartedEventObject
+>;
+
+export type GameStartedEventFilter = TypedEventFilter<GameStartedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -1162,18 +1177,31 @@ export interface DemoTable extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
-    "Bet(uint8,uint8,uint256,uint256)"(
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)"(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
       position?: PromiseOrValue<BigNumberish> | null,
       option?: null,
       callAmount?: null,
       raiseAmount?: null
     ): BetEventFilter;
     Bet(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
       position?: PromiseOrValue<BigNumberish> | null,
       option?: null,
       callAmount?: null,
       raiseAmount?: null
     ): BetEventFilter;
+
+    "GameStarted(uint32,uint64)"(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
+    GameStarted(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;

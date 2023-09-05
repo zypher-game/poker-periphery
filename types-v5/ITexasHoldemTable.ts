@@ -324,24 +324,39 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "winner", data: BytesLike): Result;
 
   events: {
-    "Bet(uint8,uint8,uint256,uint256)": EventFragment;
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": EventFragment;
+    "GameStarted(uint32,uint64)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Bet"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GameStarted"): EventFragment;
 }
 
 export interface BetEventObject {
+  gameId: BigNumber;
+  stage: number;
   position: number;
   option: number;
   callAmount: BigNumber;
   raiseAmount: BigNumber;
 }
 export type BetEvent = TypedEvent<
-  [number, number, BigNumber, BigNumber],
+  [BigNumber, number, number, number, BigNumber, BigNumber],
   BetEventObject
 >;
 
 export type BetEventFilter = TypedEventFilter<BetEvent>;
+
+export interface GameStartedEventObject {
+  tableId: number;
+  gameId: BigNumber;
+}
+export type GameStartedEvent = TypedEvent<
+  [number, BigNumber],
+  GameStartedEventObject
+>;
+
+export type GameStartedEventFilter = TypedEventFilter<GameStartedEvent>;
 
 export interface ITexasHoldemTable extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -709,18 +724,31 @@ export interface ITexasHoldemTable extends BaseContract {
   };
 
   filters: {
-    "Bet(uint8,uint8,uint256,uint256)"(
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)"(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
       position?: PromiseOrValue<BigNumberish> | null,
       option?: null,
       callAmount?: null,
       raiseAmount?: null
     ): BetEventFilter;
     Bet(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
       position?: PromiseOrValue<BigNumberish> | null,
       option?: null,
       callAmount?: null,
       raiseAmount?: null
     ): BetEventFilter;
+
+    "GameStarted(uint32,uint64)"(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
+    GameStarted(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
   };
 
   estimateGas: {
