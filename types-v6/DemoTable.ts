@@ -94,6 +94,7 @@ export declare namespace ITexasHoldemTable {
     stage: BigNumberish;
     minRaise: BigNumberish;
     betAmount: BigNumberish;
+    lastStageBet: BigNumberish;
     actingPosition: BigNumberish;
     actingTimeout: BigNumberish;
   };
@@ -102,12 +103,14 @@ export declare namespace ITexasHoldemTable {
     stage: bigint,
     minRaise: bigint,
     betAmount: bigint,
+    lastStageBet: bigint,
     actingPosition: bigint,
     actingTimeout: bigint
   ] & {
     stage: bigint;
     minRaise: bigint;
     betAmount: bigint;
+    lastStageBet: bigint;
     actingPosition: bigint;
     actingTimeout: bigint;
   };

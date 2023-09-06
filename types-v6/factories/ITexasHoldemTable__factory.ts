@@ -206,6 +206,11 @@ const _abi = [
             type: "uint256",
           },
           {
+            internalType: "uint256",
+            name: "lastStageBet",
+            type: "uint256",
+          },
+          {
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",

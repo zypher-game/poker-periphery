@@ -78,6 +78,7 @@ export type TableStatusStruct = {
   sidePots: PotMetaStruct[];
   minRaise: PromiseOrValue<BigNumberish>;
   betAmount: PromiseOrValue<BigNumberish>;
+  lastStageBet: PromiseOrValue<BigNumberish>;
   actingPosition: PromiseOrValue<BigNumberish>;
   actingTimeStart: PromiseOrValue<BigNumberish>;
   actingTimeout: PromiseOrValue<BigNumberish>;
@@ -94,6 +95,7 @@ export type TableStatusStructOutput = [
   PotMetaStructOutput[],
   BigNumber,
   BigNumber,
+  BigNumber,
   number,
   number,
   number,
@@ -108,6 +110,7 @@ export type TableStatusStructOutput = [
   sidePots: PotMetaStructOutput[];
   minRaise: BigNumber;
   betAmount: BigNumber;
+  lastStageBet: BigNumber;
   actingPosition: number;
   actingTimeStart: number;
   actingTimeout: number;

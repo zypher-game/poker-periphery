@@ -105,6 +105,7 @@ export declare namespace ITexasHoldemTable {
     stage: PromiseOrValue<BigNumberish>;
     minRaise: PromiseOrValue<BigNumberish>;
     betAmount: PromiseOrValue<BigNumberish>;
+    lastStageBet: PromiseOrValue<BigNumberish>;
     actingPosition: PromiseOrValue<BigNumberish>;
     actingTimeout: PromiseOrValue<BigNumberish>;
   };
@@ -113,12 +114,14 @@ export declare namespace ITexasHoldemTable {
     number,
     BigNumber,
     BigNumber,
+    BigNumber,
     number,
     number
   ] & {
     stage: number;
     minRaise: BigNumber;
     betAmount: BigNumber;
+    lastStageBet: BigNumber;
     actingPosition: number;
     actingTimeout: number;
   };

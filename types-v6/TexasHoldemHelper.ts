@@ -61,6 +61,7 @@ export declare namespace ITexasHoldemTable {
     timeout: BigNumberish;
     minBet: BigNumberish;
     lastRaise: BigNumberish;
+    lastStageBalancedBet: BigNumberish;
     folded: BigNumberish;
     allin: BigNumberish;
     betMatched: BigNumberish;
@@ -75,6 +76,7 @@ export declare namespace ITexasHoldemTable {
     timeout: bigint,
     minBet: bigint,
     lastRaise: bigint,
+    lastStageBalancedBet: bigint,
     folded: bigint,
     allin: bigint,
     betMatched: bigint,
@@ -87,6 +89,7 @@ export declare namespace ITexasHoldemTable {
     timeout: bigint;
     minBet: bigint;
     lastRaise: bigint;
+    lastStageBalancedBet: bigint;
     folded: bigint;
     allin: bigint;
     betMatched: bigint;

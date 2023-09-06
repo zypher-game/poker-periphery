@@ -93,6 +93,11 @@ const _abi = [
             type: "uint256",
           },
           {
+            internalType: "uint256",
+            name: "lastStageBalancedBet",
+            type: "uint256",
+          },
+          {
             internalType: "uint16",
             name: "folded",
             type: "uint16",
@@ -197,6 +202,11 @@ const _abi = [
           {
             internalType: "uint256",
             name: "lastRaise",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "lastStageBalancedBet",
             type: "uint256",
           },
           {

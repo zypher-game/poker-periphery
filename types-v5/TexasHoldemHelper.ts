@@ -65,6 +65,7 @@ export declare namespace ITexasHoldemTable {
     timeout: PromiseOrValue<BigNumberish>;
     minBet: PromiseOrValue<BigNumberish>;
     lastRaise: PromiseOrValue<BigNumberish>;
+    lastStageBalancedBet: PromiseOrValue<BigNumberish>;
     folded: PromiseOrValue<BigNumberish>;
     allin: PromiseOrValue<BigNumberish>;
     betMatched: PromiseOrValue<BigNumberish>;
@@ -79,6 +80,7 @@ export declare namespace ITexasHoldemTable {
     number,
     BigNumber,
     BigNumber,
+    BigNumber,
     number,
     number,
     number,
@@ -91,6 +93,7 @@ export declare namespace ITexasHoldemTable {
     timeout: number;
     minBet: BigNumber;
     lastRaise: BigNumber;
+    lastStageBalancedBet: BigNumber;
     folded: number;
     allin: number;
     betMatched: number;
@@ -127,7 +130,7 @@ export declare namespace ITexasHoldemTable {
 export interface TexasHoldemHelperInterface extends utils.Interface {
   functions: {
     "bestHand((uint8,uint8)[],(uint8,uint8)[])": FunctionFragment;
-    "computeNextPlayer((uint8,uint8,uint32,uint256,uint256,uint16,uint16,uint16,uint16,uint16,uint8),(uint32,uint32,uint32,uint32),uint8,uint8,uint32)": FunctionFragment;
+    "computeNextPlayer((uint8,uint8,uint32,uint256,uint256,uint256,uint16,uint16,uint16,uint16,uint16,uint8),(uint32,uint32,uint32,uint32),uint8,uint8,uint32)": FunctionFragment;
     "computePotWinners((uint8,uint64,uint256,uint8,uint16,uint16)[],uint8,(uint8,uint8)[],(uint8,uint8)[],uint256[],uint256[],uint16)": FunctionFragment;
     "computePots(uint256[],uint256[],uint16)": FunctionFragment;
     "computeSortedAllinAmounts(uint256[],uint256)": FunctionFragment;

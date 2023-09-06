@@ -245,6 +245,11 @@ const _abi = [
             type: "uint256",
           },
           {
+            internalType: "uint256",
+            name: "lastStageBet",
+            type: "uint256",
+          },
+          {
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",
@@ -601,6 +606,11 @@ const _abi = [
             type: "uint256",
           },
           {
+            internalType: "uint256",
+            name: "lastStageBet",
+            type: "uint256",
+          },
+          {
             internalType: "uint8",
             name: "actingPosition",
             type: "uint8",
@@ -784,6 +794,11 @@ const _abi = [
           {
             internalType: "uint256",
             name: "betAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "lastStageBet",
             type: "uint256",
           },
           {

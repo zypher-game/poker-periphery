@@ -117,6 +117,8 @@ export interface GameLobbyInterface extends Interface {
 
   getEvent(
     nameOrSignatureOrTopic:
+      | "Bet"
+      | "GameStarted"
       | "PendingReveal"
       | "PendingShuffle"
       | "PlayerJoined"
@@ -220,6 +222,50 @@ export interface GameLobbyInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "tables", data: BytesLike): Result;
+}
+
+export namespace BetEvent {
+  export type InputTuple = [
+    gameId: BigNumberish,
+    stage: BigNumberish,
+    position: BigNumberish,
+    option: BigNumberish,
+    callAmount: BigNumberish,
+    raiseAmount: BigNumberish
+  ];
+  export type OutputTuple = [
+    gameId: bigint,
+    stage: bigint,
+    position: bigint,
+    option: bigint,
+    callAmount: bigint,
+    raiseAmount: bigint
+  ];
+  export interface OutputObject {
+    gameId: bigint;
+    stage: bigint;
+    position: bigint;
+    option: bigint;
+    callAmount: bigint;
+    raiseAmount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace GameStartedEvent {
+  export type InputTuple = [tableId: BigNumberish, gameId: BigNumberish];
+  export type OutputTuple = [tableId: bigint, gameId: bigint];
+  export interface OutputObject {
+    tableId: bigint;
+    gameId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace PendingRevealEvent {
@@ -600,6 +646,20 @@ export interface GameLobby extends BaseContract {
   ): TypedContractMethod<[], [ILobby.TableStructOutput[]], "view">;
 
   getEvent(
+    key: "Bet"
+  ): TypedContractEvent<
+    BetEvent.InputTuple,
+    BetEvent.OutputTuple,
+    BetEvent.OutputObject
+  >;
+  getEvent(
+    key: "GameStarted"
+  ): TypedContractEvent<
+    GameStartedEvent.InputTuple,
+    GameStartedEvent.OutputTuple,
+    GameStartedEvent.OutputObject
+  >;
+  getEvent(
     key: "PendingReveal"
   ): TypedContractEvent<
     PendingRevealEvent.InputTuple,
@@ -664,6 +724,28 @@ export interface GameLobby extends BaseContract {
   >;
 
   filters: {
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": TypedContractEvent<
+      BetEvent.InputTuple,
+      BetEvent.OutputTuple,
+      BetEvent.OutputObject
+    >;
+    Bet: TypedContractEvent<
+      BetEvent.InputTuple,
+      BetEvent.OutputTuple,
+      BetEvent.OutputObject
+    >;
+
+    "GameStarted(uint32,uint64)": TypedContractEvent<
+      GameStartedEvent.InputTuple,
+      GameStartedEvent.OutputTuple,
+      GameStartedEvent.OutputObject
+    >;
+    GameStarted: TypedContractEvent<
+      GameStartedEvent.InputTuple,
+      GameStartedEvent.OutputTuple,
+      GameStartedEvent.OutputObject
+    >;
+
     "PendingReveal(uint32,address,bytes[],uint32)": TypedContractEvent<
       PendingRevealEvent.InputTuple,
       PendingRevealEvent.OutputTuple,

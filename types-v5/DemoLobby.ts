@@ -386,6 +386,8 @@ export interface DemoLobbyInterface extends utils.Interface {
   events: {
     "AdminChanged(address,address)": EventFragment;
     "BeaconUpgraded(address)": EventFragment;
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": EventFragment;
+    "GameStarted(uint32,uint64)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "PendingReveal(uint32,address,bytes[],uint32)": EventFragment;
@@ -402,6 +404,8 @@ export interface DemoLobbyInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Bet"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GameStarted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PendingReveal"): EventFragment;
@@ -436,6 +440,32 @@ export type BeaconUpgradedEvent = TypedEvent<
 >;
 
 export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
+
+export interface BetEventObject {
+  gameId: BigNumber;
+  stage: number;
+  position: number;
+  option: number;
+  callAmount: BigNumber;
+  raiseAmount: BigNumber;
+}
+export type BetEvent = TypedEvent<
+  [BigNumber, number, number, number, BigNumber, BigNumber],
+  BetEventObject
+>;
+
+export type BetEventFilter = TypedEventFilter<BetEvent>;
+
+export interface GameStartedEventObject {
+  tableId: number;
+  gameId: BigNumber;
+}
+export type GameStartedEvent = TypedEvent<
+  [number, BigNumber],
+  GameStartedEventObject
+>;
+
+export type GameStartedEventFilter = TypedEventFilter<GameStartedEvent>;
 
 export interface InitializedEventObject {
   version: number;
@@ -1065,6 +1095,32 @@ export interface DemoLobby extends BaseContract {
     BeaconUpgraded(
       beacon?: PromiseOrValue<string> | null
     ): BeaconUpgradedEventFilter;
+
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)"(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
+      position?: PromiseOrValue<BigNumberish> | null,
+      option?: null,
+      callAmount?: null,
+      raiseAmount?: null
+    ): BetEventFilter;
+    Bet(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
+      position?: PromiseOrValue<BigNumberish> | null,
+      option?: null,
+      callAmount?: null,
+      raiseAmount?: null
+    ): BetEventFilter;
+
+    "GameStarted(uint32,uint64)"(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
+    GameStarted(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;

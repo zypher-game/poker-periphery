@@ -11,6 +11,68 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint64",
+        name: "gameId",
+        type: "uint64",
+      },
+      {
+        indexed: false,
+        internalType: "enum ILobby.GameStage",
+        name: "stage",
+        type: "uint8",
+      },
+      {
+        indexed: true,
+        internalType: "uint8",
+        name: "position",
+        type: "uint8",
+      },
+      {
+        indexed: false,
+        internalType: "enum ILobby.BettingOption",
+        name: "option",
+        type: "uint8",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "callAmount",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "raiseAmount",
+        type: "uint256",
+      },
+    ],
+    name: "Bet",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint32",
+        name: "tableId",
+        type: "uint32",
+      },
+      {
+        indexed: true,
+        internalType: "uint64",
+        name: "gameId",
+        type: "uint64",
+      },
+    ],
+    name: "GameStarted",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: "address",
         name: "previousOwner",
         type: "address",

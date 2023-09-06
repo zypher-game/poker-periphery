@@ -234,6 +234,11 @@
             "type": "uint256"
           },
           {
+            "internalType": "uint256",
+            "name": "lastStageBet",
+            "type": "uint256"
+          },
+          {
             "internalType": "uint8",
             "name": "actingPosition",
             "type": "uint8"
@@ -590,6 +595,11 @@
             "type": "uint256"
           },
           {
+            "internalType": "uint256",
+            "name": "lastStageBet",
+            "type": "uint256"
+          },
+          {
             "internalType": "uint8",
             "name": "actingPosition",
             "type": "uint8"
@@ -773,6 +783,11 @@
           {
             "internalType": "uint256",
             "name": "betAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastStageBet",
             "type": "uint256"
           },
           {

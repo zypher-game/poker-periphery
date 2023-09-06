@@ -231,6 +231,8 @@ export interface ILobbyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "tables", data: BytesLike): Result;
 
   events: {
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": EventFragment;
+    "GameStarted(uint32,uint64)": EventFragment;
     "PendingReveal(uint32,address,bytes[],uint32)": EventFragment;
     "PendingShuffle(uint32,address,bytes[],bytes,uint32)": EventFragment;
     "PlayerJoined(uint32,address,string)": EventFragment;
@@ -242,6 +244,8 @@ export interface ILobbyInterface extends utils.Interface {
     "TableStarted(uint32,address,address[])": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "Bet"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GameStarted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PendingReveal"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PendingShuffle"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PlayerJoined"): EventFragment;
@@ -252,6 +256,32 @@ export interface ILobbyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "PlayerShuffledSeats"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TableStarted"): EventFragment;
 }
+
+export interface BetEventObject {
+  gameId: BigNumber;
+  stage: number;
+  position: number;
+  option: number;
+  callAmount: BigNumber;
+  raiseAmount: BigNumber;
+}
+export type BetEvent = TypedEvent<
+  [BigNumber, number, number, number, BigNumber, BigNumber],
+  BetEventObject
+>;
+
+export type BetEventFilter = TypedEventFilter<BetEvent>;
+
+export interface GameStartedEventObject {
+  tableId: number;
+  gameId: BigNumber;
+}
+export type GameStartedEvent = TypedEvent<
+  [number, BigNumber],
+  GameStartedEventObject
+>;
+
+export type GameStartedEventFilter = TypedEventFilter<GameStartedEvent>;
 
 export interface PendingRevealEventObject {
   tableId: number;
@@ -590,6 +620,32 @@ export interface ILobby extends BaseContract {
   };
 
   filters: {
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)"(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
+      position?: PromiseOrValue<BigNumberish> | null,
+      option?: null,
+      callAmount?: null,
+      raiseAmount?: null
+    ): BetEventFilter;
+    Bet(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
+      position?: PromiseOrValue<BigNumberish> | null,
+      option?: null,
+      callAmount?: null,
+      raiseAmount?: null
+    ): BetEventFilter;
+
+    "GameStarted(uint32,uint64)"(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
+    GameStarted(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
+
     "PendingReveal(uint32,address,bytes[],uint32)"(
       tableId?: PromiseOrValue<BigNumberish> | null,
       player?: PromiseOrValue<string> | null,

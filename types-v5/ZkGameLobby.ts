@@ -316,6 +316,8 @@ export interface ZkGameLobbyInterface extends utils.Interface {
   ): Result;
 
   events: {
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": EventFragment;
+    "GameStarted(uint32,uint64)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "PendingReveal(uint32,address,bytes[],uint32)": EventFragment;
     "PendingShuffle(uint32,address,bytes[],bytes,uint32)": EventFragment;
@@ -328,6 +330,8 @@ export interface ZkGameLobbyInterface extends utils.Interface {
     "TableStarted(uint32,address,address[])": EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: "Bet"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "GameStarted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PendingReveal"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PendingShuffle"): EventFragment;
@@ -339,6 +343,32 @@ export interface ZkGameLobbyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "PlayerShuffledSeats"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "TableStarted"): EventFragment;
 }
+
+export interface BetEventObject {
+  gameId: BigNumber;
+  stage: number;
+  position: number;
+  option: number;
+  callAmount: BigNumber;
+  raiseAmount: BigNumber;
+}
+export type BetEvent = TypedEvent<
+  [BigNumber, number, number, number, BigNumber, BigNumber],
+  BetEventObject
+>;
+
+export type BetEventFilter = TypedEventFilter<BetEvent>;
+
+export interface GameStartedEventObject {
+  tableId: number;
+  gameId: BigNumber;
+}
+export type GameStartedEvent = TypedEvent<
+  [number, BigNumber],
+  GameStartedEventObject
+>;
+
+export type GameStartedEventFilter = TypedEventFilter<GameStartedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -849,6 +879,32 @@ export interface ZkGameLobby extends BaseContract {
   };
 
   filters: {
+    "Bet(uint64,uint8,uint8,uint8,uint256,uint256)"(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
+      position?: PromiseOrValue<BigNumberish> | null,
+      option?: null,
+      callAmount?: null,
+      raiseAmount?: null
+    ): BetEventFilter;
+    Bet(
+      gameId?: PromiseOrValue<BigNumberish> | null,
+      stage?: null,
+      position?: PromiseOrValue<BigNumberish> | null,
+      option?: null,
+      callAmount?: null,
+      raiseAmount?: null
+    ): BetEventFilter;
+
+    "GameStarted(uint32,uint64)"(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
+    GameStarted(
+      tableId?: PromiseOrValue<BigNumberish> | null,
+      gameId?: PromiseOrValue<BigNumberish> | null
+    ): GameStartedEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
