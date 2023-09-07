@@ -10,6 +10,51 @@
       }
     }
   },
+  "5611": {
+    "DemoLobby": {
+      "address": "0x7e6fE7e3174D827f52d29C0Da579778cE34E9267",
+      "blockCreated": null,
+      "txHash": "0x1c372f1245f904cc64a25ef3eb8361d9e173955e20fe7837d9b8b6140ee4a580",
+      "meta": {
+        "deployer": "0x0d60cD0f59378e780c883d6aF5cA5C23dBF6f479",
+        "timestamp": 1694056595,
+        "tables": [
+          {
+            "id": 1,
+            "address": "0xFdDDe9ba5Db7c57387A102236c9Baf71df915645",
+            "seats": 4
+          },
+          {
+            "id": 2,
+            "address": "0x33F7678A774430398F36eCBb95E5624b301f6263",
+            "seats": 2
+          },
+          {
+            "id": 3,
+            "address": "0x9E24F88c0C944C22fAb302c53DfaB42C9Db4895b",
+            "seats": 2
+          },
+          {
+            "id": 4,
+            "address": "0x2Ba02E1848C610139d03e1E3747371E3E2f99f74",
+            "seats": 2
+          }
+        ]
+      }
+    },
+    "TexasHoldemPeriphery": {
+      "address": "0xAA2d3CE8CCF158f7FC78fc75193fC4A9A9D35Ef6",
+      "blockCreated": null
+    },
+    "DemoTable": {
+      "address": "0xaddc5713Cb8C92fc75F21930f4C64CE2684d85D0",
+      "blockCreated": null
+    },
+    "TexasHoldemHelper": {
+      "address": "0xdFC6f36718D7E06c75DB3146890200de491E207B",
+      "blockCreated": null
+    }
+  },
   "9527": {
     "IMentalPoker": {
       "address": "0x0000000000000000000000000000000000003000",
