@@ -102,6 +102,7 @@ export declare namespace IPokerTable {
 
 export declare namespace ITexasHoldemTable {
   export type TexasHoldemGameStruct = {
+    gameId: PromiseOrValue<BigNumberish>;
     stage: PromiseOrValue<BigNumberish>;
     minRaise: PromiseOrValue<BigNumberish>;
     betAmount: PromiseOrValue<BigNumberish>;
@@ -111,6 +112,7 @@ export declare namespace ITexasHoldemTable {
   };
 
   export type TexasHoldemGameStructOutput = [
+    BigNumber,
     number,
     BigNumber,
     BigNumber,
@@ -118,6 +120,7 @@ export declare namespace ITexasHoldemTable {
     number,
     number
   ] & {
+    gameId: BigNumber;
     stage: number;
     minRaise: BigNumber;
     betAmount: BigNumber;
@@ -187,7 +190,6 @@ export interface DemoTableInterface extends utils.Interface {
     "positionStatus(uint8)": FunctionFragment;
     "pots()": FunctionFragment;
     "raiseBets(uint256)": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
     "setup(uint32,string,uint8,uint256,uint256,uint256,uint256,address,bytes[])": FunctionFragment;
     "showCards()": FunctionFragment;
     "symbol()": FunctionFragment;
@@ -236,7 +238,6 @@ export interface DemoTableInterface extends utils.Interface {
       | "positionStatus"
       | "pots"
       | "raiseBets"
-      | "renounceOwnership"
       | "setup"
       | "showCards"
       | "symbol"
@@ -342,10 +343,6 @@ export interface DemoTableInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "raiseBets",
     values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "setup",
@@ -457,10 +454,6 @@ export interface DemoTableInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "pots", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "raiseBets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "setup", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "showCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -737,10 +730,6 @@ export interface DemoTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     setup(
       tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
@@ -931,10 +920,6 @@ export interface DemoTable extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   setup(
     tableId: PromiseOrValue<BigNumberish>,
     subject: PromiseOrValue<string>,
@@ -1110,8 +1095,6 @@ export interface DemoTable extends BaseContract {
       raiseAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setup(
       tableId: PromiseOrValue<BigNumberish>,
@@ -1356,10 +1339,6 @@ export interface DemoTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     setup(
       tableId: PromiseOrValue<BigNumberish>,
       subject: PromiseOrValue<string>,
@@ -1534,10 +1513,6 @@ export interface DemoTable extends BaseContract {
 
     raiseBets(
       raiseAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    renounceOwnership(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

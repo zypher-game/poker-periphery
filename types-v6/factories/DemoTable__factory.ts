@@ -489,6 +489,11 @@ const _abi = [
       {
         components: [
           {
+            internalType: "uint64",
+            name: "gameId",
+            type: "uint64",
+          },
+          {
             internalType: "enum ITexasHoldemTable.GameStage",
             name: "stage",
             type: "uint8",
@@ -874,13 +879,6 @@ const _abi = [
       },
     ],
     name: "raiseBets",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

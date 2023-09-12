@@ -101,7 +101,6 @@ export interface PokerTableInterface extends Interface {
       | "owner"
       | "playerCounts"
       | "position"
-      | "renounceOwnership"
       | "symbol"
       | "totalPots"
       | "totalSupply"
@@ -164,10 +163,6 @@ export interface PokerTableInterface extends Interface {
     functionFragment: "position",
     values: [BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(functionFragment: "totalPots", values?: undefined): string;
   encodeFunctionData(
@@ -218,10 +213,6 @@ export interface PokerTableInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "position", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "totalPots", data: BytesLike): Result;
   decodeFunctionResult(
@@ -399,8 +390,6 @@ export interface PokerTable extends BaseContract {
     "view"
   >;
 
-  renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-
   symbol: TypedContractMethod<[], [string], "view">;
 
   totalPots: TypedContractMethod<[], [bigint], "view">;
@@ -501,9 +490,6 @@ export interface PokerTable extends BaseContract {
     [IPokerTable.PositionStructOutput],
     "view"
   >;
-  getFunction(
-    nameOrSignature: "renounceOwnership"
-  ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "symbol"
   ): TypedContractMethod<[], [string], "view">;

@@ -91,6 +91,7 @@ export declare namespace IPokerTable {
 
 export declare namespace ITexasHoldemTable {
   export type TexasHoldemGameStruct = {
+    gameId: BigNumberish;
     stage: BigNumberish;
     minRaise: BigNumberish;
     betAmount: BigNumberish;
@@ -100,6 +101,7 @@ export declare namespace ITexasHoldemTable {
   };
 
   export type TexasHoldemGameStructOutput = [
+    gameId: bigint,
     stage: bigint,
     minRaise: bigint,
     betAmount: bigint,
@@ -107,6 +109,7 @@ export declare namespace ITexasHoldemTable {
     actingPosition: bigint,
     actingTimeout: bigint
   ] & {
+    gameId: bigint;
     stage: bigint;
     minRaise: bigint;
     betAmount: bigint;
@@ -179,7 +182,6 @@ export interface DemoTableInterface extends Interface {
       | "positionStatus"
       | "pots"
       | "raiseBets"
-      | "renounceOwnership"
       | "setup"
       | "showCards"
       | "symbol"
@@ -294,10 +296,6 @@ export interface DemoTableInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "setup",
     values: [
       BigNumberish,
@@ -403,10 +401,6 @@ export interface DemoTableInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "pots", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "raiseBets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "setup", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "showCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
@@ -696,8 +690,6 @@ export interface DemoTable extends BaseContract {
     "nonpayable"
   >;
 
-  renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
-
   setup: TypedContractMethod<
     [
       tableId: BigNumberish,
@@ -904,9 +896,6 @@ export interface DemoTable extends BaseContract {
   getFunction(
     nameOrSignature: "raiseBets"
   ): TypedContractMethod<[raiseAmount: BigNumberish], [void], "nonpayable">;
-  getFunction(
-    nameOrSignature: "renounceOwnership"
-  ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "setup"
   ): TypedContractMethod<

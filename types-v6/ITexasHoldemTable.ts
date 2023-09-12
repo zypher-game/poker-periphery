@@ -91,6 +91,7 @@ export declare namespace IPokerTable {
 
 export declare namespace ITexasHoldemTable {
   export type TexasHoldemGameStruct = {
+    gameId: BigNumberish;
     stage: BigNumberish;
     minRaise: BigNumberish;
     betAmount: BigNumberish;
@@ -100,6 +101,7 @@ export declare namespace ITexasHoldemTable {
   };
 
   export type TexasHoldemGameStructOutput = [
+    gameId: bigint,
     stage: bigint,
     minRaise: bigint,
     betAmount: bigint,
@@ -107,6 +109,7 @@ export declare namespace ITexasHoldemTable {
     actingPosition: bigint,
     actingTimeout: bigint
   ] & {
+    gameId: bigint;
     stage: bigint;
     minRaise: bigint;
     betAmount: bigint;

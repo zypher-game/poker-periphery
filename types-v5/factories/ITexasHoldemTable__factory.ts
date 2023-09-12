@@ -192,6 +192,11 @@ const _abi = [
       {
         components: [
           {
+            internalType: "uint64",
+            name: "gameId",
+            type: "uint64",
+          },
+          {
             internalType: "enum ITexasHoldemTable.GameStage",
             name: "stage",
             type: "uint8",

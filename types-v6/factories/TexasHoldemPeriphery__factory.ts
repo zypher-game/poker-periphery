@@ -114,6 +114,11 @@ const _abi = [
             type: "string",
           },
           {
+            internalType: "uint64",
+            name: "gameId",
+            type: "uint64",
+          },
+          {
             internalType: "enum ITexasHoldemTable.GameStage",
             name: "stage",
             type: "uint8",
@@ -475,6 +480,11 @@ const _abi = [
             type: "string",
           },
           {
+            internalType: "uint64",
+            name: "gameId",
+            type: "uint64",
+          },
+          {
             internalType: "enum ITexasHoldemTable.GameStage",
             name: "stage",
             type: "uint8",
@@ -664,6 +674,11 @@ const _abi = [
             internalType: "string",
             name: "subject",
             type: "string",
+          },
+          {
+            internalType: "uint64",
+            name: "gameId",
+            type: "uint64",
           },
           {
             internalType: "enum ITexasHoldemTable.GameStage",

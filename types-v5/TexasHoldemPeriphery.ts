@@ -71,6 +71,7 @@ export type PotMetaStructOutput = [BigNumber, number[], number] & {
 export type TableStatusStruct = {
   table: PromiseOrValue<string>;
   subject: PromiseOrValue<string>;
+  gameId: PromiseOrValue<BigNumberish>;
   stage: PromiseOrValue<BigNumberish>;
   communityCards: IPokerTable.PokerCardStruct[];
   positions: TablePositionStruct[];
@@ -88,6 +89,7 @@ export type TableStatusStruct = {
 export type TableStatusStructOutput = [
   string,
   string,
+  BigNumber,
   number,
   IPokerTable.PokerCardStructOutput[],
   TablePositionStructOutput[],
@@ -103,6 +105,7 @@ export type TableStatusStructOutput = [
 ] & {
   table: string;
   subject: string;
+  gameId: BigNumber;
   stage: number;
   communityCards: IPokerTable.PokerCardStructOutput[];
   positions: TablePositionStructOutput[];
