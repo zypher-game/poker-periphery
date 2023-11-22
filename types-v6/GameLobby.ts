@@ -104,6 +104,7 @@ export interface GameLobbyInterface extends Interface {
       | "join"
       | "kick"
       | "leave"
+      | "mainWallet"
       | "ready"
       | "reportPlayerLeft"
       | "reportTableEnded"
@@ -147,6 +148,10 @@ export interface GameLobbyInterface extends Interface {
     values: [BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mainWallet",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "reportPlayerLeft",
@@ -195,6 +200,7 @@ export interface GameLobbyInterface extends Interface {
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "kick", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mainWallet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ready", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "reportPlayerLeft",
@@ -502,6 +508,8 @@ export interface GameLobby extends BaseContract {
 
   leave: TypedContractMethod<[], [bigint], "nonpayable">;
 
+  mainWallet: TypedContractMethod<[sender: AddressLike], [string], "view">;
+
   ready: TypedContractMethod<[], [boolean], "nonpayable">;
 
   reportPlayerLeft: TypedContractMethod<
@@ -589,6 +597,9 @@ export interface GameLobby extends BaseContract {
   getFunction(
     nameOrSignature: "leave"
   ): TypedContractMethod<[], [bigint], "nonpayable">;
+  getFunction(
+    nameOrSignature: "mainWallet"
+  ): TypedContractMethod<[sender: AddressLike], [string], "view">;
   getFunction(
     nameOrSignature: "ready"
   ): TypedContractMethod<[], [boolean], "nonpayable">;

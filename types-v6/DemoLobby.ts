@@ -99,6 +99,7 @@ export declare namespace MentalPokerHelper {
 export interface DemoLobbyInterface extends Interface {
   getFunction(
     nameOrSignature:
+      | "authorize"
       | "cardConfig"
       | "createTable"
       | "initialize"
@@ -106,6 +107,7 @@ export interface DemoLobbyInterface extends Interface {
       | "isPlayerWaiting"
       | "join"
       | "leave"
+      | "mainWallet"
       | "owner"
       | "proxiableUUID"
       | "ready"
@@ -152,6 +154,10 @@ export interface DemoLobbyInterface extends Interface {
   ): EventFragment;
 
   encodeFunctionData(
+    functionFragment: "authorize",
+    values: [AddressLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "cardConfig",
     values?: undefined
   ): string;
@@ -176,6 +182,10 @@ export interface DemoLobbyInterface extends Interface {
     values: [BigNumberish, string, BytesLike, BytesLike, BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mainWallet",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "proxiableUUID",
@@ -263,6 +273,7 @@ export interface DemoLobbyInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createTable",
@@ -279,6 +290,7 @@ export interface DemoLobbyInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mainWallet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proxiableUUID",
@@ -660,6 +672,12 @@ export interface DemoLobby extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
+  authorize: TypedContractMethod<
+    [to: AddressLike, until: BigNumberish],
+    [void],
+    "payable"
+  >;
+
   cardConfig: TypedContractMethod<
     [],
     [[bigint, bigint, string] & { m: bigint; n: bigint; param: string }],
@@ -703,6 +721,8 @@ export interface DemoLobby extends BaseContract {
   >;
 
   leave: TypedContractMethod<[], [bigint], "nonpayable">;
+
+  mainWallet: TypedContractMethod<[sender: AddressLike], [string], "view">;
 
   owner: TypedContractMethod<[], [string], "view">;
 
@@ -817,6 +837,13 @@ export interface DemoLobby extends BaseContract {
   ): T;
 
   getFunction(
+    nameOrSignature: "authorize"
+  ): TypedContractMethod<
+    [to: AddressLike, until: BigNumberish],
+    [void],
+    "payable"
+  >;
+  getFunction(
     nameOrSignature: "cardConfig"
   ): TypedContractMethod<
     [],
@@ -859,6 +886,9 @@ export interface DemoLobby extends BaseContract {
   getFunction(
     nameOrSignature: "leave"
   ): TypedContractMethod<[], [bigint], "nonpayable">;
+  getFunction(
+    nameOrSignature: "mainWallet"
+  ): TypedContractMethod<[sender: AddressLike], [string], "view">;
   getFunction(
     nameOrSignature: "owner"
   ): TypedContractMethod<[], [string], "view">;

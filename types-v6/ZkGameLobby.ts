@@ -107,6 +107,7 @@ export interface ZkGameLobbyInterface extends Interface {
       | "join"
       | "kick"
       | "leave"
+      | "mainWallet"
       | "owner"
       | "ready"
       | "removeTable"
@@ -168,6 +169,10 @@ export interface ZkGameLobbyInterface extends Interface {
     values: [BigNumberish, AddressLike]
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mainWallet",
+    values: [AddressLike]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
   encodeFunctionData(
@@ -242,6 +247,7 @@ export interface ZkGameLobbyInterface extends Interface {
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "kick", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mainWallet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ready", data: BytesLike): Result;
   decodeFunctionResult(
@@ -593,6 +599,8 @@ export interface ZkGameLobby extends BaseContract {
 
   leave: TypedContractMethod<[], [bigint], "nonpayable">;
 
+  mainWallet: TypedContractMethod<[sender: AddressLike], [string], "view">;
+
   owner: TypedContractMethod<[], [string], "view">;
 
   ready: TypedContractMethod<[], [boolean], "nonpayable">;
@@ -719,6 +727,9 @@ export interface ZkGameLobby extends BaseContract {
   getFunction(
     nameOrSignature: "leave"
   ): TypedContractMethod<[], [bigint], "nonpayable">;
+  getFunction(
+    nameOrSignature: "mainWallet"
+  ): TypedContractMethod<[sender: AddressLike], [string], "view">;
   getFunction(
     nameOrSignature: "owner"
   ): TypedContractMethod<[], [string], "view">;

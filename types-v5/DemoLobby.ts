@@ -103,6 +103,7 @@ export declare namespace MentalPokerHelper {
 
 export interface DemoLobbyInterface extends utils.Interface {
   functions: {
+    "authorize(address,uint32)": FunctionFragment;
     "cardConfig()": FunctionFragment;
     "createTable(string,uint8)": FunctionFragment;
     "initialize(bytes[])": FunctionFragment;
@@ -110,6 +111,7 @@ export interface DemoLobbyInterface extends utils.Interface {
     "isPlayerWaiting(address)": FunctionFragment;
     "join(uint32,string,bytes,bytes,bytes)": FunctionFragment;
     "leave()": FunctionFragment;
+    "mainWallet(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "proxiableUUID()": FunctionFragment;
     "ready()": FunctionFragment;
@@ -137,6 +139,7 @@ export interface DemoLobbyInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "authorize"
       | "cardConfig"
       | "createTable"
       | "initialize"
@@ -144,6 +147,7 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "isPlayerWaiting"
       | "join"
       | "leave"
+      | "mainWallet"
       | "owner"
       | "proxiableUUID"
       | "ready"
@@ -169,6 +173,10 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "version"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "authorize",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(
     functionFragment: "cardConfig",
     values?: undefined
@@ -200,6 +208,10 @@ export interface DemoLobbyInterface extends utils.Interface {
     ]
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mainWallet",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "proxiableUUID",
@@ -295,6 +307,7 @@ export interface DemoLobbyInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createTable",
@@ -311,6 +324,7 @@ export interface DemoLobbyInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mainWallet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proxiableUUID",
@@ -629,6 +643,12 @@ export interface DemoLobby extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    authorize(
+      to: PromiseOrValue<string>,
+      until: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     cardConfig(
       overrides?: CallOverrides
     ): Promise<
@@ -668,6 +688,11 @@ export interface DemoLobby extends BaseContract {
     leave(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -781,6 +806,12 @@ export interface DemoLobby extends BaseContract {
     version(overrides?: CallOverrides): Promise<[number]>;
   };
 
+  authorize(
+    to: PromiseOrValue<string>,
+    until: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   cardConfig(
     overrides?: CallOverrides
   ): Promise<
@@ -820,6 +851,11 @@ export interface DemoLobby extends BaseContract {
   leave(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  mainWallet(
+    sender: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -933,6 +969,12 @@ export interface DemoLobby extends BaseContract {
   version(overrides?: CallOverrides): Promise<number>;
 
   callStatic: {
+    authorize(
+      to: PromiseOrValue<string>,
+      until: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     cardConfig(
       overrides?: CallOverrides
     ): Promise<
@@ -970,6 +1012,11 @@ export interface DemoLobby extends BaseContract {
     ): Promise<boolean>;
 
     leave(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1240,6 +1287,12 @@ export interface DemoLobby extends BaseContract {
   };
 
   estimateGas: {
+    authorize(
+      to: PromiseOrValue<string>,
+      until: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     cardConfig(overrides?: CallOverrides): Promise<BigNumber>;
 
     createTable(
@@ -1274,6 +1327,11 @@ export interface DemoLobby extends BaseContract {
 
     leave(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1389,6 +1447,12 @@ export interface DemoLobby extends BaseContract {
   };
 
   populateTransaction: {
+    authorize(
+      to: PromiseOrValue<string>,
+      until: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     cardConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createTable(
@@ -1423,6 +1487,11 @@ export interface DemoLobby extends BaseContract {
 
     leave(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;

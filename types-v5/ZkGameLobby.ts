@@ -111,6 +111,7 @@ export interface ZkGameLobbyInterface extends utils.Interface {
     "join(uint32,string,bytes,bytes,bytes)": FunctionFragment;
     "kick(uint32,address)": FunctionFragment;
     "leave()": FunctionFragment;
+    "mainWallet(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "ready()": FunctionFragment;
     "removeTable(uint32)": FunctionFragment;
@@ -137,6 +138,7 @@ export interface ZkGameLobbyInterface extends utils.Interface {
       | "join"
       | "kick"
       | "leave"
+      | "mainWallet"
       | "owner"
       | "ready"
       | "removeTable"
@@ -188,6 +190,10 @@ export interface ZkGameLobbyInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mainWallet",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
   encodeFunctionData(
@@ -270,6 +276,7 @@ export interface ZkGameLobbyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "kick", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mainWallet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ready", data: BytesLike): Result;
   decodeFunctionResult(
@@ -561,6 +568,11 @@ export interface ZkGameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     ready(
@@ -683,6 +695,11 @@ export interface ZkGameLobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  mainWallet(
+    sender: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   owner(overrides?: CallOverrides): Promise<string>;
 
   ready(
@@ -802,6 +819,11 @@ export interface ZkGameLobby extends BaseContract {
     ): Promise<boolean>;
 
     leave(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1052,6 +1074,11 @@ export interface ZkGameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     ready(
@@ -1165,6 +1192,11 @@ export interface ZkGameLobby extends BaseContract {
 
     leave(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;

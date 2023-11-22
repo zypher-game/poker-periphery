@@ -108,6 +108,7 @@ export interface GameLobbyInterface extends utils.Interface {
     "join(uint32,string,bytes,bytes,bytes)": FunctionFragment;
     "kick(uint32,address)": FunctionFragment;
     "leave()": FunctionFragment;
+    "mainWallet(address)": FunctionFragment;
     "ready()": FunctionFragment;
     "reportPlayerLeft(uint32,address,uint256,uint256,uint256)": FunctionFragment;
     "reportTableEnded(uint32)": FunctionFragment;
@@ -126,6 +127,7 @@ export interface GameLobbyInterface extends utils.Interface {
       | "join"
       | "kick"
       | "leave"
+      | "mainWallet"
       | "ready"
       | "reportPlayerLeft"
       | "reportTableEnded"
@@ -160,6 +162,10 @@ export interface GameLobbyInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "leave", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "mainWallet",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "reportPlayerLeft",
@@ -216,6 +222,7 @@ export interface GameLobbyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "join", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "kick", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "leave", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mainWallet", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "ready", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "reportPlayerLeft",
@@ -462,6 +469,11 @@ export interface GameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
+
     ready(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -548,6 +560,11 @@ export interface GameLobby extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  mainWallet(
+    sender: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
+
   ready(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -631,6 +648,11 @@ export interface GameLobby extends BaseContract {
     ): Promise<boolean>;
 
     leave(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     ready(overrides?: CallOverrides): Promise<boolean>;
 
@@ -842,6 +864,11 @@ export interface GameLobby extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     ready(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -921,6 +948,11 @@ export interface GameLobby extends BaseContract {
 
     leave(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    mainWallet(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     ready(
