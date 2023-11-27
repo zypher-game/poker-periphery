@@ -2,12 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
-import type {
-  IERC20MetadataUpgradeable,
-  IERC20MetadataUpgradeableInterface,
-} from "../IERC20MetadataUpgradeable";
+import { Contract, Interface, type ContractRunner } from "ethers";
+import type { ERC20Pausable, ERC20PausableInterface } from "../ERC20Pausable";
 
 const _abi = [
   {
@@ -39,6 +35,19 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Paused",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: "address",
         name: "from",
@@ -58,6 +67,19 @@ const _abi = [
       },
     ],
     name: "Transfer",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
+    name: "Unpaused",
     type: "event",
   },
   {
@@ -141,6 +163,54 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "subtractedValue",
+        type: "uint256",
+      },
+    ],
+    name: "decreaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "addedValue",
+        type: "uint256",
+      },
+    ],
+    name: "increaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "name",
     outputs: [
@@ -148,6 +218,19 @@ const _abi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "paused",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -234,19 +317,15 @@ const _abi = [
   },
 ] as const;
 
-export class IERC20MetadataUpgradeable__factory {
+export class ERC20Pausable__factory {
   static readonly abi = _abi;
-  static createInterface(): IERC20MetadataUpgradeableInterface {
-    return new utils.Interface(_abi) as IERC20MetadataUpgradeableInterface;
+  static createInterface(): ERC20PausableInterface {
+    return new Interface(_abi) as ERC20PausableInterface;
   }
   static connect(
     address: string,
-    signerOrProvider: Signer | Provider
-  ): IERC20MetadataUpgradeable {
-    return new Contract(
-      address,
-      _abi,
-      signerOrProvider
-    ) as IERC20MetadataUpgradeable;
+    runner?: ContractRunner | null
+  ): ERC20Pausable {
+    return new Contract(address, _abi, runner) as unknown as ERC20Pausable;
   }
 }

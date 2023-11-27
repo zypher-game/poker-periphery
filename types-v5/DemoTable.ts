@@ -159,8 +159,6 @@ export interface DemoTableInterface extends utils.Interface {
     "TABLE_TIMEOUT()": FunctionFragment;
     "activePlayerCounts()": FunctionFragment;
     "allinBets()": FunctionFragment;
-    "allowance(address,address)": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
     "bets(address)": FunctionFragment;
     "callBets()": FunctionFragment;
@@ -170,7 +168,6 @@ export interface DemoTableInterface extends utils.Interface {
     "communityCards()": FunctionFragment;
     "cutCards()": FunctionFragment;
     "decimals()": FunctionFragment;
-    "decreaseAllowance(address,uint256)": FunctionFragment;
     "foldBets()": FunctionFragment;
     "forceNewGame()": FunctionFragment;
     "forceStopGame()": FunctionFragment;
@@ -178,7 +175,6 @@ export interface DemoTableInterface extends utils.Interface {
     "getBigBlind()": FunctionFragment;
     "getSmallBlind()": FunctionFragment;
     "holeCards(uint8,bytes)": FunctionFragment;
-    "increaseAllowance(address,uint256)": FunctionFragment;
     "info()": FunctionFragment;
     "isPlaying()": FunctionFragment;
     "message()": FunctionFragment;
@@ -196,8 +192,6 @@ export interface DemoTableInterface extends utils.Interface {
     "timer()": FunctionFragment;
     "totalPots()": FunctionFragment;
     "totalSupply()": FunctionFragment;
-    "transfer(address,uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "winner(uint8)": FunctionFragment;
   };
@@ -207,8 +201,6 @@ export interface DemoTableInterface extends utils.Interface {
       | "TABLE_TIMEOUT"
       | "activePlayerCounts"
       | "allinBets"
-      | "allowance"
-      | "approve"
       | "balanceOf"
       | "bets"
       | "callBets"
@@ -218,7 +210,6 @@ export interface DemoTableInterface extends utils.Interface {
       | "communityCards"
       | "cutCards"
       | "decimals"
-      | "decreaseAllowance"
       | "foldBets"
       | "forceNewGame"
       | "forceStopGame"
@@ -226,7 +217,6 @@ export interface DemoTableInterface extends utils.Interface {
       | "getBigBlind"
       | "getSmallBlind"
       | "holeCards"
-      | "increaseAllowance"
       | "info"
       | "isPlaying"
       | "message"
@@ -244,8 +234,6 @@ export interface DemoTableInterface extends utils.Interface {
       | "timer"
       | "totalPots"
       | "totalSupply"
-      | "transfer"
-      | "transferFrom"
       | "transferOwnership"
       | "winner"
   ): FunctionFragment;
@@ -259,14 +247,6 @@ export interface DemoTableInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "allowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approve",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
     values: [PromiseOrValue<string>]
@@ -288,10 +268,6 @@ export interface DemoTableInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "cutCards", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "decreaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
   encodeFunctionData(functionFragment: "foldBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "forceNewGame",
@@ -313,10 +289,6 @@ export interface DemoTableInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "holeCards",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "increaseAllowance",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
   encodeFunctionData(functionFragment: "isPlaying", values?: undefined): string;
@@ -367,18 +339,6 @@ export interface DemoTableInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "transfer",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
@@ -396,8 +356,6 @@ export interface DemoTableInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "callBets", data: BytesLike): Result;
@@ -410,10 +368,6 @@ export interface DemoTableInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "cutCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "decreaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "foldBets", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "forceNewGame",
@@ -433,10 +387,6 @@ export interface DemoTableInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "message", data: BytesLike): Result;
@@ -463,11 +413,6 @@ export interface DemoTableInterface extends utils.Interface {
     functionFragment: "totalSupply",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -475,33 +420,21 @@ export interface DemoTableInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "winner", data: BytesLike): Result;
 
   events: {
-    "Approval(address,address,uint256)": EventFragment;
     "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": EventFragment;
     "GameStarted(uint32,uint64)": EventFragment;
     "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
+    "ShowdownResult(address,uint8,uint64)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Bet"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GameStarted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ShowdownResult"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
 }
-
-export interface ApprovalEventObject {
-  owner: string;
-  spender: string;
-  value: BigNumber;
-}
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  ApprovalEventObject
->;
-
-export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
 export interface BetEventObject {
   gameId: BigNumber;
@@ -547,6 +480,18 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface ShowdownResultEventObject {
+  player: string;
+  handRank: number;
+  kickers: BigNumber;
+}
+export type ShowdownResultEvent = TypedEvent<
+  [string, number, BigNumber],
+  ShowdownResultEventObject
+>;
+
+export type ShowdownResultEventFilter = TypedEventFilter<ShowdownResultEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -595,18 +540,6 @@ export interface DemoTable extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    allowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
-    approve(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     balanceOf(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -644,12 +577,6 @@ export interface DemoTable extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    decreaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     foldBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -683,12 +610,6 @@ export interface DemoTable extends BaseContract {
       revealToken: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<[IPokerTable.PokerCardStructOutput[]]>;
-
-    increaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     info(overrides?: CallOverrides): Promise<[IPokerTable.InfoStructOutput]>;
 
@@ -757,19 +678,6 @@ export interface DemoTable extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    transfer(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    transferFrom(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -792,18 +700,6 @@ export interface DemoTable extends BaseContract {
   activePlayerCounts(overrides?: CallOverrides): Promise<number>;
 
   allinBets(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  allowance(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  approve(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -844,12 +740,6 @@ export interface DemoTable extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  decreaseAllowance(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   foldBets(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -879,12 +769,6 @@ export interface DemoTable extends BaseContract {
     revealToken: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides
   ): Promise<IPokerTable.PokerCardStructOutput[]>;
-
-  increaseAllowance(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
 
@@ -947,19 +831,6 @@ export interface DemoTable extends BaseContract {
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  transfer(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  transferFrom(
-    arg0: PromiseOrValue<string>,
-    arg1: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   transferOwnership(
     newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -982,18 +853,6 @@ export interface DemoTable extends BaseContract {
     activePlayerCounts(overrides?: CallOverrides): Promise<number>;
 
     allinBets(overrides?: CallOverrides): Promise<void>;
-
-    allowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    approve(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
 
     balanceOf(
       account: PromiseOrValue<string>,
@@ -1024,12 +883,6 @@ export interface DemoTable extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     foldBets(overrides?: CallOverrides): Promise<void>;
 
     forceNewGame(overrides?: CallOverrides): Promise<void>;
@@ -1053,12 +906,6 @@ export interface DemoTable extends BaseContract {
       revealToken: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<IPokerTable.PokerCardStructOutput[]>;
-
-    increaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
 
     info(overrides?: CallOverrides): Promise<IPokerTable.InfoStructOutput>;
 
@@ -1121,19 +968,6 @@ export interface DemoTable extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    transferFrom(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -1152,17 +986,6 @@ export interface DemoTable extends BaseContract {
   };
 
   filters: {
-    "Approval(address,address,uint256)"(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
-      value?: null
-    ): ApprovalEventFilter;
-    Approval(
-      owner?: PromiseOrValue<string> | null,
-      spender?: PromiseOrValue<string> | null,
-      value?: null
-    ): ApprovalEventFilter;
-
     "Bet(uint64,uint8,uint8,uint8,uint256,uint256)"(
       gameId?: PromiseOrValue<BigNumberish> | null,
       stage?: null,
@@ -1201,6 +1024,17 @@ export interface DemoTable extends BaseContract {
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
+    "ShowdownResult(address,uint8,uint64)"(
+      player?: PromiseOrValue<string> | null,
+      handRank?: null,
+      kickers?: null
+    ): ShowdownResultEventFilter;
+    ShowdownResult(
+      player?: PromiseOrValue<string> | null,
+      handRank?: null,
+      kickers?: null
+    ): ShowdownResultEventFilter;
+
     "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
@@ -1219,18 +1053,6 @@ export interface DemoTable extends BaseContract {
     activePlayerCounts(overrides?: CallOverrides): Promise<BigNumber>;
 
     allinBets(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    allowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    approve(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1269,12 +1091,6 @@ export interface DemoTable extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    decreaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     foldBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -1297,12 +1113,6 @@ export interface DemoTable extends BaseContract {
       positionId: PromiseOrValue<BigNumberish>,
       revealToken: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    increaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     info(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1364,19 +1174,6 @@ export interface DemoTable extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    transferFrom(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -1396,18 +1193,6 @@ export interface DemoTable extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     allinBets(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    allowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    approve(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1446,12 +1231,6 @@ export interface DemoTable extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    decreaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     foldBets(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
@@ -1474,12 +1253,6 @@ export interface DemoTable extends BaseContract {
       positionId: PromiseOrValue<BigNumberish>,
       revealToken: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    increaseAllowance(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     info(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1540,19 +1313,6 @@ export interface DemoTable extends BaseContract {
     totalPots(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    transfer(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    transferFrom(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,

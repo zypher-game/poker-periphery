@@ -176,7 +176,9 @@ export interface ITexasHoldemTableInterface extends Interface {
       | "winner"
   ): FunctionFragment;
 
-  getEvent(nameOrSignatureOrTopic: "Bet" | "GameStarted"): EventFragment;
+  getEvent(
+    nameOrSignatureOrTopic: "Bet" | "GameStarted" | "ShowdownResult"
+  ): EventFragment;
 
   encodeFunctionData(
     functionFragment: "activePlayerCounts",
@@ -331,6 +333,24 @@ export namespace GameStartedEvent {
   export interface OutputObject {
     tableId: bigint;
     gameId: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace ShowdownResultEvent {
+  export type InputTuple = [
+    player: AddressLike,
+    handRank: BigNumberish,
+    kickers: BigNumberish
+  ];
+  export type OutputTuple = [player: string, handRank: bigint, kickers: bigint];
+  export interface OutputObject {
+    player: string;
+    handRank: bigint;
+    kickers: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -630,6 +650,13 @@ export interface ITexasHoldemTable extends BaseContract {
     GameStartedEvent.OutputTuple,
     GameStartedEvent.OutputObject
   >;
+  getEvent(
+    key: "ShowdownResult"
+  ): TypedContractEvent<
+    ShowdownResultEvent.InputTuple,
+    ShowdownResultEvent.OutputTuple,
+    ShowdownResultEvent.OutputObject
+  >;
 
   filters: {
     "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": TypedContractEvent<
@@ -652,6 +679,17 @@ export interface ITexasHoldemTable extends BaseContract {
       GameStartedEvent.InputTuple,
       GameStartedEvent.OutputTuple,
       GameStartedEvent.OutputObject
+    >;
+
+    "ShowdownResult(address,uint8,uint64)": TypedContractEvent<
+      ShowdownResultEvent.InputTuple,
+      ShowdownResultEvent.OutputTuple,
+      ShowdownResultEvent.OutputObject
+    >;
+    ShowdownResult: TypedContractEvent<
+      ShowdownResultEvent.InputTuple,
+      ShowdownResultEvent.OutputTuple,
+      ShowdownResultEvent.OutputObject
     >;
   };
 }

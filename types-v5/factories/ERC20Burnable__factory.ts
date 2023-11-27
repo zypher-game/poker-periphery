@@ -2,11 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Interface, type ContractRunner } from "ethers";
-import type {
-  IERC20MetadataUpgradeable,
-  IERC20MetadataUpgradeableInterface,
-} from "../IERC20MetadataUpgradeable";
+import { Contract, Signer, utils } from "ethers";
+import type { Provider } from "@ethersproject/providers";
+import type { ERC20Burnable, ERC20BurnableInterface } from "../ERC20Burnable";
 
 const _abi = [
   {
@@ -127,6 +125,37 @@ const _abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "burn",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "burnFrom",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "decimals",
     outputs: [
@@ -137,6 +166,54 @@ const _abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "subtractedValue",
+        type: "uint256",
+      },
+    ],
+    name: "decreaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "addedValue",
+        type: "uint256",
+      },
+    ],
+    name: "increaseAllowance",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -233,19 +310,15 @@ const _abi = [
   },
 ] as const;
 
-export class IERC20MetadataUpgradeable__factory {
+export class ERC20Burnable__factory {
   static readonly abi = _abi;
-  static createInterface(): IERC20MetadataUpgradeableInterface {
-    return new Interface(_abi) as IERC20MetadataUpgradeableInterface;
+  static createInterface(): ERC20BurnableInterface {
+    return new utils.Interface(_abi) as ERC20BurnableInterface;
   }
   static connect(
     address: string,
-    runner?: ContractRunner | null
-  ): IERC20MetadataUpgradeable {
-    return new Contract(
-      address,
-      _abi,
-      runner
-    ) as unknown as IERC20MetadataUpgradeable;
+    signerOrProvider: Signer | Provider
+  ): ERC20Burnable {
+    return new Contract(address, _abi, signerOrProvider) as ERC20Burnable;
   }
 }

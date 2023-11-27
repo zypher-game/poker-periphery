@@ -332,10 +332,12 @@ export interface ITexasHoldemTableInterface extends utils.Interface {
   events: {
     "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": EventFragment;
     "GameStarted(uint32,uint64)": EventFragment;
+    "ShowdownResult(address,uint8,uint64)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Bet"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GameStarted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "ShowdownResult"): EventFragment;
 }
 
 export interface BetEventObject {
@@ -363,6 +365,18 @@ export type GameStartedEvent = TypedEvent<
 >;
 
 export type GameStartedEventFilter = TypedEventFilter<GameStartedEvent>;
+
+export interface ShowdownResultEventObject {
+  player: string;
+  handRank: number;
+  kickers: BigNumber;
+}
+export type ShowdownResultEvent = TypedEvent<
+  [string, number, BigNumber],
+  ShowdownResultEventObject
+>;
+
+export type ShowdownResultEventFilter = TypedEventFilter<ShowdownResultEvent>;
 
 export interface ITexasHoldemTable extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -755,6 +769,17 @@ export interface ITexasHoldemTable extends BaseContract {
       tableId?: PromiseOrValue<BigNumberish> | null,
       gameId?: PromiseOrValue<BigNumberish> | null
     ): GameStartedEventFilter;
+
+    "ShowdownResult(address,uint8,uint64)"(
+      player?: PromiseOrValue<string> | null,
+      handRank?: null,
+      kickers?: null
+    ): ShowdownResultEventFilter;
+    ShowdownResult(
+      player?: PromiseOrValue<string> | null,
+      handRank?: null,
+      kickers?: null
+    ): ShowdownResultEventFilter;
   };
 
   estimateGas: {

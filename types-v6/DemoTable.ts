@@ -151,8 +151,6 @@ export interface DemoTableInterface extends Interface {
       | "TABLE_TIMEOUT"
       | "activePlayerCounts"
       | "allinBets"
-      | "allowance"
-      | "approve"
       | "balanceOf"
       | "bets"
       | "callBets"
@@ -162,7 +160,6 @@ export interface DemoTableInterface extends Interface {
       | "communityCards"
       | "cutCards"
       | "decimals"
-      | "decreaseAllowance"
       | "foldBets"
       | "forceNewGame"
       | "forceStopGame"
@@ -170,7 +167,6 @@ export interface DemoTableInterface extends Interface {
       | "getBigBlind"
       | "getSmallBlind"
       | "holeCards"
-      | "increaseAllowance"
       | "info"
       | "isPlaying"
       | "message"
@@ -188,19 +184,17 @@ export interface DemoTableInterface extends Interface {
       | "timer"
       | "totalPots"
       | "totalSupply"
-      | "transfer"
-      | "transferFrom"
       | "transferOwnership"
       | "winner"
   ): FunctionFragment;
 
   getEvent(
     nameOrSignatureOrTopic:
-      | "Approval"
       | "Bet"
       | "GameStarted"
       | "Initialized"
       | "OwnershipTransferred"
+      | "ShowdownResult"
       | "Transfer"
   ): EventFragment;
 
@@ -213,14 +207,6 @@ export interface DemoTableInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "allinBets", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "allowance",
-    values: [AddressLike, AddressLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "approve",
-    values: [AddressLike, BigNumberish]
-  ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
     values: [AddressLike]
@@ -239,10 +225,6 @@ export interface DemoTableInterface extends Interface {
   ): string;
   encodeFunctionData(functionFragment: "cutCards", values?: undefined): string;
   encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "decreaseAllowance",
-    values: [AddressLike, BigNumberish]
-  ): string;
   encodeFunctionData(functionFragment: "foldBets", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "forceNewGame",
@@ -264,10 +246,6 @@ export interface DemoTableInterface extends Interface {
   encodeFunctionData(
     functionFragment: "holeCards",
     values: [BigNumberish, BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "increaseAllowance",
-    values: [AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "info", values?: undefined): string;
   encodeFunctionData(functionFragment: "isPlaying", values?: undefined): string;
@@ -318,14 +296,6 @@ export interface DemoTableInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "transfer",
-    values: [AddressLike, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [AddressLike, AddressLike, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [AddressLike]
   ): string;
@@ -343,8 +313,6 @@ export interface DemoTableInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "allinBets", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "bets", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "callBets", data: BytesLike): Result;
@@ -357,10 +325,6 @@ export interface DemoTableInterface extends Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "cutCards", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "decreaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "foldBets", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "forceNewGame",
@@ -380,10 +344,6 @@ export interface DemoTableInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "holeCards", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "increaseAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "info", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isPlaying", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "message", data: BytesLike): Result;
@@ -410,34 +370,11 @@ export interface DemoTableInterface extends Interface {
     functionFragment: "totalSupply",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "winner", data: BytesLike): Result;
-}
-
-export namespace ApprovalEvent {
-  export type InputTuple = [
-    owner: AddressLike,
-    spender: AddressLike,
-    value: BigNumberish
-  ];
-  export type OutputTuple = [owner: string, spender: string, value: bigint];
-  export interface OutputObject {
-    owner: string;
-    spender: string;
-    value: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace BetEvent {
@@ -502,6 +439,24 @@ export namespace OwnershipTransferredEvent {
   export interface OutputObject {
     previousOwner: string;
     newOwner: string;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
+export namespace ShowdownResultEvent {
+  export type InputTuple = [
+    player: AddressLike,
+    handRank: BigNumberish,
+    kickers: BigNumberish
+  ];
+  export type OutputTuple = [player: string, handRank: bigint, kickers: bigint];
+  export interface OutputObject {
+    player: string;
+    handRank: bigint;
+    kickers: bigint;
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -576,18 +531,6 @@ export interface DemoTable extends BaseContract {
 
   allinBets: TypedContractMethod<[], [void], "nonpayable">;
 
-  allowance: TypedContractMethod<
-    [arg0: AddressLike, arg1: AddressLike],
-    [bigint],
-    "view"
-  >;
-
-  approve: TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
   balanceOf: TypedContractMethod<[account: AddressLike], [bigint], "view">;
 
   bets: TypedContractMethod<[player: AddressLike], [bigint], "view">;
@@ -609,12 +552,6 @@ export interface DemoTable extends BaseContract {
   cutCards: TypedContractMethod<[], [void], "nonpayable">;
 
   decimals: TypedContractMethod<[], [bigint], "view">;
-
-  decreaseAllowance: TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
 
   foldBets: TypedContractMethod<[], [void], "nonpayable">;
 
@@ -644,12 +581,6 @@ export interface DemoTable extends BaseContract {
     [positionId: BigNumberish, revealToken: BytesLike],
     [IPokerTable.PokerCardStructOutput[]],
     "view"
-  >;
-
-  increaseAllowance: TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
   >;
 
   info: TypedContractMethod<[], [IPokerTable.InfoStructOutput], "view">;
@@ -720,18 +651,6 @@ export interface DemoTable extends BaseContract {
 
   totalSupply: TypedContractMethod<[], [bigint], "view">;
 
-  transfer: TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
-  transferFrom: TypedContractMethod<
-    [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
     [void],
@@ -764,20 +683,6 @@ export interface DemoTable extends BaseContract {
     nameOrSignature: "allinBets"
   ): TypedContractMethod<[], [void], "nonpayable">;
   getFunction(
-    nameOrSignature: "allowance"
-  ): TypedContractMethod<
-    [arg0: AddressLike, arg1: AddressLike],
-    [bigint],
-    "view"
-  >;
-  getFunction(
-    nameOrSignature: "approve"
-  ): TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "balanceOf"
   ): TypedContractMethod<[account: AddressLike], [bigint], "view">;
   getFunction(
@@ -804,13 +709,6 @@ export interface DemoTable extends BaseContract {
   getFunction(
     nameOrSignature: "decimals"
   ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
-    nameOrSignature: "decreaseAllowance"
-  ): TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
   getFunction(
     nameOrSignature: "foldBets"
   ): TypedContractMethod<[], [void], "nonpayable">;
@@ -847,13 +745,6 @@ export interface DemoTable extends BaseContract {
     [positionId: BigNumberish, revealToken: BytesLike],
     [IPokerTable.PokerCardStructOutput[]],
     "view"
-  >;
-  getFunction(
-    nameOrSignature: "increaseAllowance"
-  ): TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
   >;
   getFunction(
     nameOrSignature: "info"
@@ -929,20 +820,6 @@ export interface DemoTable extends BaseContract {
     nameOrSignature: "totalSupply"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
-    nameOrSignature: "transfer"
-  ): TypedContractMethod<
-    [arg0: AddressLike, arg1: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "transferFrom"
-  ): TypedContractMethod<
-    [arg0: AddressLike, arg1: AddressLike, arg2: BigNumberish],
-    [boolean],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "transferOwnership"
   ): TypedContractMethod<[newOwner: AddressLike], [void], "nonpayable">;
   getFunction(
@@ -959,13 +836,6 @@ export interface DemoTable extends BaseContract {
     "view"
   >;
 
-  getEvent(
-    key: "Approval"
-  ): TypedContractEvent<
-    ApprovalEvent.InputTuple,
-    ApprovalEvent.OutputTuple,
-    ApprovalEvent.OutputObject
-  >;
   getEvent(
     key: "Bet"
   ): TypedContractEvent<
@@ -995,6 +865,13 @@ export interface DemoTable extends BaseContract {
     OwnershipTransferredEvent.OutputObject
   >;
   getEvent(
+    key: "ShowdownResult"
+  ): TypedContractEvent<
+    ShowdownResultEvent.InputTuple,
+    ShowdownResultEvent.OutputTuple,
+    ShowdownResultEvent.OutputObject
+  >;
+  getEvent(
     key: "Transfer"
   ): TypedContractEvent<
     TransferEvent.InputTuple,
@@ -1003,17 +880,6 @@ export interface DemoTable extends BaseContract {
   >;
 
   filters: {
-    "Approval(address,address,uint256)": TypedContractEvent<
-      ApprovalEvent.InputTuple,
-      ApprovalEvent.OutputTuple,
-      ApprovalEvent.OutputObject
-    >;
-    Approval: TypedContractEvent<
-      ApprovalEvent.InputTuple,
-      ApprovalEvent.OutputTuple,
-      ApprovalEvent.OutputObject
-    >;
-
     "Bet(uint64,uint8,uint8,uint8,uint256,uint256)": TypedContractEvent<
       BetEvent.InputTuple,
       BetEvent.OutputTuple,
@@ -1056,6 +922,17 @@ export interface DemoTable extends BaseContract {
       OwnershipTransferredEvent.InputTuple,
       OwnershipTransferredEvent.OutputTuple,
       OwnershipTransferredEvent.OutputObject
+    >;
+
+    "ShowdownResult(address,uint8,uint64)": TypedContractEvent<
+      ShowdownResultEvent.InputTuple,
+      ShowdownResultEvent.OutputTuple,
+      ShowdownResultEvent.OutputObject
+    >;
+    ShowdownResult: TypedContractEvent<
+      ShowdownResultEvent.InputTuple,
+      ShowdownResultEvent.OutputTuple,
+      ShowdownResultEvent.OutputObject
     >;
 
     "Transfer(address,address,uint256)": TypedContractEvent<

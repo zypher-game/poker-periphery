@@ -299,7 +299,11 @@ export interface ITexasHoldemHelper extends BaseContract {
       bFoldedPositions: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [PotWinnerStructOutput[]] & { winners: PotWinnerStructOutput[] }
+      [PotWinnerStructOutput[], number, BigNumber] & {
+        winners: PotWinnerStructOutput[];
+        ranking: number;
+        kickers: BigNumber;
+      }
     >;
 
     computePots(
@@ -367,7 +371,13 @@ export interface ITexasHoldemHelper extends BaseContract {
     ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
     bFoldedPositions: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
-  ): Promise<PotWinnerStructOutput[]>;
+  ): Promise<
+    [PotWinnerStructOutput[], number, BigNumber] & {
+      winners: PotWinnerStructOutput[];
+      ranking: number;
+      kickers: BigNumber;
+    }
+  >;
 
   computePots(
     bets: PromiseOrValue<BigNumberish>[],
@@ -430,7 +440,13 @@ export interface ITexasHoldemHelper extends BaseContract {
       ascSortedAllInAmounts: PromiseOrValue<BigNumberish>[],
       bFoldedPositions: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<PotWinnerStructOutput[]>;
+    ): Promise<
+      [PotWinnerStructOutput[], number, BigNumber] & {
+        winners: PotWinnerStructOutput[];
+        ranking: number;
+        kickers: BigNumber;
+      }
+    >;
 
     computePots(
       bets: PromiseOrValue<BigNumberish>[],

@@ -386,6 +386,16 @@ const _abi = [
         name: "winners",
         type: "tuple[]",
       },
+      {
+        internalType: "enum HandRanking",
+        name: "ranking",
+        type: "uint8",
+      },
+      {
+        internalType: "uint64",
+        name: "kickers",
+        type: "uint64",
+      },
     ],
     stateMutability: "pure",
     type: "function",

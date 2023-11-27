@@ -298,7 +298,13 @@ export interface TexasHoldemHelper extends BaseContract {
       ascSortedAllInAmounts: BigNumberish[],
       bFoldedPositions: BigNumberish
     ],
-    [PotWinnerStructOutput[]],
+    [
+      [PotWinnerStructOutput[], bigint, bigint] & {
+        winners: PotWinnerStructOutput[];
+        ranking: bigint;
+        kickers: bigint;
+      }
+    ],
     "view"
   >;
 
@@ -383,7 +389,13 @@ export interface TexasHoldemHelper extends BaseContract {
       ascSortedAllInAmounts: BigNumberish[],
       bFoldedPositions: BigNumberish
     ],
-    [PotWinnerStructOutput[]],
+    [
+      [PotWinnerStructOutput[], bigint, bigint] & {
+        winners: PotWinnerStructOutput[];
+        ranking: bigint;
+        kickers: bigint;
+      }
+    ],
     "view"
   >;
   getFunction(
