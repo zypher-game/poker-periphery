@@ -9,7 +9,7 @@ import type { MuOwnable, MuOwnableInterface } from "../MuOwnable";
 const _abi = [
   {
     inputs: [],
-    name: "OwnableInvalid",
+    name: "Unauthorized",
     type: "error",
   },
   {

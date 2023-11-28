@@ -49,11 +49,6 @@ const _abi = [
     type: "error",
   },
   {
-    inputs: [],
-    name: "OwnableInvalid",
-    type: "error",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -83,6 +78,11 @@ const _abi = [
       },
     ],
     name: "STAGE",
+    type: "error",
+  },
+  {
+    inputs: [],
+    name: "Unauthorized",
     type: "error",
   },
   {

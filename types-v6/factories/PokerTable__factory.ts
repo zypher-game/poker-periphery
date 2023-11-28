@@ -28,7 +28,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "OwnableInvalid",
+    name: "Unauthorized",
     type: "error",
   },
   {
