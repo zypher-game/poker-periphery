@@ -116,7 +116,7 @@ export interface ZkGameLobbyInterface extends utils.Interface {
     "ready()": FunctionFragment;
     "removeTable(uint32)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "reportPlayerLeft(uint32,address,uint256,uint256,uint256)": FunctionFragment;
+    "reportPlayerLeft(uint32,address,uint256)": FunctionFragment;
     "reportTableEnded(uint32)": FunctionFragment;
     "revealSeats(uint32,bytes[],bytes[])": FunctionFragment;
     "setDefinition(bytes32,address)": FunctionFragment;
@@ -209,8 +209,6 @@ export interface ZkGameLobbyInterface extends utils.Interface {
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -591,9 +589,7 @@ export interface ZkGameLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -718,9 +714,7 @@ export interface ZkGameLobby extends BaseContract {
   reportPlayerLeft(
     tableId: PromiseOrValue<BigNumberish>,
     player: PromiseOrValue<string>,
-    totalGames: PromiseOrValue<BigNumberish>,
-    totalBet: PromiseOrValue<BigNumberish>,
-    totalEarned: PromiseOrValue<BigNumberish>,
+    finalBalance: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -839,9 +833,7 @@ export interface ZkGameLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1097,9 +1089,7 @@ export interface ZkGameLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1217,9 +1207,7 @@ export interface ZkGameLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

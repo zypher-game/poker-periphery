@@ -27,6 +27,7 @@ export type { IERC1822ProxiableUpgradeable } from "./IERC1822ProxiableUpgradeabl
 export type { IERC1967Upgradeable } from "./IERC1967Upgradeable";
 export type { IERC20 } from "./IERC20";
 export type { IERC20Metadata } from "./IERC20Metadata";
+export type { IERC20Upgradeable } from "./IERC20Upgradeable";
 export type { IGameInstance } from "./IGameInstance";
 export type { ILobby } from "./ILobby";
 export type { IMentalPoker } from "./IMentalPoker";
@@ -82,6 +83,7 @@ export { IERC1822ProxiableUpgradeable__factory } from "./factories/IERC1822Proxi
 export { IERC1967Upgradeable__factory } from "./factories/IERC1967Upgradeable__factory";
 export { IERC20__factory } from "./factories/IERC20__factory";
 export { IERC20Metadata__factory } from "./factories/IERC20Metadata__factory";
+export { IERC20Upgradeable__factory } from "./factories/IERC20Upgradeable__factory";
 export { IGameInstance__factory } from "./factories/IGameInstance__factory";
 export { ILobby__factory } from "./factories/ILobby__factory";
 export { IMentalPoker__factory } from "./factories/IMentalPoker__factory";

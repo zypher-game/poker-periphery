@@ -117,13 +117,16 @@ export interface DemoLobbyInterface extends utils.Interface {
     "ready()": FunctionFragment;
     "removeTable(uint32)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "reportPlayerLeft(uint32,address,uint256,uint256,uint256)": FunctionFragment;
+    "reportPlayerLeft(uint32,address,uint256)": FunctionFragment;
     "reportTableEnded(uint32)": FunctionFragment;
     "revealSeats(uint32,bytes[],bytes[])": FunctionFragment;
     "setHelper(address)": FunctionFragment;
     "setReadyTime(uint32)": FunctionFragment;
     "setRevealTime(uint32)": FunctionFragment;
     "setShuffleTime(uint32)": FunctionFragment;
+    "setStakeAmount(uint256)": FunctionFragment;
+    "setStakeRatio(uint256)": FunctionFragment;
+    "setStakeToken(address)": FunctionFragment;
     "setTable(uint32,address)": FunctionFragment;
     "setTableFactory(address)": FunctionFragment;
     "setTablePlayTime(uint32)": FunctionFragment;
@@ -160,6 +163,9 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "setReadyTime"
       | "setRevealTime"
       | "setShuffleTime"
+      | "setStakeAmount"
+      | "setStakeRatio"
+      | "setStakeToken"
       | "setTable"
       | "setTableFactory"
       | "setTablePlayTime"
@@ -231,8 +237,6 @@ export interface DemoLobbyInterface extends utils.Interface {
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -263,6 +267,18 @@ export interface DemoLobbyInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "setShuffleTime",
     values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStakeAmount",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStakeRatio",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStakeToken",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "setTable",
@@ -362,6 +378,18 @@ export interface DemoLobbyInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setShuffleTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setStakeAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setStakeRatio",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setStakeToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setTable", data: BytesLike): Result;
@@ -714,9 +742,7 @@ export interface DemoLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -749,6 +775,21 @@ export interface DemoLobby extends BaseContract {
 
     setShuffleTime(
       shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setStakeAmount(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setStakeRatio(
+      ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setStakeToken(
+      token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -877,9 +918,7 @@ export interface DemoLobby extends BaseContract {
   reportPlayerLeft(
     tableId: PromiseOrValue<BigNumberish>,
     player: PromiseOrValue<string>,
-    arg2: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<BigNumberish>,
-    arg4: PromiseOrValue<BigNumberish>,
+    balance: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -912,6 +951,21 @@ export interface DemoLobby extends BaseContract {
 
   setShuffleTime(
     shuffleTimeout: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setStakeAmount(
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setStakeRatio(
+    ratio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setStakeToken(
+    token: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -1034,9 +1088,7 @@ export interface DemoLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1069,6 +1121,21 @@ export interface DemoLobby extends BaseContract {
 
     setShuffleTime(
       shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setStakeAmount(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setStakeRatio(
+      ratio: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setStakeToken(
+      token: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1354,9 +1421,7 @@ export interface DemoLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1389,6 +1454,21 @@ export interface DemoLobby extends BaseContract {
 
     setShuffleTime(
       shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setStakeAmount(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setStakeRatio(
+      ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setStakeToken(
+      token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -1514,9 +1594,7 @@ export interface DemoLobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      arg2: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<BigNumberish>,
-      arg4: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1549,6 +1627,21 @@ export interface DemoLobby extends BaseContract {
 
     setShuffleTime(
       shuffleTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setStakeAmount(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setStakeRatio(
+      ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setStakeToken(
+      token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

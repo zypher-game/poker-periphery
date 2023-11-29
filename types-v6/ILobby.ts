@@ -149,13 +149,7 @@ export interface ILobbyInterface extends Interface {
   encodeFunctionData(functionFragment: "ready", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "reportPlayerLeft",
-    values: [
-      BigNumberish,
-      AddressLike,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ]
+    values: [BigNumberish, AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "reportTableEnded",
@@ -495,13 +489,7 @@ export interface ILobby extends BaseContract {
   ready: TypedContractMethod<[], [boolean], "nonpayable">;
 
   reportPlayerLeft: TypedContractMethod<
-    [
-      tableId: BigNumberish,
-      player: AddressLike,
-      totalGames: BigNumberish,
-      totalBet: BigNumberish,
-      totalEarned: BigNumberish
-    ],
+    [tableId: BigNumberish, player: AddressLike, finalBalance: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -569,13 +557,7 @@ export interface ILobby extends BaseContract {
   getFunction(
     nameOrSignature: "reportPlayerLeft"
   ): TypedContractMethod<
-    [
-      tableId: BigNumberish,
-      player: AddressLike,
-      totalGames: BigNumberish,
-      totalBet: BigNumberish,
-      totalEarned: BigNumberish
-    ],
+    [tableId: BigNumberish, player: AddressLike, finalBalance: BigNumberish],
     [void],
     "nonpayable"
   >;

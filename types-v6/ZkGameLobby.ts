@@ -185,13 +185,7 @@ export interface ZkGameLobbyInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "reportPlayerLeft",
-    values: [
-      BigNumberish,
-      AddressLike,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ]
+    values: [BigNumberish, AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "reportTableEnded",
@@ -614,13 +608,7 @@ export interface ZkGameLobby extends BaseContract {
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
   reportPlayerLeft: TypedContractMethod<
-    [
-      tableId: BigNumberish,
-      player: AddressLike,
-      totalGames: BigNumberish,
-      totalBet: BigNumberish,
-      totalEarned: BigNumberish
-    ],
+    [tableId: BigNumberish, player: AddressLike, finalBalance: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -745,13 +733,7 @@ export interface ZkGameLobby extends BaseContract {
   getFunction(
     nameOrSignature: "reportPlayerLeft"
   ): TypedContractMethod<
-    [
-      tableId: BigNumberish,
-      player: AddressLike,
-      totalGames: BigNumberish,
-      totalBet: BigNumberish,
-      totalEarned: BigNumberish
-    ],
+    [tableId: BigNumberish, player: AddressLike, finalBalance: BigNumberish],
     [void],
     "nonpayable"
   >;

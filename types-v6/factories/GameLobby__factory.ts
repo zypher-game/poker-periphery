@@ -452,17 +452,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "totalGames",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "totalBet",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "totalEarned",
+        name: "finalBalance",
         type: "uint256",
       },
     ],

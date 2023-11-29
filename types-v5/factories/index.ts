@@ -27,6 +27,7 @@ export { IERC1822ProxiableUpgradeable__factory } from "./IERC1822ProxiableUpgrad
 export { IERC1967Upgradeable__factory } from "./IERC1967Upgradeable__factory";
 export { IERC20__factory } from "./IERC20__factory";
 export { IERC20Metadata__factory } from "./IERC20Metadata__factory";
+export { IERC20Upgradeable__factory } from "./IERC20Upgradeable__factory";
 export { IGameInstance__factory } from "./IGameInstance__factory";
 export { ILobby__factory } from "./ILobby__factory";
 export { IMentalPoker__factory } from "./IMentalPoker__factory";

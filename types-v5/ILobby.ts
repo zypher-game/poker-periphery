@@ -109,7 +109,7 @@ export interface ILobbyInterface extends utils.Interface {
     "leave()": FunctionFragment;
     "mainWallet(address)": FunctionFragment;
     "ready()": FunctionFragment;
-    "reportPlayerLeft(uint32,address,uint256,uint256,uint256)": FunctionFragment;
+    "reportPlayerLeft(uint32,address,uint256)": FunctionFragment;
     "reportTableEnded(uint32)": FunctionFragment;
     "revealSeats(uint32,bytes[],bytes[])": FunctionFragment;
     "shuffleSeats(uint32,bytes[],bytes)": FunctionFragment;
@@ -164,8 +164,6 @@ export interface ILobbyInterface extends utils.Interface {
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>
     ]
   ): string;
@@ -461,9 +459,7 @@ export interface ILobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -534,9 +530,7 @@ export interface ILobby extends BaseContract {
   reportPlayerLeft(
     tableId: PromiseOrValue<BigNumberish>,
     player: PromiseOrValue<string>,
-    totalGames: PromiseOrValue<BigNumberish>,
-    totalBet: PromiseOrValue<BigNumberish>,
-    totalEarned: PromiseOrValue<BigNumberish>,
+    finalBalance: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -603,9 +597,7 @@ export interface ILobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -802,9 +794,7 @@ export interface ILobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -876,9 +866,7 @@ export interface ILobby extends BaseContract {
     reportPlayerLeft(
       tableId: PromiseOrValue<BigNumberish>,
       player: PromiseOrValue<string>,
-      totalGames: PromiseOrValue<BigNumberish>,
-      totalBet: PromiseOrValue<BigNumberish>,
-      totalEarned: PromiseOrValue<BigNumberish>,
+      finalBalance: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

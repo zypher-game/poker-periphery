@@ -120,6 +120,9 @@ export interface DemoLobbyInterface extends Interface {
       | "setReadyTime"
       | "setRevealTime"
       | "setShuffleTime"
+      | "setStakeAmount"
+      | "setStakeRatio"
+      | "setStakeToken"
       | "setTable"
       | "setTableFactory"
       | "setTablePlayTime"
@@ -202,13 +205,7 @@ export interface DemoLobbyInterface extends Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "reportPlayerLeft",
-    values: [
-      BigNumberish,
-      AddressLike,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
-    ]
+    values: [BigNumberish, AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "reportTableEnded",
@@ -233,6 +230,18 @@ export interface DemoLobbyInterface extends Interface {
   encodeFunctionData(
     functionFragment: "setShuffleTime",
     values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStakeAmount",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStakeRatio",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setStakeToken",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setTable",
@@ -328,6 +337,18 @@ export interface DemoLobbyInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setShuffleTime",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setStakeAmount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setStakeRatio",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setStakeToken",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setTable", data: BytesLike): Result;
@@ -739,13 +760,7 @@ export interface DemoLobby extends BaseContract {
   renounceOwnership: TypedContractMethod<[], [void], "nonpayable">;
 
   reportPlayerLeft: TypedContractMethod<
-    [
-      tableId: BigNumberish,
-      player: AddressLike,
-      arg2: BigNumberish,
-      arg3: BigNumberish,
-      arg4: BigNumberish
-    ],
+    [tableId: BigNumberish, player: AddressLike, balance: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -778,6 +793,24 @@ export interface DemoLobby extends BaseContract {
 
   setShuffleTime: TypedContractMethod<
     [shuffleTimeout: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setStakeAmount: TypedContractMethod<
+    [amount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setStakeRatio: TypedContractMethod<
+    [ratio: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
+  setStakeToken: TypedContractMethod<
+    [token: AddressLike],
     [void],
     "nonpayable"
   >;
@@ -907,13 +940,7 @@ export interface DemoLobby extends BaseContract {
   getFunction(
     nameOrSignature: "reportPlayerLeft"
   ): TypedContractMethod<
-    [
-      tableId: BigNumberish,
-      player: AddressLike,
-      arg2: BigNumberish,
-      arg3: BigNumberish,
-      arg4: BigNumberish
-    ],
+    [tableId: BigNumberish, player: AddressLike, balance: BigNumberish],
     [void],
     "nonpayable"
   >;
@@ -939,6 +966,15 @@ export interface DemoLobby extends BaseContract {
   getFunction(
     nameOrSignature: "setShuffleTime"
   ): TypedContractMethod<[shuffleTimeout: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setStakeAmount"
+  ): TypedContractMethod<[amount: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setStakeRatio"
+  ): TypedContractMethod<[ratio: BigNumberish], [void], "nonpayable">;
+  getFunction(
+    nameOrSignature: "setStakeToken"
+  ): TypedContractMethod<[token: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "setTable"
   ): TypedContractMethod<
