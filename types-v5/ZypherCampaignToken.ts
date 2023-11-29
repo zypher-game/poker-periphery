@@ -27,7 +27,7 @@ import type {
   PromiseOrValue,
 } from "./common";
 
-export interface ZacePreheatTokenInterface extends utils.Interface {
+export interface ZypherCampaignTokenInterface extends utils.Interface {
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "MINTER_ROLE()": FunctionFragment;
@@ -324,6 +324,7 @@ export interface ZacePreheatTokenInterface extends utils.Interface {
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "Claimed(address,uint256)": EventFragment;
     "Paused(address)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
@@ -333,6 +334,7 @@ export interface ZacePreheatTokenInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Claimed"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
@@ -352,6 +354,14 @@ export type ApprovalEvent = TypedEvent<
 >;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+
+export interface ClaimedEventObject {
+  user: string;
+  amount: BigNumber;
+}
+export type ClaimedEvent = TypedEvent<[string, BigNumber], ClaimedEventObject>;
+
+export type ClaimedEventFilter = TypedEventFilter<ClaimedEvent>;
 
 export interface PausedEventObject {
   account: string;
@@ -416,12 +426,12 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface ZacePreheatToken extends BaseContract {
+export interface ZypherCampaignToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ZacePreheatTokenInterface;
+  interface: ZypherCampaignTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -912,6 +922,15 @@ export interface ZacePreheatToken extends BaseContract {
       spender?: PromiseOrValue<string> | null,
       value?: null
     ): ApprovalEventFilter;
+
+    "Claimed(address,uint256)"(
+      user?: PromiseOrValue<string> | null,
+      amount?: null
+    ): ClaimedEventFilter;
+    Claimed(
+      user?: PromiseOrValue<string> | null,
+      amount?: null
+    ): ClaimedEventFilter;
 
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;

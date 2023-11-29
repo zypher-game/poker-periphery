@@ -53,5 +53,5 @@ export { TexasHoldemHelper__factory } from "./TexasHoldemHelper__factory";
 export { TexasHoldemPeriphery__factory } from "./TexasHoldemPeriphery__factory";
 export { TexasHoldemRound__factory } from "./TexasHoldemRound__factory";
 export { UUPSUpgradeable__factory } from "./UUPSUpgradeable__factory";
-export { ZacePreheatToken__factory } from "./ZacePreheatToken__factory";
 export { ZkGameLobby__factory } from "./ZkGameLobby__factory";
+export { ZypherCampaignToken__factory } from "./ZypherCampaignToken__factory";

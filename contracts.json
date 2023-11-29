@@ -37,6 +37,15 @@
     "TexasHoldemHelper": {
       "address": "0x97213E2B6564CD2301E87C8217Ae4F74bBfc6106",
       "blockCreated": null
+    },
+    "ZypherCampaignToken": {
+      "address": "0x62bCE4E13FfaBB69aBE5d4EE1E2eB6a97562E4ae",
+      "blockCreated": 14368373,
+      "txHash": "0x9efcf27af48ecfdd6324897c427c970eac82a3585f3dc41f84f1b48f5abf7e24",
+      "meta": {
+        "deployer": "0x0d60cD0f59378e780c883d6aF5cA5C23dBF6f479",
+        "timestamp": 1701246881
+      }
     }
   },
   "421613": {

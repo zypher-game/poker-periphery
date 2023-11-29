@@ -4,9 +4,9 @@
 
 import { Contract, Interface, type ContractRunner } from "ethers";
 import type {
-  ZacePreheatToken,
-  ZacePreheatTokenInterface,
-} from "../ZacePreheatToken";
+  ZypherCampaignToken,
+  ZypherCampaignTokenInterface,
+} from "../ZypherCampaignToken";
 
 const _abi = [
   {
@@ -64,6 +64,25 @@ const _abi = [
       },
     ],
     name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "user",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "Claimed",
     type: "event",
   },
   {
@@ -785,15 +804,19 @@ const _abi = [
   },
 ] as const;
 
-export class ZacePreheatToken__factory {
+export class ZypherCampaignToken__factory {
   static readonly abi = _abi;
-  static createInterface(): ZacePreheatTokenInterface {
-    return new Interface(_abi) as ZacePreheatTokenInterface;
+  static createInterface(): ZypherCampaignTokenInterface {
+    return new Interface(_abi) as ZypherCampaignTokenInterface;
   }
   static connect(
     address: string,
     runner?: ContractRunner | null
-  ): ZacePreheatToken {
-    return new Contract(address, _abi, runner) as unknown as ZacePreheatToken;
+  ): ZypherCampaignToken {
+    return new Contract(
+      address,
+      _abi,
+      runner
+    ) as unknown as ZypherCampaignToken;
   }
 }

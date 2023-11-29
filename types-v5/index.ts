@@ -53,8 +53,8 @@ export type { TexasHoldemHelper } from "./TexasHoldemHelper";
 export type { TexasHoldemPeriphery } from "./TexasHoldemPeriphery";
 export type { TexasHoldemRound } from "./TexasHoldemRound";
 export type { UUPSUpgradeable } from "./UUPSUpgradeable";
-export type { ZacePreheatToken } from "./ZacePreheatToken";
 export type { ZkGameLobby } from "./ZkGameLobby";
+export type { ZypherCampaignToken } from "./ZypherCampaignToken";
 export * as factories from "./factories";
 export { AccessControl__factory } from "./factories/AccessControl__factory";
 export { AccessControlEnumerable__factory } from "./factories/AccessControlEnumerable__factory";
@@ -108,5 +108,5 @@ export { TexasHoldemHelper__factory } from "./factories/TexasHoldemHelper__facto
 export { TexasHoldemPeriphery__factory } from "./factories/TexasHoldemPeriphery__factory";
 export { TexasHoldemRound__factory } from "./factories/TexasHoldemRound__factory";
 export { UUPSUpgradeable__factory } from "./factories/UUPSUpgradeable__factory";
-export { ZacePreheatToken__factory } from "./factories/ZacePreheatToken__factory";
 export { ZkGameLobby__factory } from "./factories/ZkGameLobby__factory";
+export { ZypherCampaignToken__factory } from "./factories/ZypherCampaignToken__factory";

@@ -23,7 +23,7 @@ import type {
   TypedContractMethod,
 } from "./common";
 
-export interface ZacePreheatTokenInterface extends Interface {
+export interface ZypherCampaignTokenInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "DEFAULT_ADMIN_ROLE"
@@ -66,6 +66,7 @@ export interface ZacePreheatTokenInterface extends Interface {
   getEvent(
     nameOrSignatureOrTopic:
       | "Approval"
+      | "Claimed"
       | "Paused"
       | "RoleAdminChanged"
       | "RoleGranted"
@@ -300,6 +301,19 @@ export namespace ApprovalEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
+export namespace ClaimedEvent {
+  export type InputTuple = [user: AddressLike, amount: BigNumberish];
+  export type OutputTuple = [user: string, amount: bigint];
+  export interface OutputObject {
+    user: string;
+    amount: bigint;
+  }
+  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
+  export type Filter = TypedDeferredTopicFilter<Event>;
+  export type Log = TypedEventLog<Event>;
+  export type LogDescription = TypedLogDescription<Event>;
+}
+
 export namespace PausedEvent {
   export type InputTuple = [account: AddressLike];
   export type OutputTuple = [account: string];
@@ -400,11 +414,11 @@ export namespace UnpausedEvent {
   export type LogDescription = TypedLogDescription<Event>;
 }
 
-export interface ZacePreheatToken extends BaseContract {
-  connect(runner?: ContractRunner | null): ZacePreheatToken;
+export interface ZypherCampaignToken extends BaseContract {
+  connect(runner?: ContractRunner | null): ZypherCampaignToken;
   waitForDeployment(): Promise<this>;
 
-  interface: ZacePreheatTokenInterface;
+  interface: ZypherCampaignTokenInterface;
 
   queryFilter<TCEvent extends TypedContractEvent>(
     event: TCEvent,
@@ -747,6 +761,13 @@ export interface ZacePreheatToken extends BaseContract {
     ApprovalEvent.OutputObject
   >;
   getEvent(
+    key: "Claimed"
+  ): TypedContractEvent<
+    ClaimedEvent.InputTuple,
+    ClaimedEvent.OutputTuple,
+    ClaimedEvent.OutputObject
+  >;
+  getEvent(
     key: "Paused"
   ): TypedContractEvent<
     PausedEvent.InputTuple,
@@ -799,6 +820,17 @@ export interface ZacePreheatToken extends BaseContract {
       ApprovalEvent.InputTuple,
       ApprovalEvent.OutputTuple,
       ApprovalEvent.OutputObject
+    >;
+
+    "Claimed(address,uint256)": TypedContractEvent<
+      ClaimedEvent.InputTuple,
+      ClaimedEvent.OutputTuple,
+      ClaimedEvent.OutputObject
+    >;
+    Claimed: TypedContractEvent<
+      ClaimedEvent.InputTuple,
+      ClaimedEvent.OutputTuple,
+      ClaimedEvent.OutputObject
     >;
 
     "Paused(address)": TypedContractEvent<
