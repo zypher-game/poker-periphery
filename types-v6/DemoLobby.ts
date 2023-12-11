@@ -100,6 +100,7 @@ export interface DemoLobbyInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "authorize"
+      | "cancelAuthorization"
       | "cardConfig"
       | "createTable"
       | "initialize"
@@ -133,6 +134,7 @@ export interface DemoLobbyInterface extends Interface {
       | "transferOwnership"
       | "upgradeTo"
       | "upgradeToAndCall"
+      | "verifySigner"
       | "version"
   ): FunctionFragment;
 
@@ -158,7 +160,11 @@ export interface DemoLobbyInterface extends Interface {
 
   encodeFunctionData(
     functionFragment: "authorize",
-    values: [AddressLike, BigNumberish]
+    values: [AddressLike, BigNumberish, BytesLike, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "cancelAuthorization",
+    values: [AddressLike]
   ): string;
   encodeFunctionData(
     functionFragment: "cardConfig",
@@ -280,9 +286,17 @@ export interface DemoLobbyInterface extends Interface {
     functionFragment: "upgradeToAndCall",
     values: [AddressLike, BytesLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "verifySigner",
+    values: [BytesLike, BytesLike, AddressLike]
+  ): string;
   encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "cancelAuthorization",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createTable",
@@ -380,6 +394,10 @@ export interface DemoLobbyInterface extends Interface {
   decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "upgradeToAndCall",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "verifySigner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
@@ -694,9 +712,20 @@ export interface DemoLobby extends BaseContract {
   ): Promise<this>;
 
   authorize: TypedContractMethod<
-    [to: AddressLike, until: BigNumberish],
+    [
+      deputy: AddressLike,
+      until: BigNumberish,
+      signature: BytesLike,
+      signedAt: BigNumberish
+    ],
     [void],
     "payable"
+  >;
+
+  cancelAuthorization: TypedContractMethod<
+    [deputy: AddressLike],
+    [void],
+    "nonpayable"
   >;
 
   cardConfig: TypedContractMethod<
@@ -863,6 +892,12 @@ export interface DemoLobby extends BaseContract {
     "payable"
   >;
 
+  verifySigner: TypedContractMethod<
+    [sig: BytesLike, message: BytesLike, signer: AddressLike],
+    [boolean],
+    "view"
+  >;
+
   version: TypedContractMethod<[], [bigint], "view">;
 
   getFunction<T extends ContractMethod = ContractMethod>(
@@ -872,10 +907,18 @@ export interface DemoLobby extends BaseContract {
   getFunction(
     nameOrSignature: "authorize"
   ): TypedContractMethod<
-    [to: AddressLike, until: BigNumberish],
+    [
+      deputy: AddressLike,
+      until: BigNumberish,
+      signature: BytesLike,
+      signedAt: BigNumberish
+    ],
     [void],
     "payable"
   >;
+  getFunction(
+    nameOrSignature: "cancelAuthorization"
+  ): TypedContractMethod<[deputy: AddressLike], [void], "nonpayable">;
   getFunction(
     nameOrSignature: "cardConfig"
   ): TypedContractMethod<
@@ -1020,6 +1063,13 @@ export interface DemoLobby extends BaseContract {
     [newImplementation: AddressLike, data: BytesLike],
     [void],
     "payable"
+  >;
+  getFunction(
+    nameOrSignature: "verifySigner"
+  ): TypedContractMethod<
+    [sig: BytesLike, message: BytesLike, signer: AddressLike],
+    [boolean],
+    "view"
   >;
   getFunction(
     nameOrSignature: "version"

@@ -7,6 +7,11 @@ import type { DemoLobby, DemoLobbyInterface } from "../DemoLobby";
 
 const _abi = [
   {
+    inputs: [],
+    name: "InvalidSignature",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -368,18 +373,41 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "to",
+        name: "deputy",
         type: "address",
       },
       {
-        internalType: "uint32",
+        internalType: "uint64",
         name: "until",
-        type: "uint32",
+        type: "uint64",
+      },
+      {
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "uint64",
+        name: "signedAt",
+        type: "uint64",
       },
     ],
     name: "authorize",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "deputy",
+        type: "address",
+      },
+    ],
+    name: "cancelAuthorization",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -1035,6 +1063,35 @@ const _abi = [
     name: "upgradeToAndCall",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "bytes",
+        name: "sig",
+        type: "bytes",
+      },
+      {
+        internalType: "bytes",
+        name: "message",
+        type: "bytes",
+      },
+      {
+        internalType: "address",
+        name: "signer",
+        type: "address",
+      },
+    ],
+    name: "verifySigner",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

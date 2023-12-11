@@ -103,7 +103,8 @@ export declare namespace MentalPokerHelper {
 
 export interface DemoLobbyInterface extends utils.Interface {
   functions: {
-    "authorize(address,uint32)": FunctionFragment;
+    "authorize(address,uint64,bytes,uint64)": FunctionFragment;
+    "cancelAuthorization(address)": FunctionFragment;
     "cardConfig()": FunctionFragment;
     "createTable(string,uint8)": FunctionFragment;
     "initialize(bytes[])": FunctionFragment;
@@ -137,12 +138,14 @@ export interface DemoLobbyInterface extends utils.Interface {
     "transferOwnership(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
+    "verifySigner(bytes,bytes,address)": FunctionFragment;
     "version()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | "authorize"
+      | "cancelAuthorization"
       | "cardConfig"
       | "createTable"
       | "initialize"
@@ -176,12 +179,22 @@ export interface DemoLobbyInterface extends utils.Interface {
       | "transferOwnership"
       | "upgradeTo"
       | "upgradeToAndCall"
+      | "verifySigner"
       | "version"
   ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "authorize",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "cancelAuthorization",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "cardConfig",
@@ -321,9 +334,21 @@ export interface DemoLobbyInterface extends utils.Interface {
     functionFragment: "upgradeToAndCall",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
   ): string;
+  encodeFunctionData(
+    functionFragment: "verifySigner",
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>
+    ]
+  ): string;
   encodeFunctionData(functionFragment: "version", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "authorize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "cancelAuthorization",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "cardConfig", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "createTable",
@@ -421,6 +446,10 @@ export interface DemoLobbyInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "upgradeToAndCall",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "verifySigner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "version", data: BytesLike): Result;
@@ -672,9 +701,16 @@ export interface DemoLobby extends BaseContract {
 
   functions: {
     authorize(
-      to: PromiseOrValue<string>,
+      deputy: PromiseOrValue<string>,
       until: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      signedAt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    cancelAuthorization(
+      deputy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     cardConfig(
@@ -844,13 +880,27 @@ export interface DemoLobby extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    verifySigner(
+      sig: PromiseOrValue<BytesLike>,
+      message: PromiseOrValue<BytesLike>,
+      signer: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     version(overrides?: CallOverrides): Promise<[number]>;
   };
 
   authorize(
-    to: PromiseOrValue<string>,
+    deputy: PromiseOrValue<string>,
     until: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    signedAt: PromiseOrValue<BigNumberish>,
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  cancelAuthorization(
+    deputy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   cardConfig(
@@ -1020,12 +1070,26 @@ export interface DemoLobby extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  verifySigner(
+    sig: PromiseOrValue<BytesLike>,
+    message: PromiseOrValue<BytesLike>,
+    signer: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   version(overrides?: CallOverrides): Promise<number>;
 
   callStatic: {
     authorize(
-      to: PromiseOrValue<string>,
+      deputy: PromiseOrValue<string>,
       until: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      signedAt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    cancelAuthorization(
+      deputy: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1189,6 +1253,13 @@ export interface DemoLobby extends BaseContract {
       data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    verifySigner(
+      sig: PromiseOrValue<BytesLike>,
+      message: PromiseOrValue<BytesLike>,
+      signer: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     version(overrides?: CallOverrides): Promise<number>;
   };
@@ -1355,9 +1426,16 @@ export interface DemoLobby extends BaseContract {
 
   estimateGas: {
     authorize(
-      to: PromiseOrValue<string>,
+      deputy: PromiseOrValue<string>,
       until: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      signedAt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    cancelAuthorization(
+      deputy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     cardConfig(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1523,14 +1601,28 @@ export interface DemoLobby extends BaseContract {
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    verifySigner(
+      sig: PromiseOrValue<BytesLike>,
+      message: PromiseOrValue<BytesLike>,
+      signer: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     version(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     authorize(
-      to: PromiseOrValue<string>,
+      deputy: PromiseOrValue<string>,
       until: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      signedAt: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    cancelAuthorization(
+      deputy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     cardConfig(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1694,6 +1786,13 @@ export interface DemoLobby extends BaseContract {
       newImplementation: PromiseOrValue<string>,
       data: PromiseOrValue<BytesLike>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    verifySigner(
+      sig: PromiseOrValue<BytesLike>,
+      message: PromiseOrValue<BytesLike>,
+      signer: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
