@@ -208,6 +208,7 @@ export interface TexasHoldemPeripheryInterface extends Interface {
       | "proxiableUUID"
       | "renounceOwnership"
       | "tableByAddress"
+      | "tableById"
       | "tableByIndex"
       | "transferOwnership"
       | "upgradeTo"
@@ -250,6 +251,10 @@ export interface TexasHoldemPeripheryInterface extends Interface {
     values: [AddressLike, BytesLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "tableById",
+    values: [BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "tableByIndex",
     values: [BigNumberish, BytesLike]
   ): string;
@@ -289,6 +294,7 @@ export interface TexasHoldemPeripheryInterface extends Interface {
     functionFragment: "tableByAddress",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "tableById", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "tableByIndex",
     data: BytesLike
@@ -433,6 +439,12 @@ export interface TexasHoldemPeriphery extends BaseContract {
     "view"
   >;
 
+  tableById: TypedContractMethod<
+    [tableId: BigNumberish, revealToken: BytesLike],
+    [TableStatusStructOutput],
+    "view"
+  >;
+
   tableByIndex: TypedContractMethod<
     [index: BigNumberish, revealToken: BytesLike],
     [TableStatusStructOutput],
@@ -490,6 +502,13 @@ export interface TexasHoldemPeriphery extends BaseContract {
     nameOrSignature: "tableByAddress"
   ): TypedContractMethod<
     [table: AddressLike, revealToken: BytesLike],
+    [TableStatusStructOutput],
+    "view"
+  >;
+  getFunction(
+    nameOrSignature: "tableById"
+  ): TypedContractMethod<
+    [tableId: BigNumberish, revealToken: BytesLike],
     [TableStatusStructOutput],
     "view"
   >;

@@ -215,6 +215,7 @@ export interface TexasHoldemPeripheryInterface extends utils.Interface {
     "proxiableUUID()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "tableByAddress(address,bytes)": FunctionFragment;
+    "tableById(uint32,bytes)": FunctionFragment;
     "tableByIndex(uint8,bytes)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
@@ -231,6 +232,7 @@ export interface TexasHoldemPeripheryInterface extends utils.Interface {
       | "proxiableUUID"
       | "renounceOwnership"
       | "tableByAddress"
+      | "tableById"
       | "tableByIndex"
       | "transferOwnership"
       | "upgradeTo"
@@ -262,6 +264,10 @@ export interface TexasHoldemPeripheryInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "tableByAddress",
     values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tableById",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "tableByIndex",
@@ -303,6 +309,7 @@ export interface TexasHoldemPeripheryInterface extends utils.Interface {
     functionFragment: "tableByAddress",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "tableById", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "tableByIndex",
     data: BytesLike
@@ -439,6 +446,12 @@ export interface TexasHoldemPeriphery extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[TableStatusStructOutput] & { status: TableStatusStructOutput }>;
 
+    tableById(
+      tableId: PromiseOrValue<BigNumberish>,
+      revealToken: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<[TableStatusStructOutput] & { status: TableStatusStructOutput }>;
+
     tableByIndex(
       index: PromiseOrValue<BigNumberish>,
       revealToken: PromiseOrValue<BytesLike>,
@@ -491,6 +504,12 @@ export interface TexasHoldemPeriphery extends BaseContract {
     overrides?: CallOverrides
   ): Promise<TableStatusStructOutput>;
 
+  tableById(
+    tableId: PromiseOrValue<BigNumberish>,
+    revealToken: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides
+  ): Promise<TableStatusStructOutput>;
+
   tableByIndex(
     index: PromiseOrValue<BigNumberish>,
     revealToken: PromiseOrValue<BytesLike>,
@@ -537,6 +556,12 @@ export interface TexasHoldemPeriphery extends BaseContract {
 
     tableByAddress(
       table: PromiseOrValue<string>,
+      revealToken: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<TableStatusStructOutput>;
+
+    tableById(
+      tableId: PromiseOrValue<BigNumberish>,
       revealToken: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<TableStatusStructOutput>;
@@ -631,6 +656,12 @@ export interface TexasHoldemPeriphery extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    tableById(
+      tableId: PromiseOrValue<BigNumberish>,
+      revealToken: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     tableByIndex(
       index: PromiseOrValue<BigNumberish>,
       revealToken: PromiseOrValue<BytesLike>,
@@ -680,6 +711,12 @@ export interface TexasHoldemPeriphery extends BaseContract {
 
     tableByAddress(
       table: PromiseOrValue<string>,
+      revealToken: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tableById(
+      tableId: PromiseOrValue<BigNumberish>,
       revealToken: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

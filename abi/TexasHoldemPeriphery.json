@@ -641,6 +641,202 @@
   {
     "inputs": [
       {
+        "internalType": "uint32",
+        "name": "tableId",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "revealToken",
+        "type": "bytes"
+      }
+    ],
+    "name": "tableById",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "table",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "subject",
+            "type": "string"
+          },
+          {
+            "internalType": "uint64",
+            "name": "gameId",
+            "type": "uint64"
+          },
+          {
+            "internalType": "enum ITexasHoldemTable.GameStage",
+            "name": "stage",
+            "type": "uint8"
+          },
+          {
+            "components": [
+              {
+                "internalType": "enum IPokerTable.PokerSuit",
+                "name": "suit",
+                "type": "uint8"
+              },
+              {
+                "internalType": "enum IPokerTable.PokerRank",
+                "name": "rank",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct IPokerTable.PokerCard[]",
+            "name": "communityCards",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint8",
+                "name": "pid",
+                "type": "uint8"
+              },
+              {
+                "internalType": "address",
+                "name": "wallet",
+                "type": "address"
+              },
+              {
+                "internalType": "string",
+                "name": "displayName",
+                "type": "string"
+              },
+              {
+                "internalType": "enum ITexasHoldemTable.PlayerStatus",
+                "name": "status",
+                "type": "uint8"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "enum IPokerTable.PokerSuit",
+                    "name": "suit",
+                    "type": "uint8"
+                  },
+                  {
+                    "internalType": "enum IPokerTable.PokerRank",
+                    "name": "rank",
+                    "type": "uint8"
+                  }
+                ],
+                "internalType": "struct IPokerTable.PokerCard[]",
+                "name": "holeCards",
+                "type": "tuple[]"
+              },
+              {
+                "internalType": "uint256",
+                "name": "bets",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "chips",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct TablePosition[]",
+            "name": "positions",
+            "type": "tuple[]"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8[]",
+                "name": "winners",
+                "type": "uint8[]"
+              },
+              {
+                "internalType": "enum HandRanking",
+                "name": "winnerHandRanking",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct PotMeta",
+            "name": "mainPot",
+            "type": "tuple"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint8[]",
+                "name": "winners",
+                "type": "uint8[]"
+              },
+              {
+                "internalType": "enum HandRanking",
+                "name": "winnerHandRanking",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct PotMeta[]",
+            "name": "sidePots",
+            "type": "tuple[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minRaise",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "betAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "lastStageBet",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint8",
+            "name": "actingPosition",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "actingTimeStart",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "actingTimeout",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint32",
+            "name": "timestamp",
+            "type": "uint32"
+          }
+        ],
+        "internalType": "struct TableStatus",
+        "name": "status",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint8",
         "name": "index",
         "type": "uint8"
